@@ -1294,10 +1294,6 @@ let n=0;
 
 let favorites=new Set();
 
-/*
-  نظام سجل التنقل الجديد
-*/
-
 let historyReady=false;
 
 
@@ -1535,6 +1531,7 @@ function hideAll(){
       el.classList.add("hidden");
 
   });
+
 }
 
 
@@ -1556,11 +1553,12 @@ function setNav(active){
 
   if(active && $(active))
     $(active).classList.add("active");
+
 }
 
 
 /*
-  إضافة صفحة داخل سجل الهاتف
+  إضافة حالة جديدة لسجل التطبيق
 */
 
 function pushRoute(state){
@@ -1569,16 +1567,18 @@ function pushRoute(state){
     return;
 
   history.pushState(
-    state,
+    {
+      ...state,
+      app:true
+    },
     "",
     location.href
   );
+
 }
 
 
-/*
-  الرئيسية
-*/
+/* HOME */
 
 function showPage(
   id,
@@ -1628,12 +1628,11 @@ function home(
     "home",
     push
   );
+
 }
 
 
-/*
-  الأقسام
-*/
+/* الأقسام */
 
 function showSections(
   push=true
@@ -1672,9 +1671,7 @@ function showSections(
 }
 
 
-/*
-  المفضلة
-*/
+/* المفضلة */
 
 function showFavorites(
   push=true
@@ -1708,9 +1705,7 @@ function showFavorites(
 }
 
 
-/*
-  الإعدادات
-*/
+/* الإعدادات */
 
 function showSettings(
   push=true
@@ -1743,30 +1738,37 @@ function showSettings(
 
 
 /*
-  زر الرجوع الموجود داخل التطبيق
+  زر الرجوع داخل التطبيق
 */
 
 function back(){
 
-  /*
-    إذا كان لدينا سجل داخلي
-    نرجع له بدل الخروج من الموقع.
-  */
-
-  if(history.length>1){
+  if(historyReady){
 
     history.back();
 
-  }else{
-
-    showSections(false);
+    return;
 
   }
+
+  showSections(false);
+
 }
 
 
 /*
-  زر الرجوع الأساسي في الهاتف
+  =====================================================
+  زر الرجوع في الهاتف
+  =====================================================
+
+  هذا هو الإصلاح الأساسي.
+
+  عند وجود صفحة داخلية:
+  رجوع الهاتف يعيد الصفحة السابقة داخل التطبيق.
+
+  عند الوصول إلى الرئيسية:
+  لا نقوم بإجبار المستخدم على الخروج
+  من الموقع بسبب حالة غير معروفة.
 */
 
 window.addEventListener(
@@ -1778,13 +1780,19 @@ window.addEventListener(
 
 
     /*
-      الرئيسية
+      حالة غير تابعة للتطبيق
     */
 
-    if(
-      !state ||
-      !state.page
-    ){
+    if(!state || !state.app){
+
+      history.pushState(
+        {
+          page:"home",
+          app:true
+        },
+        "",
+        location.href
+      );
 
       showPage(
         "home",
@@ -1933,20 +1941,41 @@ window.addEventListener(
 
 
 /*
-  تجهيز أول صفحة
+  تهيئة سجل التطبيق
 */
 
 function initHistory(){
 
+  /*
+    الحالة الحالية = الرئيسية
+  */
+
   history.replaceState(
     {
-      page:"home"
+      page:"home",
+      app:true
+    },
+    "",
+    location.href
+  );
+
+  /*
+    نقطة إضافية للرئيسية.
+    وجودها يمنع أول رجوع من إخراج
+    التطبيق مباشرة.
+  */
+
+  history.pushState(
+    {
+      page:"home",
+      app:true
     },
     "",
     location.href
   );
 
   historyReady=true;
+
 }
 
 
@@ -2331,10 +2360,6 @@ function openCat(
   });
 
 
-  /*
-    تسجيل القسم في سجل الهاتف
-  */
-
   if(push){
 
     pushRoute({
@@ -2455,10 +2480,6 @@ function openReader(
   });
 
 
-  /*
-    حفظ قارئ الذكر في سجل الهاتف
-  */
-
   if(push){
 
     pushRoute({
@@ -2570,8 +2591,8 @@ function tap(){
         n=0;
 
         /*
-          الانتقال التلقائي لا ينشئ
-          صفحة رجوع جديدة
+          الانتقال التلقائي لا يضيف
+          سجلًا جديدًا.
         */
 
         openReader(
@@ -2630,6 +2651,7 @@ function skip(){
     showSections();
 
   }
+
 }
 
 
@@ -3043,7 +3065,6 @@ if(
 
 /*
   تشغيل سجل التنقل
-  بعد تجهيز الصفحة
 */
 
 initHistory();
