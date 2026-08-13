@@ -3,21 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#087f73">
+<meta name="theme-color" content="#0b7a70">
 <link rel="manifest" href="./manifest.json">
 <title>أذكار المسلم</title>
 
 <style>
 :root{
-  --primary:#087f73;
-  --primary-dark:#05645b;
-  --primary-soft:#e1f5f1;
+  --primary:#0b7a70;
+  --primary2:#075e57;
+  --soft:#dff4f0;
   --bg:#f4f8f7;
   --card:#fff;
   --text:#17312e;
-  --muted:#71827f;
-  --border:#e2ebe9;
-  --shadow:0 8px 28px rgba(20,70,64,.08);
+  --muted:#70817e;
+  --border:#e1ebe8;
+  --shadow:0 8px 28px rgba(15,65,59,.08);
+  --danger:#c94b4b;
 }
 
 *{
@@ -25,10 +26,14 @@
   -webkit-tap-highlight-color:transparent;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
   background:
-    radial-gradient(circle at 100% 0,#087f7314,transparent 30%),
+    radial-gradient(circle at 100% 0%,rgba(11,122,112,.08),transparent 28%),
     var(--bg);
   color:var(--text);
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;
@@ -49,20 +54,18 @@ button{
   padding-bottom:95px;
 }
 
-.hidden{
-  display:none!important;
-}
-
 /* HEADER */
 
 header{
   position:relative;
   overflow:hidden;
   color:white;
-  padding:28px 18px 27px;
-  background:linear-gradient(145deg,#098a7c,#05645b);
+  padding:
+    calc(25px + env(safe-area-inset-top))
+    20px 28px;
+  background:linear-gradient(145deg,var(--primary),var(--primary2));
   border-radius:0 0 32px 32px;
-  box-shadow:0 12px 30px #05645b2b;
+  box-shadow:0 10px 30px rgba(7,94,87,.18);
 }
 
 header:before,
@@ -70,24 +73,24 @@ header:after{
   content:"";
   position:absolute;
   border-radius:50%;
-  background:#ffffff0d;
+  background:rgba(255,255,255,.06);
 }
 
 header:before{
-  width:210px;
-  height:210px;
-  left:-80px;
-  top:-100px;
+  width:190px;
+  height:190px;
+  left:-70px;
+  top:-80px;
 }
 
 header:after{
   width:140px;
   height:140px;
-  right:-55px;
-  bottom:-75px;
+  right:-50px;
+  bottom:-70px;
 }
 
-.header-inner{
+.header-content{
   position:relative;
   z-index:2;
 }
@@ -99,14 +102,15 @@ header:after{
 }
 
 .brand-icon{
-  width:54px;
-  height:54px;
+  width:55px;
+  height:55px;
   border-radius:18px;
-  background:#ffffff1b;
-  display:grid;
-  place-items:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-size:28px;
-  box-shadow:inset 0 0 0 1px #ffffff15;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(8px);
 }
 
 .brand h1{
@@ -117,34 +121,21 @@ header:after{
 
 .brand p{
   margin:4px 0 0;
-  font-size:13px;
   opacity:.85;
-}
-
-.header-subtitle{
-  margin-top:19px;
   font-size:13px;
-  opacity:.88;
 }
 
 /* MAIN */
 
 main{
-  padding:17px 15px;
-}
-
-#status{
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:3px 0 9px;
+  padding:18px 15px;
 }
 
 /* SEARCH */
 
 .search{
   position:relative;
-  margin-bottom:17px;
+  margin-bottom:18px;
 }
 
 .search input{
@@ -153,32 +144,25 @@ main{
   outline:none;
   background:var(--card);
   color:var(--text);
-  padding:17px 48px 17px 43px;
   border-radius:19px;
+  padding:17px 48px 17px 45px;
   box-shadow:var(--shadow);
-  font-size:15px;
-}
-
-.search input:focus{
-  border-color:var(--primary);
 }
 
 .search-icon{
   position:absolute;
-  right:16px;
+  right:17px;
   top:50%;
   transform:translateY(-50%);
-  color:var(--muted);
   font-size:19px;
+  color:var(--muted);
 }
 
 .clear{
   position:absolute;
-  left:8px;
+  left:9px;
   top:50%;
   transform:translateY(-50%);
-  width:36px;
-  height:36px;
   border:0;
   background:transparent;
   color:var(--muted);
@@ -190,21 +174,12 @@ main{
 .welcome{
   position:relative;
   overflow:hidden;
-  background:linear-gradient(135deg,#fff,#eef8f6);
-  border:1px solid var(--border);
+  padding:21px;
   border-radius:25px;
-  padding:20px;
+  background:linear-gradient(135deg,#fff,#edf8f6);
+  border:1px solid var(--border);
   box-shadow:var(--shadow);
-  margin-bottom:21px;
-}
-
-.welcome:after{
-  content:"🌿";
-  position:absolute;
-  left:10px;
-  bottom:-15px;
-  font-size:75px;
-  opacity:.06;
+  margin-bottom:22px;
 }
 
 .welcome h2{
@@ -215,22 +190,23 @@ main{
 .welcome p{
   margin:0;
   color:var(--muted);
-  font-size:14px;
+  font-size:13px;
   line-height:1.8;
 }
 
 .stats{
-  display:flex;
-  gap:9px;
-  margin-top:16px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:17px;
 }
 
 .stat{
-  flex:1;
-  background:#fff;
+  background:rgba(255,255,255,.8);
   border:1px solid var(--border);
-  border-radius:16px;
+  border-radius:15px;
   padding:10px;
+  text-align:center;
 }
 
 .stat strong{
@@ -244,13 +220,47 @@ main{
   font-size:10px;
 }
 
-/* QUICK */
+/* CONTINUE */
+
+.continue{
+  display:none;
+  margin-bottom:22px;
+  padding:17px;
+  border-radius:21px;
+  background:var(--primary);
+  color:white;
+  box-shadow:var(--shadow);
+}
+
+.continue.show{
+  display:block;
+}
+
+.continue small{
+  opacity:.8;
+}
+
+.continue-title{
+  font-weight:800;
+  margin:6px 0 12px;
+}
+
+.continue button{
+  border:0;
+  border-radius:13px;
+  padding:11px 15px;
+  background:white;
+  color:var(--primary);
+  font-weight:700;
+}
+
+/* SECTION */
 
 .section-title{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin:21px 3px 11px;
+  margin:22px 3px 12px;
 }
 
 .section-title h2{
@@ -263,59 +273,22 @@ main{
   font-size:11px;
 }
 
-.quick{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.quick button{
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  border-radius:20px;
-  padding:16px;
-  text-align:right;
-  box-shadow:var(--shadow);
-}
-
-.quick-icon{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  background:var(--primary-soft);
-  display:grid;
-  place-items:center;
-  font-size:21px;
-  margin-bottom:9px;
-}
-
-.quick strong{
-  display:block;
-  font-size:14px;
-}
-
-.quick small{
-  color:var(--muted);
-  font-size:11px;
-}
-
 /* CATEGORIES */
 
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:10px;
+  gap:11px;
 }
 
 .category{
-  border:1px solid var(--border);
+  min-height:112px;
+  padding:16px 14px;
+  text-align:right;
   background:var(--card);
   color:var(--text);
-  border-radius:21px;
-  padding:16px 14px;
-  min-height:112px;
-  text-align:right;
+  border:1px solid var(--border);
+  border-radius:20px;
   box-shadow:var(--shadow);
   transition:.15s;
 }
@@ -324,23 +297,24 @@ main{
   transform:scale(.97);
 }
 
-.category-icon{
+.cat-icon{
   width:44px;
   height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--soft);
   border-radius:14px;
-  background:var(--primary-soft);
-  display:grid;
-  place-items:center;
   font-size:21px;
   margin-bottom:10px;
 }
 
-.category-title{
-  font-size:15px;
+.cat-title{
   font-weight:800;
+  font-size:15px;
 }
 
-.category-count{
+.cat-count{
   color:var(--muted);
   font-size:11px;
   margin-top:4px;
@@ -353,7 +327,7 @@ main{
   border:1px solid var(--border);
   background:var(--card);
   color:var(--text);
-  border-radius:19px;
+  border-radius:18px;
   padding:16px;
   margin-bottom:10px;
   text-align:right;
@@ -362,34 +336,33 @@ main{
 
 .result-title{
   font-weight:800;
-  font-size:15px;
 }
 
 .result-preview{
   color:var(--muted);
   font-size:12px;
   line-height:1.7;
-  margin-top:7px;
+  margin-top:6px;
 }
 
-/* TOPBAR */
+/* TOP BAR */
 
 .topbar{
   display:flex;
   align-items:center;
   gap:10px;
-  margin-bottom:17px;
+  margin-bottom:18px;
 }
 
 .back{
   width:44px;
   height:44px;
   border:0;
+  border-radius:15px;
   background:var(--card);
   color:var(--text);
-  border-radius:15px;
   box-shadow:var(--shadow);
-  font-size:21px;
+  font-size:20px;
 }
 
 .top-title{
@@ -403,53 +376,48 @@ main{
 
 .top-title small{
   color:var(--muted);
-  font-size:11px;
 }
 
 /* LIST */
 
-.dhikr-item{
+.item{
   width:100%;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  border-radius:19px;
-  padding:16px;
-  margin-bottom:10px;
   display:flex;
   align-items:center;
   gap:12px;
-  text-align:right;
+  padding:16px;
+  margin-bottom:10px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:19px;
   box-shadow:var(--shadow);
-}
-
-.dhikr-item:active{
-  transform:scale(.98);
+  text-align:right;
 }
 
 .number{
+  width:40px;
+  height:40px;
   flex:none;
-  width:41px;
-  height:41px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   border-radius:13px;
-  background:var(--primary-soft);
+  background:var(--soft);
   color:var(--primary);
-  display:grid;
-  place-items:center;
-  font-weight:850;
+  font-weight:800;
 }
 
-.dhikr-info{
+.item-info{
   flex:1;
-  min-width:0;
 }
 
-.dhikr-title{
+.item-title{
   font-weight:800;
   font-size:15px;
 }
 
-.dhikr-count{
+.item-count{
   color:var(--muted);
   font-size:11px;
   margin-top:5px;
@@ -457,16 +425,16 @@ main{
 
 .arrow{
   color:var(--muted);
-  font-size:20px;
+  font-size:18px;
 }
 
 /* READER */
 
 .reader-head{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  margin-bottom:15px;
+  align-items:center;
+  margin-bottom:14px;
 }
 
 .favorite{
@@ -474,7 +442,7 @@ main{
   height:44px;
   border:1px solid var(--border);
   background:var(--card);
-  color:var(--primary);
+  color:#d19b22;
   border-radius:15px;
   box-shadow:var(--shadow);
   font-size:22px;
@@ -489,31 +457,31 @@ main{
 }
 
 .reader-top{
-  padding:20px 20px 8px;
+  padding:20px 20px 10px;
 }
 
 .reader-title{
-  font-size:20px;
+  font-size:19px;
   font-weight:850;
-  line-height:1.7;
+  line-height:1.6;
 }
 
 .source{
   color:var(--muted);
   font-size:12px;
   line-height:1.7;
-  margin-top:5px;
+  margin-top:7px;
 }
 
 .reader-text{
-  padding:13px 22px 27px;
+  padding:14px 22px 25px;
   font-size:25px;
-  line-height:2.35;
+  line-height:2.25;
   white-space:pre-wrap;
 }
 
 .progress-area{
-  padding:0 20px 13px;
+  padding:0 20px 15px;
 }
 
 .progress-info{
@@ -526,53 +494,48 @@ main{
 
 .progress{
   height:8px;
-  background:#e8efed;
+  background:#e7efed;
   border-radius:20px;
   overflow:hidden;
 }
 
 .progress-bar{
-  width:0;
   height:100%;
-  background:linear-gradient(90deg,var(--primary),#17a393);
-  border-radius:20px;
+  width:0;
+  background:linear-gradient(90deg,var(--primary),#18a596);
   transition:.25s;
 }
 
 .counter{
-  margin:5px 20px 17px;
+  margin:5px 20px 18px;
   padding:15px;
-  background:var(--primary-soft);
   border-radius:20px;
+  background:var(--soft);
   text-align:center;
 }
 
-.counter strong{
-  display:block;
-  color:var(--primary);
+.counter-number{
   font-size:28px;
+  font-weight:900;
+  color:var(--primary);
 }
 
-.counter span{
+.counter-label{
   color:var(--muted);
   font-size:11px;
 }
 
 .tap{
   width:calc(100% - 30px);
-  margin:0 15px 11px;
+  margin:0 15px 12px;
   border:0;
-  color:white;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
   border-radius:19px;
-  padding:17px;
+  padding:18px;
+  color:white;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  font-weight:800;
   font-size:17px;
-  font-weight:850;
-  box-shadow:0 9px 22px #087f7330;
-}
-
-.tap:active{
-  transform:scale(.98);
+  box-shadow:0 9px 20px rgba(11,122,112,.2);
 }
 
 .reader-actions{
@@ -587,14 +550,27 @@ main{
   background:var(--bg);
   color:var(--text);
   border-radius:15px;
-  padding:12px;
+  padding:12px 5px;
 }
 
 .reader-actions button:disabled{
   opacity:.4;
 }
 
-/* FAVORITES / SETTINGS */
+/* FAVORITES */
+
+.favorite-empty{
+  text-align:center;
+  padding:55px 20px;
+  color:var(--muted);
+}
+
+.favorite-empty div{
+  font-size:48px;
+  margin-bottom:10px;
+}
+
+/* SETTINGS */
 
 .setting{
   background:var(--card);
@@ -603,29 +579,87 @@ main{
   padding:16px;
   margin-bottom:10px;
   box-shadow:var(--shadow);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
 }
 
-.setting small{
-  display:block;
+.setting-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.setting-title{
+  font-weight:800;
+}
+
+.setting-desc{
   color:var(--muted);
-  margin-top:4px;
   font-size:11px;
+  margin-top:4px;
 }
 
 .setting button{
-  border:1px solid var(--border);
-  background:var(--bg);
-  color:var(--text);
-  border-radius:12px;
-  padding:8px 13px;
+  border:0;
+  background:var(--soft);
+  color:var(--primary);
+  border-radius:13px;
+  padding:9px 13px;
+  font-weight:700;
 }
 
-.range{
-  width:125px;
-  accent-color:var(--primary);
+.font-buttons{
+  display:flex;
+  gap:7px;
+}
+
+.font-buttons button{
+  min-width:42px;
+}
+
+.danger{
+  color:var(--danger)!important;
+  background:#fff0f0!important;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  z-index:50;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:min(850px,100%);
+  padding:
+    8px
+    10px
+    calc(8px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(15px);
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:7px 2px;
+  border-radius:14px;
+  font-size:11px;
+}
+
+.nav-btn span{
+  display:block;
+  font-size:20px;
+  margin-bottom:2px;
+}
+
+.nav-btn.active{
+  color:var(--primary);
+  background:var(--soft);
+  font-weight:800;
 }
 
 /* EMPTY */
@@ -637,101 +671,67 @@ main{
 }
 
 .empty-icon{
-  font-size:43px;
+  font-size:45px;
+  margin-bottom:10px;
 }
 
 .empty strong{
   display:block;
   color:var(--text);
-  margin:8px;
+  margin-bottom:5px;
 }
 
-/* BOTTOM NAV */
+/* STATUS */
 
-.bottom-nav{
-  position:fixed;
-  z-index:20;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(850px,100%);
-  padding:8px 12px calc(8px + env(safe-area-inset-bottom));
-  background:#ffffffed;
-  backdrop-filter:blur(15px);
-  border-top:1px solid var(--border);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:4px;
-}
-
-.nav{
-  border:0;
-  background:transparent;
+#status{
+  text-align:center;
   color:var(--muted);
-  border-radius:14px;
-  padding:7px 3px;
-  font-size:10px;
+  font-size:11px;
+  padding:4px 0 8px;
 }
 
-.nav span{
-  display:block;
-  font-size:20px;
-  margin-bottom:2px;
-}
+/* HIDDEN */
 
-.nav.active{
-  color:var(--primary);
-  background:var(--primary-soft);
-}
-
-/* TOAST */
-
-.toast{
-  position:fixed;
-  z-index:50;
-  bottom:85px;
-  left:50%;
-  transform:translateX(-50%) translateY(20px);
-  background:#17312e;
-  color:white;
-  padding:11px 17px;
-  border-radius:14px;
-  font-size:12px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+.hidden{
+  display:none!important;
 }
 
 /* DARK */
 
 body.dark{
-  --bg:#0f1d1b;
-  --card:#172825;
+  --bg:#0e1b19;
+  --card:#172724;
   --text:#e7f1ef;
   --muted:#91a5a1;
-  --border:#263a36;
-  --primary-soft:#173e39;
-  --shadow:0 8px 25px #0004;
+  --border:#293c38;
+  --soft:#173d38;
+  --shadow:0 8px 28px rgba(0,0,0,.2);
 }
 
 body.dark .welcome{
-  background:linear-gradient(135deg,#172825,#142f2b);
+  background:linear-gradient(135deg,#172724,#14312d);
 }
 
 body.dark .stat{
-  background:#172825;
+  background:#172724;
 }
 
 body.dark .bottom-nav{
-  background:#12221fee;
+  background:rgba(17,35,32,.94);
 }
 
+body.dark .progress{
+  background:#293c38;
+}
+
+/* DESKTOP */
+
 @media(min-width:650px){
+
+  main{
+    padding:24px 20px;
+  }
+
   .grid{
     grid-template-columns:repeat(3,1fr);
   }
@@ -740,12 +740,25 @@ body.dark .bottom-nav{
     font-size:28px;
     padding:20px 40px 30px;
   }
+
 }
 
+/* SMALL */
+
 @media(max-width:360px){
+
+  .brand h1{
+    font-size:22px;
+  }
+
   .reader-text{
     font-size:21px;
   }
+
+  .category{
+    padding:13px 11px;
+  }
+
 }
 </style>
 </head>
@@ -755,131 +768,98 @@ body.dark .bottom-nav{
 <div class="app">
 
 <header>
-<div class="header-inner">
-
-<div class="brand">
-<div class="brand-icon">📿</div>
-<div>
-<h1>أذكار المسلم</h1>
-<p>رفيقك اليومي للذكر والدعاء</p>
-</div>
-</div>
-
-<div class="header-subtitle">
-اجعل ذكر الله جزءًا من يومك 🌿
-</div>
-
-</div>
+  <div class="header-content">
+    <div class="brand">
+      <div class="brand-icon">📿</div>
+      <div>
+        <h1>أذكار المسلم</h1>
+        <p>رفيقك اليومي للذكر والدعاء</p>
+      </div>
+    </div>
+  </div>
 </header>
 
 <main>
 
 <div id="status">جارٍ تحميل الأذكار...</div>
 
-
 <!-- HOME -->
 
 <section id="home">
 
-<div class="search">
+  <div class="search">
+    <span class="search-icon">🔍</span>
 
-<span class="search-icon">🔍</span>
+    <input
+      id="q"
+      type="search"
+      placeholder="ابحث عن ذكر أو دعاء..."
+      autocomplete="off"
+      oninput="renderHome()"
+    >
 
-<input
-id="q"
-type="search"
-placeholder="ابحث عن ذكر أو دعاء..."
-autocomplete="off"
-oninput="renderHome()"
->
+    <button id="clearSearch"
+      class="clear"
+      onclick="clearSearch()">✕</button>
+  </div>
 
-<button
-id="clear"
-class="clear"
-onclick="clearSearch()"
->✕</button>
+  <div class="welcome">
 
-</div>
+    <h2>السلام عليكم ورحمة الله 🌿</h2>
 
+    <p>
+      اجعل لسانك عامرًا بذكر الله، واختر ما تريد من الأذكار.
+    </p>
 
-<div class="welcome">
+    <div class="stats">
 
-<h2>السلام عليكم ورحمة الله 🌿</h2>
+      <div class="stat">
+        <strong id="totalAzkar">0</strong>
+        <span>ذكر</span>
+      </div>
 
-<p>
-اختر ما يناسب وقتك، وابدأ وردك اليومي بسهولة وطمأنينة.
-</p>
+      <div class="stat">
+        <strong id="totalCategories">0</strong>
+        <span>قسم</span>
+      </div>
 
-<div class="stats">
+      <div class="stat">
+        <strong id="favoriteCount">0</strong>
+        <span>مفضلة</span>
+      </div>
 
-<div class="stat">
-<strong id="total">0</strong>
-<span>ذكر</span>
-</div>
+    </div>
 
-<div class="stat">
-<strong id="catsCount">0</strong>
-<span>قسم</span>
-</div>
+  </div>
 
-<div class="stat">
-<strong id="favCount">0</strong>
-<span>مفضلة</span>
-</div>
+  <div id="continueBox" class="continue">
 
-</div>
+    <small>📖 أكمل من حيث توقفت</small>
 
-</div>
+    <div id="continueTitle" class="continue-title"></div>
 
+    <button onclick="continueReading()">
+      متابعة القراءة
+    </button>
 
-<div class="section-title">
-<h2>ابدأ الآن</h2>
-<span>وصول سريع</span>
-</div>
+  </div>
 
-<div class="quick">
+  <div class="section-title">
+    <h2>الأقسام</h2>
+    <span>اختر قسمًا</span>
+  </div>
 
-<button onclick="openSpecial('الصباح')">
+  <div id="cats" class="grid"></div>
 
-<div class="quick-icon">☀️</div>
+  <div id="results" class="hidden">
 
-<strong>أذكار الصباح</strong>
+    <div class="section-title">
+      <h2>نتائج البحث</h2>
+    </div>
 
-<small>ابدأ يومك بالذكر</small>
+    <div id="searchResults"></div>
 
-</button>
-
-
-<button onclick="openSpecial('المساء')">
-
-<div class="quick-icon">🌙</div>
-
-<strong>أذكار المساء</strong>
-
-<small>اختم يومك بالذكر</small>
-
-</button>
-
-</div>
-
-
-<div class="section-title">
-<h2>الأقسام</h2>
-<span>اختر قسمًا</span>
-</div>
-
-<div id="cats" class="grid"></div>
-
-
-<div id="results" class="hidden">
-
-<div class="section-title">
-<h2>نتائج البحث</h2>
-</div>
-
-<div id="searchResults"></div>
-
-</div>
+  </div>
 
 </section>
 
@@ -888,18 +868,18 @@ onclick="clearSearch()"
 
 <section id="list" class="hidden">
 
-<div class="topbar">
+  <div class="topbar">
 
-<button class="back" onclick="home()">→</button>
+    <button class="back" onclick="home()">→</button>
 
-<div class="top-title">
-<h2 id="lt"></h2>
-<small id="listCount"></small>
-</div>
+    <div class="top-title">
+      <h2 id="lt"></h2>
+      <small id="listCount"></small>
+    </div>
 
-</div>
+  </div>
 
-<div id="ls"></div>
+  <div id="ls"></div>
 
 </section>
 
@@ -908,279 +888,293 @@ onclick="clearSearch()"
 
 <section id="reader" class="hidden">
 
-<div class="reader-head">
+  <div class="reader-head">
 
-<button class="back" onclick="back()">→</button>
+    <button class="back" onclick="back()">→</button>
 
-<button
-id="favoriteBtn"
-class="favorite"
-onclick="toggleFavorite()"
->☆</button>
+    <button
+      id="favoriteBtn"
+      class="favorite"
+      onclick="toggleFavorite()"
+    >☆</button>
 
-</div>
+  </div>
 
+  <div class="reader-card">
 
-<div class="reader-card">
+    <div class="reader-top">
 
-<div class="reader-top">
+      <div id="rt" class="reader-title"></div>
 
-<div
-id="rt"
-class="reader-title"
-></div>
+      <div id="rs" class="source"></div>
 
-<div
-id="rs"
-class="source"
-></div>
+    </div>
 
-</div>
+    <div id="rx" class="reader-text"></div>
 
+    <div class="progress-area">
 
-<div
-id="rx"
-class="reader-text"
-></div>
+      <div class="progress-info">
+        <span id="progressText">التكرار</span>
+        <span id="progressPercent">0%</span>
+      </div>
 
+      <div class="progress">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
 
-<div class="progress-area">
+    </div>
 
-<div class="progress-info">
+    <div class="counter">
 
-<span id="progressText">
-التكرار
-</span>
+      <div id="rc" class="counter-number">
+        0 / 1
+      </div>
 
-<span id="progressPercent">
-0%
-</span>
+      <div class="counter-label">
+        عدد مرات التكرار
+      </div>
 
-</div>
+    </div>
 
-<div class="progress">
+    <button class="tap" onclick="tap()">
+      📿 اضغط للعد
+    </button>
 
-<div
-id="progressBar"
-class="progress-bar"
-></div>
+    <div class="reader-actions">
 
-</div>
+      <button id="prevBtn" onclick="prev()">
+        → السابق
+      </button>
 
-</div>
+      <button onclick="copyDhikr()">
+        📋 نسخ
+      </button>
 
+      <button onclick="skip()">
+        تخطي ←
+      </button>
 
-<div class="counter">
+    </div>
 
-<strong id="rc">
-0 / 1
-</strong>
+    <div class="reader-actions">
 
-<span>
-عدد مرات التكرار
-</span>
+      <button onclick="shareDhikr()">
+        📤 مشاركة
+      </button>
 
-</div>
+      <button onclick="changeFont(-1)">
+        🔤 أصغر
+      </button>
 
+      <button onclick="changeFont(1)">
+        🔠 أكبر
+      </button>
 
-<button
-class="tap"
-onclick="tap()"
->
-📿 اضغط للعد
-</button>
+    </div>
 
-
-<div class="reader-actions">
-
-<button
-id="prevBtn"
-onclick="prev()"
->
-→ السابق
-</button>
-
-<button onclick="skip()">
-تخطي ←
-</button>
-
-<button onclick="resetCount()">
-↻ إعادة
-</button>
-
-</div>
-
-</div>
+  </div>
 
 </section>
 
 
 <!-- FAVORITES -->
 
-<section
-id="favorites"
-class="hidden"
->
+<section id="favoritesPage" class="hidden">
 
-<div class="section-title">
+  <div class="topbar">
 
-<h2>⭐ المفضلة</h2>
+    <div class="top-title">
+      <h2>❤️ المفضلة</h2>
+      <small>الأذكار التي اخترتها</small>
+    </div>
 
-<span id="favTitleCount"></span>
+  </div>
 
-</div>
-
-<div id="favList"></div>
+  <div id="favoriteList"></div>
 
 </section>
 
 
 <!-- SETTINGS -->
 
-<section
-id="settings"
-class="hidden"
->
+<section id="settingsPage" class="hidden">
 
-<div class="section-title">
+  <div class="topbar">
 
-<h2>⚙️ الإعدادات</h2>
+    <div class="top-title">
+      <h2>⚙️ الإعدادات</h2>
+      <small>خصص تجربة الاستخدام</small>
+    </div>
 
-<span>تخصيص التطبيق</span>
-
-</div>
+  </div>
 
 
-<div class="setting">
+  <div class="setting">
 
-<div>
-<b>🌙 الوضع الليلي</b>
-<small>تغيير مظهر التطبيق</small>
-</div>
+    <div class="setting-row">
 
-<button
-id="themeBtn"
-onclick="toggleTheme()"
->
-تشغيل
-</button>
+      <div>
+        <div class="setting-title">
+          🌙 الوضع الليلي
+        </div>
 
-</div>
+        <div class="setting-desc">
+          تغيير مظهر التطبيق
+        </div>
+      </div>
 
+      <button onclick="toggleDark()" id="darkBtn">
+        تفعيل
+      </button>
 
-<div class="setting">
+    </div>
 
-<div>
-<b>🔤 حجم الخط</b>
-<small>حجم نص الذكر</small>
-</div>
-
-<input
-id="fontRange"
-class="range"
-type="range"
-min="20"
-max="34"
-value="25"
-oninput="setFont(this.value)"
->
-
-</div>
+  </div>
 
 
-<div class="setting">
+  <div class="setting">
 
-<div>
-<b>🧹 إعادة التقدم</b>
-<small>مسح تقدم العد</small>
-</div>
+    <div class="setting-title">
+      🔤 حجم خط الذكر
+    </div>
 
-<button onclick="resetProgress()">
-مسح
-</button>
+    <div class="setting-desc">
+      اختر الحجم المناسب للقراءة
+    </div>
 
-</div>
+    <div class="font-buttons" style="margin-top:12px">
+
+      <button onclick="setFont(21)">
+        صغير
+      </button>
+
+      <button onclick="setFont(25)">
+        متوسط
+      </button>
+
+      <button onclick="setFont(29)">
+        كبير
+      </button>
+
+    </div>
+
+  </div>
 
 
-<div class="setting">
+  <div class="setting">
 
-<div>
-<b>ℹ️ أذكار المسلم</b>
-<small>
-نسخة ويب قابلة للتحويل إلى تطبيق
-</small>
-</div>
+    <div class="setting-row">
 
-</div>
+      <div>
+        <div class="setting-title">
+          💾 حفظ التقدم
+        </div>
+
+        <div class="setting-desc">
+          يتم حفظ آخر موضع وصلت إليه تلقائيًا
+        </div>
+      </div>
+
+      <button onclick="clearProgress()">
+        إعادة
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="setting">
+
+    <div class="setting-row">
+
+      <div>
+        <div class="setting-title">
+          ❤️ المفضلة
+        </div>
+
+        <div class="setting-desc">
+          حذف جميع الأذكار المحفوظة
+        </div>
+      </div>
+
+      <button
+        class="danger"
+        onclick="clearFavorites()"
+      >
+        حذف الكل
+      </button>
+
+    </div>
+
+  </div>
 
 </section>
 
 </main>
-
-</div>
 
 
 <!-- BOTTOM NAV -->
 
 <nav class="bottom-nav">
 
-<button
-class="nav active"
-data-page="home"
-onclick="goNav('home')"
->
-<span>🏠</span>
-الرئيسية
-</button>
+  <button
+    id="navHome"
+    class="nav-btn active"
+    onclick="goHome()"
+  >
+    <span>🏠</span>
+    الرئيسية
+  </button>
 
+  <button
+    id="navSections"
+    class="nav-btn"
+    onclick="goSections()"
+  >
+    <span>📚</span>
+    الأقسام
+  </button>
 
-<button
-class="nav"
-data-page="favorites"
-onclick="goNav('favorites')"
->
-<span>⭐</span>
-المفضلة
-</button>
+  <button
+    id="navFavorites"
+    class="nav-btn"
+    onclick="goFavorites()"
+  >
+    <span>❤️</span>
+    المفضلة
+  </button>
 
-
-<button
-class="nav"
-data-page="list"
-onclick="goNav('list')"
->
-<span>📚</span>
-الأقسام
-</button>
-
-
-<button
-class="nav"
-data-page="settings"
-onclick="goNav('settings')"
->
-<span>⚙️</span>
-الإعدادات
-</button>
+  <button
+    id="navSettings"
+    class="nav-btn"
+    onclick="goSettings()"
+  >
+    <span>⚙️</span>
+    الإعدادات
+  </button>
 
 </nav>
 
-
-<div
-id="toast"
-class="toast"
-></div>
+</div>
 
 
 <script>
+
+/* =========================
+   SETTINGS
+========================= */
 
 const REMOTE_URL="./azkar.json";
 
 const CACHE_KEY="azkar_muslim_content_v3";
 
-const FAV_KEY="azkar_muslim_favorites_v2";
+const FAVORITES_KEY="azkar_muslim_favorites_v2";
 
-const PROG_KEY="azkar_muslim_progress_v1";
+const PROGRESS_KEY="azkar_muslim_progress_v1";
+
+const SETTINGS_KEY="azkar_muslim_settings_v1";
 
 
 let data=[];
@@ -1195,1225 +1189,1357 @@ let favorites=new Set();
 
 let progress={};
 
-
-function $(id){
-return document.getElementById(id);
-}
-
-
-function setStatus(t){
-$("status").textContent=t;
-}
-
-
-function esc(v){
-
-return String(v??"").replace(
-/[&<>"']/g,
-m=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[m])
-);
-
-}
-
-
-function key(x){
-
-return String(
-x.id ??
-x.title ??
-x.text ??
-""
-);
-
-}
-
-
-/* FAVORITES */
-
-function loadFav(){
-
-try{
-
-favorites=new Set(
-JSON.parse(
-localStorage.getItem(FAV_KEY)||"[]"
-)
-);
-
-}catch(e){
-
-favorites=new Set();
-
-}
-
-}
-
-
-function saveFav(){
-
-localStorage.setItem(
-FAV_KEY,
-JSON.stringify([...favorites])
-);
-
-updateStats();
-
-}
-
-
-/* PROGRESS */
-
-function loadProg(){
-
-try{
-
-progress=JSON.parse(
-localStorage.getItem(PROG_KEY)||"{}"
-);
-
-}catch(e){
-
-progress={};
-
-}
-
-}
-
-
-function saveProg(){
-
-localStorage.setItem(
-PROG_KEY,
-JSON.stringify(progress)
-);
-
-}
-
-
-/* DATA */
-
-async function loadData(){
-
-try{
-
-const r=await fetch(
-REMOTE_URL,
-{cache:"no-store"}
-);
-
-if(!r.ok)
-throw 0;
-
-const x=await r.json();
-
-data=x.items||x;
-
-if(!Array.isArray(data))
-throw 0;
-
-localStorage.setItem(
-CACHE_KEY,
-JSON.stringify(x)
-);
-
-setStatus(
-"تم تحديث المحتوى ✓"
-);
-
-}catch(e){
-
-try{
-
-const x=JSON.parse(
-localStorage.getItem(CACHE_KEY)||"null"
-);
-
-if(x){
-
-data=x.items||x;
-
-setStatus(
-"تم تشغيل آخر نسخة محفوظة ✓"
-);
-
-}
-
-}catch(e2){}
-
-}
-
-
-if(!data.length){
-
-try{
-
-const r=await fetch(
-"./azkar.json"
-);
-
-const x=await r.json();
-
-data=x.items||x;
-
-localStorage.setItem(
-CACHE_KEY,
-JSON.stringify(x)
-);
-
-setStatus(
-"تم تحميل المحتوى ✓"
-);
-
-}catch(e){
-
-setStatus(
-"تعذر تحميل الأذكار."
-);
-
-}
-
-}
-
-
-updateStats();
-
-renderHome();
-
-}
-
-
-/* STATS */
-
-function updateStats(){
-
-$("total").textContent=data.length;
-
-$("catsCount").textContent=
-[
-...new Set(
-data
-.map(x=>x.category)
-.filter(Boolean)
-)
-].length;
-
-$("favCount").textContent=
-favorites.size;
-
-}
-
-
-/* NAVIGATION */
-
-function S(id){
-
-[
-"home",
-"list",
-"reader",
-"favorites",
-"settings"
-].forEach(x=>{
-
-$(x)
-.classList
-.toggle(
-"hidden",
-x!==id
-);
-
-});
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-
-function activeNav(id){
-
-document
-.querySelectorAll(".nav")
-.forEach(b=>{
-
-b.classList.toggle(
-"active",
-b.dataset.page===id
-);
-
-});
-
-}
-
-
-function goNav(id){
-
-activeNav(id);
-
-if(id==="favorites"){
-
-S("favorites");
-
-renderFavorites();
-
-}
-
-else if(id==="settings"){
-
-S("settings");
-
-}
-
-else if(id==="list"){
-
-if(view.length){
-
-S("list");
-
-renderList();
-
-}else{
-
-S("home");
-
-toast(
-"اختر قسمًا أولًا"
-);
-
-}
-
-}
-
-else{
-
-S("home");
-
-renderHome();
-
-}
-
-}
-
-
-function home(){
-
-activeNav("home");
-
-S("home");
-
-renderHome();
-
-}
-
-
-function back(){
-
-S("list");
-
-activeNav("list");
-
-renderList();
-
-}
-
-
-/* CATEGORIES */
-
-function categories(){
-
-return [
-...new Set(
-data
-.map(x=>x.category)
-.filter(Boolean)
-)
-];
-
-}
-
-
-function categoryIcon(name,index){
-
-const n=
-String(name||"")
-.toLowerCase();
-
-
-if(
-n.includes("صباح")
-)
-return "☀️";
-
-
-if(
-n.includes("مساء")
-)
-return "🌙";
-
-
-if(
-n.includes("نوم") ||
-n.includes("استيق")
-)
-return "🌙";
-
-
-if(
-n.includes("صلاة") ||
-n.includes("صل")
-)
-return "🕌";
-
-
-if(
-n.includes("منزل") ||
-n.includes("بيت")
-)
-return "🏠";
-
-
-if(
-n.includes("سفر")
-)
-return "🧳";
-
-
-if(
-n.includes("قرآن") ||
-n.includes("قران")
-)
-return "📖";
-
-
-if(
-n.includes("مسجد")
-)
-return "🕌";
-
-
-if(
-n.includes("دعاء")
-)
-return "🤲";
-
-
-return [
-"📿",
-"🌿",
-"🤲",
-"✨",
-"🕊️",
-"📖"
-][index%6];
-
-}
-
-
-/* HOME */
-
-function renderHome(){
-
-const q=
-$("q")
-.value
-.trim()
-.toLowerCase();
-
-
-const box=$("cats");
-
-const results=$("results");
-
-const rb=$("searchResults");
-
-
-box.innerHTML="";
-
-rb.innerHTML="";
-
-
-$("clear").style.display=
-q ? "block" : "none";
-
-
-if(!q){
-
-results.classList.add(
-"hidden"
-);
-
-
-categories().forEach(
-(c,j)=>{
-
-const items=
-data.filter(
-x=>x.category===c
-);
-
-
-const b=
-document.createElement(
-"button"
-);
-
-
-b.className=
-"category";
-
-
-b.innerHTML=`
-
-<div class="category-icon">
-${categoryIcon(c,j)}
-</div>
-
-<div class="category-title">
-${esc(c)}
-</div>
-
-<div class="category-count">
-${items.length} أذكار
-</div>
-
-`;
-
-
-b.onclick=
-()=>openCat(c);
-
-
-box.appendChild(b);
-
-});
-
-return;
-
-}
-
-
-results.classList.remove(
-"hidden"
-);
-
-
-const found=
-data.filter(x=>{
-
-const text=
-(
-(x.text||"")+
-" "+
-(x.title||"")+
-" "+
-(x.category||"")
-)
-.toLowerCase();
-
-return text.includes(q);
-
-});
-
-
-if(!found.length){
-
-rb.innerHTML=`
-
-<div class="empty">
-
-<div class="empty-icon">
-🔎
-</div>
-
-<strong>
-لم نجد ما تبحث عنه
-</strong>
-
-جرّب كلمة أخرى
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-found.forEach(x=>{
-
-const b=
-document.createElement(
-"button"
-);
-
-b.className="result";
-
-
-b.innerHTML=`
-
-<div class="result-title">
-${esc(x.title||"ذكر")}
-</div>
-
-<div class="result-preview">
-${esc(
-String(x.text||"")
-.replace(/\s+/g," ")
-.slice(0,140)
-)}
-${String(x.text||"").length>140?"…":""}
-</div>
-
-`;
-
-
-b.onclick=()=>{
-
-view=[x];
-
-i=0;
-
-openReader(0);
-
+let settings={
+  dark:false,
+  font:25
 };
 
 
-rb.appendChild(b);
+/* =========================
+   HELPERS
+========================= */
 
-});
+function $(id){
+  return document.getElementById(id);
+}
+
+function esc(v){
+
+  return String(v??"").replace(
+    /[&<>"']/g,
+    m=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[m])
+  );
 
 }
 
 
-/* QUICK */
+/* =========================
+   SETTINGS LOAD
+========================= */
 
-function openSpecial(word){
+function loadSettings(){
 
-const c=
-categories().find(
-c=>String(c).includes(word)
-);
+  try{
 
+    const x=
+      JSON.parse(
+        localStorage.getItem(SETTINGS_KEY)||"{}"
+      );
 
-if(c)
-openCat(c);
-else
-toast(
-"هذا القسم غير موجود في المحتوى الحالي"
-);
+    settings={
+      ...settings,
+      ...x
+    };
+
+  }catch(e){}
+
+  applySettings();
 
 }
 
 
-/* LIST */
+function saveSettings(){
 
-function openCat(c){
+  localStorage.setItem(
+    SETTINGS_KEY,
+    JSON.stringify(settings)
+  );
 
-view=
-data.filter(
-x=>x.category===c
-);
-
-i=0;
+}
 
 
-$("lt").textContent=c;
+function applySettings(){
 
-$("listCount").textContent=
-view.length+" أذكار";
+  document.body.classList.toggle(
+    "dark",
+    !!settings.dark
+  );
+
+  if($("darkBtn")){
+
+    $("darkBtn").textContent=
+      settings.dark
+      ?"إيقاف"
+      :"تفعيل";
+
+  }
+
+}
 
 
-S("list");
+function toggleDark(){
 
-activeNav("list");
+  settings.dark=!settings.dark;
 
-renderList();
+  saveSettings();
+
+  applySettings();
+
+}
+
+
+function setFont(size){
+
+  settings.font=size;
+
+  saveSettings();
+
+  if($("rx"))
+    $("rx").style.fontSize=size+"px";
+
+}
+
+
+function changeFont(amount){
+
+  let size=
+    Number(settings.font)||25;
+
+  size+=amount*2;
+
+  size=Math.max(19,Math.min(34,size));
+
+  settings.font=size;
+
+  saveSettings();
+
+  if($("rx"))
+    $("rx").style.fontSize=size+"px";
+
+}
+
+
+/* =========================
+   FAVORITES
+========================= */
+
+function loadFavorites(){
+
+  try{
+
+    favorites=
+      new Set(
+        JSON.parse(
+          localStorage.getItem(
+            FAVORITES_KEY
+          )||"[]"
+        )
+      );
+
+  }catch(e){
+
+    favorites=new Set();
+
+  }
+
+  updateFavoriteCount();
+
+}
+
+
+function saveFavorites(){
+
+  localStorage.setItem(
+    FAVORITES_KEY,
+    JSON.stringify([...favorites])
+  );
+
+  updateFavoriteCount();
+
+}
+
+
+function getKey(x){
+
+  return String(
+    x.id ??
+    x.title ??
+    x.text ??
+    ""
+  );
+
+}
+
+
+function updateFavoriteCount(){
+
+  if($("favoriteCount"))
+    $("favoriteCount").textContent=
+      favorites.size;
+
+}
+
+
+function toggleFavorite(){
+
+  const x=view[i];
+
+  if(!x)
+    return;
+
+  const key=getKey(x);
+
+  if(favorites.has(key))
+    favorites.delete(key);
+  else
+    favorites.add(key);
+
+  saveFavorites();
+
+  updateFavoriteButton();
+
+}
+
+
+function updateFavoriteButton(){
+
+  const x=view[i];
+
+  if(!x)
+    return;
+
+  const key=getKey(x);
+
+  $("favoriteBtn").textContent=
+    favorites.has(key)
+    ?"★"
+    :"☆";
+
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+function loadProgress(){
+
+  try{
+
+    progress=
+      JSON.parse(
+        localStorage.getItem(
+          PROGRESS_KEY
+        )||"{}"
+      );
+
+  }catch(e){
+
+    progress={};
+
+  }
+
+}
+
+
+function saveProgress(){
+
+  localStorage.setItem(
+    PROGRESS_KEY,
+    JSON.stringify(progress)
+  );
+
+}
+
+
+function saveCurrentProgress(){
+
+  const x=view[i];
+
+  if(!x)
+    return;
+
+  progress[getKey(x)]=n;
+
+  saveProgress();
+
+  showContinue();
+
+}
+
+
+function showContinue(){
+
+  const keys=
+    Object.keys(progress);
+
+  if(!keys.length){
+
+    $("continueBox")
+      .classList.remove("show");
+
+    return;
+
+  }
+
+  let key=
+    keys[keys.length-1];
+
+  const x=
+    data.find(
+      z=>getKey(z)===key
+    );
+
+  if(!x || Number(progress[key])<=0){
+
+    $("continueBox")
+      .classList.remove("show");
+
+    return;
+
+  }
+
+  $("continueTitle").textContent=
+    x.title||"ذكر";
+
+  $("continueBox")
+    .classList.add("show");
+
+}
+
+
+function continueReading(){
+
+  const keys=
+    Object.keys(progress);
+
+  if(!keys.length)
+    return;
+
+  const key=
+    keys[keys.length-1];
+
+  const x=
+    data.find(
+      z=>getKey(z)===key
+    );
+
+  if(!x)
+    return;
+
+  view=
+    data.filter(
+      z=>z.category===x.category
+    );
+
+  i=
+    view.findIndex(
+      z=>getKey(z)===key
+    );
+
+  n=
+    Number(progress[key])||0;
+
+  openReader(i);
+
+}
+
+
+function clearProgress(){
+
+  if(!confirm("هل تريد إعادة حذف تقدم القراءة؟"))
+    return;
+
+  progress={};
+
+  saveProgress();
+
+  showContinue();
+
+}
+
+
+/* =========================
+   DATA
+========================= */
+
+async function loadData(){
+
+  try{
+
+    const r=
+      await fetch(
+        REMOTE_URL,
+        {cache:"no-store"}
+      );
+
+    if(!r.ok)
+      throw new Error();
+
+    const x=
+      await r.json();
+
+    data=
+      x.items||x;
+
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify(x)
+    );
+
+    setStatus("تم تحميل الأذكار ✓");
+
+    updateStats();
+
+    renderHome();
+
+    return;
+
+  }catch(e){}
+
+
+  try{
+
+    const saved=
+      localStorage.getItem(
+        CACHE_KEY
+      );
+
+    if(saved){
+
+      const x=
+        JSON.parse(saved);
+
+      data=
+        x.items||x;
+
+      setStatus(
+        "تم تشغيل النسخة المحفوظة ✓"
+      );
+
+      updateStats();
+
+      renderHome();
+
+      return;
+
+    }
+
+  }catch(e){}
+
+
+  setStatus(
+    "تعذر تحميل ملف azkar.json"
+  );
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function setStatus(text){
+
+  $("status").textContent=text;
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+  const cats=
+    [
+      ...new Set(
+        data
+          .map(x=>x.category)
+          .filter(Boolean)
+      )
+    ];
+
+  $("totalAzkar").textContent=
+    data.length;
+
+  $("totalCategories").textContent=
+    cats.length;
+
+  updateFavoriteCount();
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function hideAll(){
+
+  [
+    "home",
+    "list",
+    "reader",
+    "favoritesPage",
+    "settingsPage"
+  ].forEach(id=>{
+    $(id).classList.add("hidden");
+  });
+
+}
+
+
+function navActive(id){
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(x=>
+      x.classList.remove("active")
+    );
+
+  $(id).classList.add("active");
+
+}
+
+
+function goHome(){
+
+  hideAll();
+
+  $("home").classList.remove("hidden");
+
+  navActive("navHome");
+
+  renderHome();
+
+  scrollTop();
+
+}
+
+
+function goSections(){
+
+  hideAll();
+
+  $("home").classList.remove("hidden");
+
+  navActive("navSections");
+
+  $("q").value="";
+
+  renderHome();
+
+  scrollTop();
+
+}
+
+
+function goFavorites(){
+
+  hideAll();
+
+  $("favoritesPage")
+    .classList.remove("hidden");
+
+  navActive("navFavorites");
+
+  renderFavorites();
+
+  scrollTop();
+
+}
+
+
+function goSettings(){
+
+  hideAll();
+
+  $("settingsPage")
+    .classList.remove("hidden");
+
+  navActive("navSettings");
+
+  scrollTop();
+
+}
+
+
+function scrollTop(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function renderHome(){
+
+  const q=
+    $("q").value
+      .trim()
+      .toLowerCase();
+
+  $("clearSearch").style.display=
+    q?"block":"none";
+
+  const cats=
+    [
+      ...new Set(
+        data
+          .map(x=>x.category)
+          .filter(Boolean)
+      )
+    ];
+
+  const box=$("cats");
+
+  const results=$("results");
+
+  const searchResults=$("searchResults");
+
+  box.innerHTML="";
+
+  searchResults.innerHTML="";
+
+  showContinue();
+
+
+  if(q){
+
+    results.classList.remove(
+      "hidden"
+    );
+
+    const found=
+      data.filter(x=>
+        (
+          (x.text||"")+" "+
+          (x.title||"")+" "+
+          (x.category||"")
+        )
+        .toLowerCase()
+        .includes(q)
+      );
+
+
+    if(!found.length){
+
+      searchResults.innerHTML=`
+
+        <div class="empty">
+
+          <div class="empty-icon">🔎</div>
+
+          <strong>
+            لم نجد ما تبحث عنه
+          </strong>
+
+          جرّب كلمة أخرى
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    found.forEach(x=>{
+
+      const b=
+        document.createElement(
+          "button"
+        );
+
+      b.className="result";
+
+      b.innerHTML=`
+
+        <div class="result-title">
+          ${esc(x.title||"ذكر")}
+        </div>
+
+        <div class="result-preview">
+          ${esc(
+            String(x.text||"")
+              .replace(/\s+/g," ")
+              .slice(0,150)
+          )}
+          ${String(x.text||"").length>150?"…":""}
+        </div>
+
+      `;
+
+      b.onclick=()=>{
+
+        view=[x];
+
+        i=0;
+
+        openReader(0);
+
+      };
+
+      searchResults.appendChild(b);
+
+    });
+
+    return;
+
+  }
+
+
+  results.classList.add("hidden");
+
+
+  cats.forEach((c,index)=>{
+
+    const count=
+      data.filter(
+        x=>x.category===c
+      ).length;
+
+    const b=
+      document.createElement(
+        "button"
+      );
+
+    b.className="category";
+
+    b.innerHTML=`
+
+      <div class="cat-icon">
+        ${categoryIcon(c,index)}
+      </div>
+
+      <div class="cat-title">
+        ${esc(c)}
+      </div>
+
+      <div class="cat-count">
+        ${count} أذكار
+      </div>
+
+    `;
+
+    b.onclick=
+      ()=>openCat(c);
+
+    box.appendChild(b);
+
+  });
+
+}
+
+
+/* =========================
+   CATEGORY ICON
+========================= */
+
+function categoryIcon(name,index){
+
+  const n=
+    String(name||"")
+      .toLowerCase();
+
+  if(n.includes("صباح")||n.includes("مساء"))
+    return "☀️";
+
+  if(n.includes("نوم")||n.includes("استيق"))
+    return "🌙";
+
+  if(n.includes("صلاة")||n.includes("صل"))
+    return "🕌";
+
+  if(n.includes("بيت")||n.includes("منزل"))
+    return "🏠";
+
+  if(n.includes("طعام")||n.includes("أكل"))
+    return "🍃";
+
+  if(n.includes("سفر"))
+    return "🧳";
+
+  if(n.includes("قرآن")||n.includes("قران"))
+    return "📖";
+
+  if(n.includes("دعاء"))
+    return "🤲";
+
+  return [
+    "📿",
+    "🌿",
+    "🤲",
+    "✨",
+    "🕊️",
+    "📖"
+  ][index%6];
+
+}
+
+
+/* =========================
+   LIST
+========================= */
+
+function openCat(category){
+
+  view=
+    data.filter(
+      x=>x.category===category
+    );
+
+  i=0;
+
+  $("lt").textContent=
+    category;
+
+  $("listCount").textContent=
+    view.length+" أذكار";
+
+  hideAll();
+
+  $("list").classList.remove(
+    "hidden"
+  );
+
+  renderList();
+
+  scrollTop();
 
 }
 
 
 function renderList(){
 
-const box=$("ls");
+  const box=$("ls");
 
-box.innerHTML="";
+  box.innerHTML="";
 
+  view.forEach((x,j)=>{
 
-if(!view.length){
+    const b=
+      document.createElement(
+        "button"
+      );
 
-box.innerHTML=`
+    b.className="item";
 
-<div class="empty">
+    b.innerHTML=`
 
-<div class="empty-icon">
-🌿
-</div>
+      <div class="number">
+        ${j+1}
+      </div>
 
-<strong>
-لا توجد أذكار
-</strong>
+      <div class="item-info">
 
-</div>
+        <div class="item-title">
+          ${esc(x.title||"ذكر")}
+        </div>
 
-`;
+        <div class="item-count">
+          التكرار: ${esc(x.count??1)}
+        </div>
 
-return;
+      </div>
 
-}
+      <div class="arrow">
+        ‹
+      </div>
 
+    `;
 
-view.forEach(
-(x,j)=>{
+    b.onclick=
+      ()=>openReader(j);
 
-const b=
-document.createElement(
-"button"
-);
+    box.appendChild(b);
 
-b.className=
-"dhikr-item";
-
-
-b.innerHTML=`
-
-<div class="number">
-${j+1}
-</div>
-
-<div class="dhikr-info">
-
-<div class="dhikr-title">
-${esc(x.title||"ذكر")}
-</div>
-
-<div class="dhikr-count">
-التكرار: ${esc(x.count??1)}
-</div>
-
-</div>
-
-<div class="arrow">
-‹
-</div>
-
-`;
-
-
-b.onclick=
-()=>openReader(j);
-
-
-box.appendChild(b);
-
-});
+  });
 
 }
 
 
-/* READER */
+/* =========================
+   READER
+========================= */
 
-function openReader(j){
+function openReader(index){
 
-i=j;
+  i=index;
 
-n=0;
+  const x=view[i];
 
+  if(!x)
+    return;
 
-const x=view[i];
+  if(
+    progress[getKey(x)]!==undefined &&
+    progress[getKey(x)]>0 &&
+    progress[getKey(x)]<
+      Number(x.count||1)
+  ){
 
-if(!x)
-return;
+    n=
+      Number(progress[getKey(x)]);
 
+  }else{
 
-$("rt").textContent=
-x.title||"ذكر";
+    n=0;
 
+  }
 
-$("rx").textContent=
-x.text||"";
+  $("rt").textContent=
+    x.title||"ذكر";
 
+  $("rx").textContent=
+    x.text||"";
 
-$("rs").textContent=
-[
-x.source,
-x.grade||x.status
-]
-.filter(Boolean)
-.join(" — ");
+  $("rx").style.fontSize=
+    (settings.font||25)+"px";
 
+  $("rs").textContent=
+    [
+      x.source,
+      x.grade||x.status
+    ]
+    .filter(Boolean)
+    .join(" — ");
 
-updateReader();
+  hideAll();
 
-S("reader");
+  $("reader").classList.remove(
+    "hidden"
+  );
+
+  updateReader();
+
+  scrollTop();
 
 }
 
-
-/* UPDATE READER */
 
 function updateReader(){
 
-const x=view[i];
+  const x=view[i];
 
-if(!x)
-return;
+  if(!x)
+    return;
 
+  const count=
+    Math.max(
+      1,
+      Number(x.count)||1
+    );
 
-let count=
-Number(x.count);
+  $("rc").textContent=
+    n+" / "+count;
 
+  const percent=
+    Math.min(
+      100,
+      Math.round(
+        (n/count)*100
+      )
+    );
 
-if(
-!Number.isFinite(count) ||
-count<1
-)
-count=1;
+  $("progressBar")
+    .style.width=
+    percent+"%";
 
+  $("progressPercent")
+    .textContent=
+    percent+"%";
 
-$("rc").textContent=
-n+" / "+count;
+  $("progressText")
+    .textContent=
+    "التكرار "+n+" من "+count;
 
+  $("prevBtn").disabled=
+    i===0;
 
-const percent=
-Math.min(
-100,
-Math.round(
-(n/count)*100
-)
-);
-
-
-$("progressBar")
-.style.width=
-percent+"%";
-
-
-$("progressPercent")
-.textContent=
-percent+"%";
-
-
-$("progressText")
-.textContent=
-"التكرار "+
-n+
-" من "+
-count;
-
-
-$("prevBtn").disabled=
-i===0;
-
-
-$("favoriteBtn").textContent=
-favorites.has(key(x))
-?"★"
-:"☆";
+  updateFavoriteButton();
 
 }
 
 
-/* TAP */
+/* =========================
+   TAP
+========================= */
 
 function tap(){
 
-const x=view[i];
+  const x=view[i];
 
-if(!x)
-return;
+  if(!x)
+    return;
 
+  const count=
+    Math.max(
+      1,
+      Number(x.count)||1
+    );
 
-let count=
-Number(x.count);
+  n++;
 
+  saveCurrentProgress();
 
-if(
-!Number.isFinite(count) ||
-count<1
-)
-count=1;
+  if(n>=count){
 
+    n=count;
 
-n=Math.min(
-n+1,
-count
-);
+    updateReader();
 
+    setTimeout(()=>{
 
-progress[key(x)]=n;
+      if(i<view.length-1){
 
-saveProg();
+        i++;
 
-updateReader();
+        n=0;
 
+        openReader(i);
 
-if(n>=count){
+      }else{
 
-setTimeout(()=>{
+        showComplete();
 
-if(i<view.length-1){
+      }
 
-i++;
+    },180);
 
-n=0;
+    return;
 
-openReader(i);
+  }
 
-}else{
-
-toast(
-"أحسنت 🌿 أتممت القسم"
-);
-
-}
-
-},220);
-
-}
+  updateReader();
 
 }
 
 
-/* PREV */
+/* =========================
+   PREV
+========================= */
 
 function prev(){
 
-if(i>0){
+  if(i>0){
 
-i--;
+    i--;
 
-n=0;
+    n=0;
 
-openReader(i);
+    openReader(i);
+
+  }
 
 }
 
-}
 
-
-/* SKIP */
+/* =========================
+   SKIP
+========================= */
 
 function skip(){
 
-if(i<view.length-1){
+  if(i<view.length-1){
 
-i++;
+    i++;
 
-n=0;
+    n=0;
 
-openReader(i);
+    openReader(i);
 
-}else{
+  }else{
 
-toast(
-"أتممت هذا القسم 🌿"
-);
+    showComplete();
 
-}
+  }
 
 }
 
 
-/* RESET */
+/* =========================
+   COMPLETE
+========================= */
 
-function resetCount(){
+function showComplete(){
 
-n=0;
+  alert(
+    "أحسنت 🌿\n\nلقد أتممت جميع أذكار هذا القسم."
+  );
 
-progress[key(view[i])]=0;
+  back();
 
-saveProg();
+}
 
-updateReader();
+
+function back(){
+
+  hideAll();
+
+  $("list").classList.remove(
+    "hidden"
+  );
+
+  renderList();
+
+  scrollTop();
 
 }
 
 
-/* FAVORITES */
-
-function toggleFavorite(){
-
-const k=key(view[i]);
-
-
-if(favorites.has(k))
-favorites.delete(k);
-else
-favorites.add(k);
-
-
-saveFav();
-
-updateReader();
-
-
-toast(
-favorites.has(k)
-?"أضيف إلى المفضلة ⭐"
-:"أزيل من المفضلة"
-);
-
-}
-
+/* =========================
+   FAVORITES PAGE
+========================= */
 
 function renderFavorites(){
 
-const box=$("favList");
+  const box=
+    $("favoriteList");
+
+  box.innerHTML="";
+
+  const list=
+    data.filter(
+      x=>favorites.has(
+        getKey(x)
+      )
+    );
 
 
-const arr=
-data.filter(
-x=>favorites.has(key(x))
-);
+  if(!list.length){
+
+    box.innerHTML=`
+
+      <div class="favorite-empty">
+
+        <div>🤍</div>
+
+        لا توجد أذكار في المفضلة بعد.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
 
 
-$("favTitleCount").textContent=
-arr.length+" أذكار";
+  list.forEach(x=>{
 
+    const b=
+      document.createElement(
+        "button"
+      );
 
-box.innerHTML="";
+    b.className="item";
 
+    b.innerHTML=`
 
-if(!arr.length){
+      <div class="number">
+        ❤️
+      </div>
 
-box.innerHTML=`
+      <div class="item-info">
 
-<div class="empty">
+        <div class="item-title">
+          ${esc(x.title||"ذكر")}
+        </div>
 
-<div class="empty-icon">
-⭐
-</div>
+        <div class="item-count">
+          ${esc(x.category||"")}
+        </div>
 
-<strong>
-لا توجد أذكار مفضلة
-</strong>
+      </div>
 
-اضغط ☆ داخل أي ذكر لإضافته هنا.
+      <div class="arrow">
+        ‹
+      </div>
 
-</div>
+    `;
 
-`;
+    b.onclick=()=>{
 
-return;
+      view=[x];
 
-}
+      i=0;
 
+      openReader(0);
 
-arr.forEach(x=>{
+    };
 
-const b=
-document.createElement(
-"button"
-);
+    box.appendChild(b);
 
-b.className="result";
-
-
-b.innerHTML=`
-
-<div class="result-title">
-★ ${esc(x.title||"ذكر")}
-</div>
-
-<div class="result-preview">
-${esc(
-String(x.text||"")
-.replace(/\s+/g," ")
-.slice(0,130)
-)}
-…
-
-</div>
-
-`;
-
-
-b.onclick=()=>{
-
-view=[x];
-
-i=0;
-
-openReader(0);
-
-};
-
-
-box.appendChild(b);
-
-});
+  });
 
 }
 
 
-/* SEARCH */
+/* =========================
+   CLEAR FAVORITES
+========================= */
+
+function clearFavorites(){
+
+  if(!favorites.size)
+    return;
+
+  if(
+    !confirm(
+      "هل تريد حذف جميع الأذكار من المفضلة؟"
+    )
+  )
+    return;
+
+  favorites.clear();
+
+  saveFavorites();
+
+  renderFavorites();
+
+  updateFavoriteButton();
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
 
 function clearSearch(){
 
-$("q").value="";
+  $("q").value="";
 
-renderHome();
+  $("q").focus();
 
-$("q").focus();
-
-}
-
-
-/* SETTINGS */
-
-function setFont(v){
-
-$("rx").style.fontSize=
-v+"px";
-
-localStorage.setItem(
-"azkar_font",
-v
-);
+  renderHome();
 
 }
 
 
-function toggleTheme(){
+/* =========================
+   COPY
+========================= */
 
-document.body.classList.toggle(
-"dark"
-);
+async function copyDhikr(){
 
+  const x=view[i];
 
-const dark=
-document.body.classList.contains(
-"dark"
-);
+  if(!x)
+    return;
 
+  const text=
+    [
+      x.title,
+      x.text,
+      x.source
+    ]
+    .filter(Boolean)
+    .join("\n\n");
 
-localStorage.setItem(
-"azkar_theme",
-dark
-?"dark"
-:"light"
-);
+  try{
 
+    await navigator.clipboard.writeText(
+      text
+    );
 
-$("themeBtn").textContent=
-dark
-?"إيقاف"
-:"تشغيل";
+    alert("تم نسخ الذكر ✓");
 
-}
+  }catch(e){
 
+    alert("تعذر النسخ على هذا الجهاز.");
 
-function resetProgress(){
-
-progress={};
-
-saveProg();
-
-toast(
-"تم مسح التقدم"
-);
+  }
 
 }
 
 
-/* TOAST */
+/* =========================
+   SHARE
+========================= */
 
-function toast(t){
+async function shareDhikr(){
 
-const x=$("toast");
+  const x=view[i];
 
-x.textContent=t;
+  if(!x)
+    return;
 
-x.classList.add("show");
-
-clearTimeout(
-window._toast
-);
-
-window._toast=
-setTimeout(
-()=>x.classList.remove("show"),
-1800
-);
-
-}
+  const text=
+    [
+      x.title,
+      x.text,
+      x.source
+    ]
+    .filter(Boolean)
+    .join("\n\n");
 
 
-/* START */
+  if(
+    navigator.share
+  ){
 
-loadFav();
+    try{
 
-loadProg();
+      await navigator.share({
+        title:x.title||"أذكار المسلم",
+        text:text
+      });
 
+    }catch(e){}
 
-const theme=
-localStorage.getItem(
-"azkar_theme"
-);
+    return;
 
+  }
 
-if(theme==="dark"){
-
-document.body.classList.add(
-"dark"
-);
-
-$("themeBtn").textContent=
-"إيقاف";
+  await copyDhikr();
 
 }
 
 
-const font=
-localStorage.getItem(
-"azkar_font"
-);
+/* =========================
+   START
+========================= */
 
+loadSettings();
 
-if(font){
+loadFavorites();
 
-$("fontRange").value=font;
-
-$("rx").style.fontSize=
-font+"px";
-
-}
-
+loadProgress();
 
 loadData();
 
 
-/* SERVICE WORKER */
+/* =========================
+   SERVICE WORKER
+========================= */
 
 if(
-"serviceWorker"
-in navigator
+  "serviceWorker" in navigator
 ){
 
-window.addEventListener(
-"load",
-()=>{
+  window.addEventListener(
+    "load",
+    ()=>{
 
-navigator.serviceWorker
-.register(
-"./service-worker.js"
-)
-.catch(()=>{});
+      navigator.serviceWorker
+        .register(
+          "./service-worker.js"
+        )
+        .catch(()=>{});
 
-});
+    }
+  );
 
 }
 
 </script>
 
 </body>
-</html>
+  </html>
