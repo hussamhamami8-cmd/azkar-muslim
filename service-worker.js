@@ -3,7 +3,7 @@ const CACHE_NAME = "azkar-muslim-v1";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
-  "./Azkar.json",
+  "./azkar.json",
   "./manifest.json"
 ];
 
