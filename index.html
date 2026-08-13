@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b7a70">
+<meta name="theme-color" content="#087f73">
 <link rel="manifest" href="./manifest.json">
 <title>أذكار المسلم</title>
 
 <style>
 :root{
-  --primary:#0b7a70;
-  --primary2:#075e57;
-  --soft:#dff4f0;
+  --primary:#087f73;
+  --primary-dark:#05665d;
+  --light:#e5f5f2;
   --bg:#f4f8f7;
   --card:#fff;
   --text:#17312e;
-  --muted:#70817e;
+  --muted:#748480;
   --border:#e1ebe8;
-  --shadow:0 8px 28px rgba(15,65,59,.08);
-  --danger:#c94b4b;
+  --shadow:0 7px 24px rgba(20,70,64,.08);
+  --radius:22px;
 }
 
 *{
@@ -26,18 +26,12 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 body{
   margin:0;
-  background:
-    radial-gradient(circle at 100% 0%,rgba(11,122,112,.08),transparent 28%),
-    var(--bg);
+  background:var(--bg);
   color:var(--text);
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;
-  min-height:100vh;
+  font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  padding-bottom:78px;
 }
 
 button,input{
@@ -48,51 +42,23 @@ button{
   cursor:pointer;
 }
 
-.app{
-  max-width:850px;
-  margin:auto;
-  padding-bottom:95px;
+.hidden{
+  display:none!important;
 }
 
-/* HEADER */
+.app{
+  max-width:900px;
+  margin:auto;
+}
+
+/* ===== HEADER ===== */
 
 header{
-  position:relative;
-  overflow:hidden;
-  color:white;
-  padding:
-    calc(25px + env(safe-area-inset-top))
-    20px 28px;
-  background:linear-gradient(145deg,var(--primary),var(--primary2));
-  border-radius:0 0 32px 32px;
-  box-shadow:0 10px 30px rgba(7,94,87,.18);
-}
-
-header:before,
-header:after{
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  background:rgba(255,255,255,.06);
-}
-
-header:before{
-  width:190px;
-  height:190px;
-  left:-70px;
-  top:-80px;
-}
-
-header:after{
-  width:140px;
-  height:140px;
-  right:-50px;
-  bottom:-70px;
-}
-
-.header-content{
-  position:relative;
-  z-index:2;
+  background:linear-gradient(145deg,#0b887b,#05665d);
+  color:#fff;
+  padding:28px 18px 30px;
+  border-radius:0 0 30px 30px;
+  box-shadow:0 10px 30px rgba(5,102,93,.18);
 }
 
 .brand{
@@ -105,18 +71,16 @@ header:after{
   width:55px;
   height:55px;
   border-radius:18px;
+  background:rgba(255,255,255,.15);
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:28px;
-  background:rgba(255,255,255,.14);
-  backdrop-filter:blur(8px);
 }
 
 .brand h1{
   margin:0;
   font-size:25px;
-  font-weight:850;
 }
 
 .brand p{
@@ -125,87 +89,57 @@ header:after{
   font-size:13px;
 }
 
-/* MAIN */
-
 main{
   padding:18px 15px;
 }
 
-/* SEARCH */
+/* ===== HOME ===== */
 
-.search{
-  position:relative;
+.hero{
+  background:linear-gradient(135deg,#fff,#edf8f5);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:21px;
+  box-shadow:var(--shadow);
   margin-bottom:18px;
 }
 
-.search input{
-  width:100%;
-  border:1px solid var(--border);
-  outline:none;
-  background:var(--card);
-  color:var(--text);
-  border-radius:19px;
-  padding:17px 48px 17px 45px;
-  box-shadow:var(--shadow);
-}
-
-.search-icon{
-  position:absolute;
-  right:17px;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:19px;
-  color:var(--muted);
-}
-
-.clear{
-  position:absolute;
-  left:9px;
-  top:50%;
-  transform:translateY(-50%);
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  display:none;
-}
-
-/* WELCOME */
-
-.welcome{
-  position:relative;
-  overflow:hidden;
-  padding:21px;
-  border-radius:25px;
-  background:linear-gradient(135deg,#fff,#edf8f6);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-  margin-bottom:22px;
-}
-
-.welcome h2{
+.hero h2{
   margin:0 0 7px;
-  font-size:20px;
+  font-size:21px;
 }
 
-.welcome p{
+.hero p{
   margin:0;
   color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
+  line-height:1.7;
+  font-size:14px;
+}
+
+.start-btn{
+  width:100%;
+  margin-top:17px;
+  border:0;
+  padding:15px;
+  border-radius:17px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:750;
+  box-shadow:0 8px 18px rgba(8,127,115,.2);
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:17px;
+  gap:9px;
+  margin-top:16px;
 }
 
 .stat{
-  background:rgba(255,255,255,.8);
+  background:#fff;
   border:1px solid var(--border);
-  border-radius:15px;
-  padding:10px;
+  border-radius:16px;
+  padding:11px;
   text-align:center;
 }
 
@@ -217,78 +151,82 @@ main{
 
 .stat span{
   color:var(--muted);
-  font-size:10px;
+  font-size:11px;
 }
 
-/* CONTINUE */
+/* ===== SEARCH ===== */
 
-.continue{
-  display:none;
-  margin-bottom:22px;
-  padding:17px;
-  border-radius:21px;
-  background:var(--primary);
-  color:white;
+.search{
+  position:relative;
+  margin-bottom:20px;
+}
+
+.search input{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:18px;
+  padding:16px 46px 16px 42px;
+  outline:none;
   box-shadow:var(--shadow);
 }
 
-.continue.show{
-  display:block;
+.search-icon{
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
 }
 
-.continue small{
-  opacity:.8;
-}
-
-.continue-title{
-  font-weight:800;
-  margin:6px 0 12px;
-}
-
-.continue button{
+.clear{
+  display:none;
+  position:absolute;
+  left:8px;
+  top:50%;
+  transform:translateY(-50%);
+  width:35px;
+  height:35px;
   border:0;
-  border-radius:13px;
-  padding:11px 15px;
-  background:white;
-  color:var(--primary);
-  font-weight:700;
+  background:none;
+  color:var(--muted);
 }
 
-/* SECTION */
+/* ===== TITLES ===== */
 
-.section-title{
+.section-head{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin:22px 3px 12px;
 }
 
-.section-title h2{
+.section-head h2{
   margin:0;
-  font-size:18px;
+  font-size:19px;
 }
 
-.section-title span{
+.section-head span{
   color:var(--muted);
-  font-size:11px;
+  font-size:12px;
 }
 
-/* CATEGORIES */
+/* ===== CATEGORIES ===== */
 
-.grid{
+.categories{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:11px;
 }
 
 .category{
-  min-height:112px;
-  padding:16px 14px;
-  text-align:right;
-  background:var(--card);
-  color:var(--text);
   border:1px solid var(--border);
-  border-radius:20px;
+  background:var(--card);
+  border-radius:21px;
+  padding:17px 15px;
+  min-height:125px;
+  text-align:right;
+  color:var(--text);
   box-shadow:var(--shadow);
   transition:.15s;
 }
@@ -297,30 +235,354 @@ main{
   transform:scale(.97);
 }
 
-.cat-icon{
-  width:44px;
-  height:44px;
+.category-icon{
+  width:45px;
+  height:45px;
+  border-radius:15px;
+  background:var(--light);
   display:flex;
   align-items:center;
   justify-content:center;
-  background:var(--soft);
-  border-radius:14px;
-  font-size:21px;
-  margin-bottom:10px;
+  font-size:22px;
+  margin-bottom:11px;
 }
 
-.cat-title{
+.category-title{
   font-weight:800;
   font-size:15px;
 }
 
-.cat-count{
+.category-count{
   color:var(--muted);
   font-size:11px;
-  margin-top:4px;
+  margin-top:5px;
 }
 
-/* SEARCH RESULTS */
+/* ===== CONTINUE CARD ===== */
+
+.continue{
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:21px;
+  padding:17px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+
+.continue-title{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:5px;
+}
+
+.continue-name{
+  font-weight:800;
+  font-size:16px;
+}
+
+.continue-btn{
+  margin-top:12px;
+  border:0;
+  background:var(--light);
+  color:var(--primary);
+  border-radius:14px;
+  padding:10px 14px;
+  font-weight:700;
+}
+
+/* ===== PAGES ===== */
+
+.page-head{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:18px;
+}
+
+.back{
+  width:44px;
+  height:44px;
+  border:0;
+  background:var(--card);
+  color:var(--text);
+  border-radius:15px;
+  box-shadow:var(--shadow);
+  font-size:21px;
+}
+
+.page-title{
+  flex:1;
+}
+
+.page-title h2{
+  margin:0;
+  font-size:21px;
+}
+
+.page-title small{
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* ===== SECTION PAGE ===== */
+
+.section-summary{
+  background:linear-gradient(135deg,#087f73,#05665d);
+  color:#fff;
+  border-radius:23px;
+  padding:19px;
+  margin-bottom:17px;
+}
+
+.section-summary h2{
+  margin:0 0 5px;
+}
+
+.section-summary p{
+  margin:0;
+  opacity:.85;
+  font-size:13px;
+}
+
+.section-progress{
+  margin-top:15px;
+}
+
+.progress-track{
+  height:8px;
+  background:rgba(255,255,255,.2);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:0;
+  background:#a7f3d0;
+  border-radius:20px;
+  transition:.3s;
+}
+
+.section-progress-info{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  margin-bottom:6px;
+}
+
+/* ===== DHIKR LIST ===== */
+
+.dhikr{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:19px;
+  padding:15px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-align:right;
+  box-shadow:var(--shadow);
+}
+
+.dhikr.done{
+  border-color:#b7ded7;
+  background:#f2faf8;
+}
+
+.number{
+  width:41px;
+  height:41px;
+  flex:none;
+  border-radius:14px;
+  background:var(--light);
+  color:var(--primary);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+
+.dhikr.done .number{
+  background:var(--primary);
+  color:#fff;
+}
+
+.dhikr-info{
+  flex:1;
+}
+
+.dhikr-title{
+  font-weight:750;
+  font-size:15px;
+}
+
+.dhikr-count{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.arrow{
+  color:var(--muted);
+  font-size:20px;
+}
+
+/* ===== FAVORITES ===== */
+
+.favorite-card{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:19px;
+  padding:16px;
+  margin-bottom:10px;
+  text-align:right;
+  box-shadow:var(--shadow);
+}
+
+.favorite-title{
+  font-weight:800;
+}
+
+.favorite-preview{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+  margin-top:6px;
+}
+
+/* ===== READER ===== */
+
+.reader-actions-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:13px;
+}
+
+.favorite-btn{
+  width:44px;
+  height:44px;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:15px;
+  box-shadow:var(--shadow);
+  font-size:21px;
+}
+
+.reader{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:27px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.reader-head{
+  padding:20px 20px 10px;
+}
+
+.reader-title{
+  font-size:20px;
+  font-weight:850;
+  line-height:1.6;
+}
+
+.reader-source{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+  margin-top:7px;
+}
+
+.reader-text{
+  padding:12px 23px 28px;
+  font-size:25px;
+  line-height:2.25;
+  white-space:pre-wrap;
+}
+
+.counter{
+  margin:0 20px 16px;
+  background:var(--light);
+  border-radius:21px;
+  text-align:center;
+  padding:15px;
+}
+
+.counter strong{
+  display:block;
+  color:var(--primary);
+  font-size:29px;
+}
+
+.counter span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.reader-progress{
+  padding:0 20px 15px;
+}
+
+.reader-progress-info{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:6px;
+}
+
+.reader-progress-track{
+  height:8px;
+  background:#e7efed;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.reader-progress-fill{
+  height:100%;
+  width:0;
+  background:var(--primary);
+  transition:.25s;
+}
+
+.tap{
+  width:calc(100% - 30px);
+  margin:0 15px 11px;
+  border:0;
+  background:linear-gradient(135deg,#087f73,#05665d);
+  color:#fff;
+  padding:17px;
+  border-radius:18px;
+  font-size:17px;
+  font-weight:800;
+}
+
+.reader-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  padding:0 15px 18px;
+}
+
+.reader-buttons button{
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  border-radius:15px;
+  padding:13px;
+}
+
+.reader-buttons button:disabled{
+  opacity:.4;
+}
+
+/* ===== SEARCH RESULTS ===== */
 
 .result{
   width:100%;
@@ -338,331 +600,14 @@ main{
   font-weight:800;
 }
 
-.result-preview{
+.result-text{
   color:var(--muted);
   font-size:12px;
-  line-height:1.7;
+  line-height:1.6;
   margin-top:6px;
 }
 
-/* TOP BAR */
-
-.topbar{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:18px;
-}
-
-.back{
-  width:44px;
-  height:44px;
-  border:0;
-  border-radius:15px;
-  background:var(--card);
-  color:var(--text);
-  box-shadow:var(--shadow);
-  font-size:20px;
-}
-
-.top-title{
-  flex:1;
-}
-
-.top-title h2{
-  margin:0;
-  font-size:20px;
-}
-
-.top-title small{
-  color:var(--muted);
-}
-
-/* LIST */
-
-.item{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:16px;
-  margin-bottom:10px;
-  background:var(--card);
-  color:var(--text);
-  border:1px solid var(--border);
-  border-radius:19px;
-  box-shadow:var(--shadow);
-  text-align:right;
-}
-
-.number{
-  width:40px;
-  height:40px;
-  flex:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:13px;
-  background:var(--soft);
-  color:var(--primary);
-  font-weight:800;
-}
-
-.item-info{
-  flex:1;
-}
-
-.item-title{
-  font-weight:800;
-  font-size:15px;
-}
-
-.item-count{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:5px;
-}
-
-.arrow{
-  color:var(--muted);
-  font-size:18px;
-}
-
-/* READER */
-
-.reader-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:14px;
-}
-
-.favorite{
-  width:44px;
-  height:44px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:#d19b22;
-  border-radius:15px;
-  box-shadow:var(--shadow);
-  font-size:22px;
-}
-
-.reader-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:27px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-}
-
-.reader-top{
-  padding:20px 20px 10px;
-}
-
-.reader-title{
-  font-size:19px;
-  font-weight:850;
-  line-height:1.6;
-}
-
-.source{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.7;
-  margin-top:7px;
-}
-
-.reader-text{
-  padding:14px 22px 25px;
-  font-size:25px;
-  line-height:2.25;
-  white-space:pre-wrap;
-}
-
-.progress-area{
-  padding:0 20px 15px;
-}
-
-.progress-info{
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-  font-size:11px;
-  margin-bottom:7px;
-}
-
-.progress{
-  height:8px;
-  background:#e7efed;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,var(--primary),#18a596);
-  transition:.25s;
-}
-
-.counter{
-  margin:5px 20px 18px;
-  padding:15px;
-  border-radius:20px;
-  background:var(--soft);
-  text-align:center;
-}
-
-.counter-number{
-  font-size:28px;
-  font-weight:900;
-  color:var(--primary);
-}
-
-.counter-label{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.tap{
-  width:calc(100% - 30px);
-  margin:0 15px 12px;
-  border:0;
-  border-radius:19px;
-  padding:18px;
-  color:white;
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
-  font-weight:800;
-  font-size:17px;
-  box-shadow:0 9px 20px rgba(11,122,112,.2);
-}
-
-.reader-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:8px;
-  padding:0 15px 18px;
-}
-
-.reader-actions button{
-  border:1px solid var(--border);
-  background:var(--bg);
-  color:var(--text);
-  border-radius:15px;
-  padding:12px 5px;
-}
-
-.reader-actions button:disabled{
-  opacity:.4;
-}
-
-/* FAVORITES */
-
-.favorite-empty{
-  text-align:center;
-  padding:55px 20px;
-  color:var(--muted);
-}
-
-.favorite-empty div{
-  font-size:48px;
-  margin-bottom:10px;
-}
-
-/* SETTINGS */
-
-.setting{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:19px;
-  padding:16px;
-  margin-bottom:10px;
-  box-shadow:var(--shadow);
-}
-
-.setting-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.setting-title{
-  font-weight:800;
-}
-
-.setting-desc{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:4px;
-}
-
-.setting button{
-  border:0;
-  background:var(--soft);
-  color:var(--primary);
-  border-radius:13px;
-  padding:9px 13px;
-  font-weight:700;
-}
-
-.font-buttons{
-  display:flex;
-  gap:7px;
-}
-
-.font-buttons button{
-  min-width:42px;
-}
-
-.danger{
-  color:var(--danger)!important;
-  background:#fff0f0!important;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-  position:fixed;
-  z-index:50;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:min(850px,100%);
-  padding:
-    8px
-    10px
-    calc(8px + env(safe-area-inset-bottom));
-  background:rgba(255,255,255,.92);
-  backdrop-filter:blur(15px);
-  border-top:1px solid var(--border);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-}
-
-.nav-btn{
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  padding:7px 2px;
-  border-radius:14px;
-  font-size:11px;
-}
-
-.nav-btn span{
-  display:block;
-  font-size:20px;
-  margin-bottom:2px;
-}
-
-.nav-btn.active{
-  color:var(--primary);
-  background:var(--soft);
-  font-weight:800;
-}
-
-/* EMPTY */
+/* ===== EMPTY ===== */
 
 .empty{
   text-align:center;
@@ -671,8 +616,8 @@ main{
 }
 
 .empty-icon{
-  font-size:45px;
-  margin-bottom:10px;
+  font-size:42px;
+  margin-bottom:9px;
 }
 
 .empty strong{
@@ -681,69 +626,112 @@ main{
   margin-bottom:5px;
 }
 
-/* STATUS */
+/* ===== BOTTOM NAV ===== */
+
+.bottom-nav{
+  position:fixed;
+  z-index:50;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(255,255,255,.96);
+  border-top:1px solid var(--border);
+  box-shadow:0 -5px 20px rgba(0,0,0,.06);
+  display:flex;
+  justify-content:center;
+  padding:
+    7px
+    max(7px,env(safe-area-inset-left))
+    calc(7px + env(safe-area-inset-bottom))
+    max(7px,env(safe-area-inset-right));
+}
+
+.nav-btn{
+  flex:1;
+  max-width:170px;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:6px 3px;
+  border-radius:14px;
+  font-size:11px;
+}
+
+.nav-btn div{
+  font-size:20px;
+  margin-bottom:2px;
+}
+
+.nav-btn.active{
+  color:var(--primary);
+  background:var(--light);
+  font-weight:750;
+}
+
+/* ===== STATUS ===== */
 
 #status{
   text-align:center;
   color:var(--muted);
   font-size:11px;
-  padding:4px 0 8px;
+  padding:3px 0 9px;
 }
 
-/* HIDDEN */
+/* ===== DARK ===== */
 
-.hidden{
-  display:none!important;
+@media(prefers-color-scheme:dark){
+
+  :root{
+    --bg:#0e1d1b;
+    --card:#172825;
+    --text:#e8f1ef;
+    --muted:#91a5a1;
+    --border:#293c38;
+    --light:#183f3a;
+    --shadow:0 8px 25px rgba(0,0,0,.2);
+  }
+
+  .hero{
+    background:#172825;
+  }
+
+  .stat{
+    background:#172825;
+  }
+
+  .bottom-nav{
+    background:rgba(23,40,37,.97);
+  }
+
+  .dhikr.done{
+    background:#18312e;
+  }
+
+  .reader-progress-track{
+    background:#293c38;
+  }
 }
 
-/* DARK */
-
-body.dark{
-  --bg:#0e1b19;
-  --card:#172724;
-  --text:#e7f1ef;
-  --muted:#91a5a1;
-  --border:#293c38;
-  --soft:#173d38;
-  --shadow:0 8px 28px rgba(0,0,0,.2);
-}
-
-body.dark .welcome{
-  background:linear-gradient(135deg,#172724,#14312d);
-}
-
-body.dark .stat{
-  background:#172724;
-}
-
-body.dark .bottom-nav{
-  background:rgba(17,35,32,.94);
-}
-
-body.dark .progress{
-  background:#293c38;
-}
-
-/* DESKTOP */
+/* ===== DESKTOP ===== */
 
 @media(min-width:650px){
 
   main{
-    padding:24px 20px;
+    padding:25px 22px;
   }
 
-  .grid{
+  .categories{
     grid-template-columns:repeat(3,1fr);
   }
 
   .reader-text{
     font-size:28px;
-    padding:20px 40px 30px;
+    padding:20px 45px 32px;
   }
 
 }
 
-/* SMALL */
+/* ===== SMALL ===== */
 
 @media(max-width:360px){
 
@@ -751,12 +739,16 @@ body.dark .progress{
     font-size:22px;
   }
 
-  .reader-text{
-    font-size:21px;
+  .categories{
+    gap:8px;
   }
 
   .category{
     padding:13px 11px;
+  }
+
+  .reader-text{
+    font-size:21px;
   }
 
 }
@@ -768,13 +760,11 @@ body.dark .progress{
 <div class="app">
 
 <header>
-  <div class="header-content">
-    <div class="brand">
-      <div class="brand-icon">📿</div>
-      <div>
-        <h1>أذكار المسلم</h1>
-        <p>رفيقك اليومي للذكر والدعاء</p>
-      </div>
+  <div class="brand">
+    <div class="brand-icon">📿</div>
+    <div>
+      <h1>أذكار المسلم</h1>
+      <p>رفيقك اليومي للذكر والدعاء</p>
     </div>
   </div>
 </header>
@@ -783,36 +773,22 @@ body.dark .progress{
 
 <div id="status">جارٍ تحميل الأذكار...</div>
 
-<!-- HOME -->
+<!-- ================= الرئيسية ================= -->
 
 <section id="home">
 
-  <div class="search">
-    <span class="search-icon">🔍</span>
-
-    <input
-      id="q"
-      type="search"
-      placeholder="ابحث عن ذكر أو دعاء..."
-      autocomplete="off"
-      oninput="renderHome()"
-    >
-
-    <button id="clearSearch"
-      class="clear"
-      onclick="clearSearch()">✕</button>
-  </div>
-
-  <div class="welcome">
-
+  <div class="hero">
     <h2>السلام عليكم ورحمة الله 🌿</h2>
 
     <p>
-      اجعل لسانك عامرًا بذكر الله، واختر ما تريد من الأذكار.
+      اجعل لسانك عامرًا بذكر الله، وابدأ وردك اليومي من هنا.
     </p>
 
-    <div class="stats">
+    <button class="start-btn" onclick="startDhikr()">
+      📿 ابدأ الذكر
+    </button>
 
+    <div class="stats">
       <div class="stat">
         <strong id="totalAzkar">0</strong>
         <span>ذكر</span>
@@ -827,33 +803,45 @@ body.dark .progress{
         <strong id="favoriteCount">0</strong>
         <span>مفضلة</span>
       </div>
+    </div>
+  </div>
 
+  <div id="continueBox" class="continue hidden">
+    <div class="continue-title">تابع من حيث توقفت</div>
+    <div id="continueName" class="continue-name"></div>
+    <button class="continue-btn" onclick="continueReading()">
+      متابعة الذكر ←
+    </button>
+  </div>
+
+  <div class="search">
+    <span class="search-icon">🔍</span>
+
+    <input
+      id="q"
+      type="search"
+      placeholder="ابحث عن ذكر أو دعاء..."
+      autocomplete="off"
+      oninput="renderSearch()"
+    >
+
+    <button id="clearBtn" class="clear" onclick="clearSearch()">✕</button>
+  </div>
+
+  <div id="homeCategories">
+
+    <div class="section-head">
+      <h2>الأقسام</h2>
+      <span>اختر قسمًا</span>
     </div>
 
-  </div>
-
-  <div id="continueBox" class="continue">
-
-    <small>📖 أكمل من حيث توقفت</small>
-
-    <div id="continueTitle" class="continue-title"></div>
-
-    <button onclick="continueReading()">
-      متابعة القراءة
-    </button>
+    <div id="cats" class="categories"></div>
 
   </div>
 
-  <div class="section-title">
-    <h2>الأقسام</h2>
-    <span>اختر قسمًا</span>
-  </div>
+  <div id="searchBox" class="hidden">
 
-  <div id="cats" class="grid"></div>
-
-  <div id="results" class="hidden">
-
-    <div class="section-title">
+    <div class="section-head">
       <h2>نتائج البحث</h2>
     </div>
 
@@ -864,17 +852,78 @@ body.dark .progress{
 </section>
 
 
-<!-- LIST -->
+<!-- ================= الأقسام ================= -->
+
+<section id="sections" class="hidden">
+
+  <div class="page-head">
+
+    <button class="back" onclick="showPage('home')">→</button>
+
+    <div class="page-title">
+      <h2>الأقسام</h2>
+      <small>اختر القسم الذي تريد قراءته</small>
+    </div>
+
+  </div>
+
+  <div id="allCategories" class="categories"></div>
+
+</section>
+
+
+<!-- ================= المفضلة ================= -->
+
+<section id="favoritesPage" class="hidden">
+
+  <div class="page-head">
+
+    <button class="back" onclick="showPage('home')">→</button>
+
+    <div class="page-title">
+      <h2>المفضلة ⭐</h2>
+      <small>الأذكار التي حفظتها</small>
+    </div>
+
+  </div>
+
+  <div id="favoritesList"></div>
+
+</section>
+
+
+<!-- ================= قائمة القسم ================= -->
 
 <section id="list" class="hidden">
 
-  <div class="topbar">
+  <div class="page-head">
 
-    <button class="back" onclick="home()">→</button>
+    <button class="back" onclick="showPage('sections')">→</button>
 
-    <div class="top-title">
-      <h2 id="lt"></h2>
+    <div class="page-title">
+      <h2 id="listTitle"></h2>
       <small id="listCount"></small>
+    </div>
+
+  </div>
+
+  <div class="section-summary">
+
+    <h2 id="summaryTitle"></h2>
+
+    <p id="summaryCount"></p>
+
+    <div class="section-progress">
+
+      <div class="section-progress-info">
+        <span>التقدم</span>
+        <span id="sectionPercent">0%</span>
+      </div>
+
+      <div class="progress-track">
+        <div id="sectionProgress" class="progress-fill"></div>
+      </div>
+
     </div>
 
   </div>
@@ -884,226 +933,64 @@ body.dark .progress{
 </section>
 
 
-<!-- READER -->
+<!-- ================= القارئ ================= -->
 
 <section id="reader" class="hidden">
 
-  <div class="reader-head">
+  <div class="reader-actions-top">
 
-    <button class="back" onclick="back()">→</button>
+    <button class="back" onclick="backFromReader()">→</button>
 
     <button
       id="favoriteBtn"
-      class="favorite"
+      class="favorite-btn"
       onclick="toggleFavorite()"
     >☆</button>
 
   </div>
 
-  <div class="reader-card">
+  <div class="reader">
 
-    <div class="reader-top">
+    <div class="reader-head">
 
-      <div id="rt" class="reader-title"></div>
+      <div id="readerTitle" class="reader-title"></div>
 
-      <div id="rs" class="source"></div>
+      <div id="readerSource" class="reader-source"></div>
 
     </div>
 
-    <div id="rx" class="reader-text"></div>
+    <div id="readerText" class="reader-text"></div>
 
-    <div class="progress-area">
+    <div class="reader-progress">
 
-      <div class="progress-info">
-        <span id="progressText">التكرار</span>
-        <span id="progressPercent">0%</span>
+      <div class="reader-progress-info">
+        <span id="readerProgressText">التكرار</span>
+        <span id="readerPercent">0%</span>
       </div>
 
-      <div class="progress">
-        <div id="progressBar" class="progress-bar"></div>
+      <div class="reader-progress-track">
+        <div id="readerProgress" class="reader-progress-fill"></div>
       </div>
 
     </div>
 
     <div class="counter">
-
-      <div id="rc" class="counter-number">
-        0 / 1
-      </div>
-
-      <div class="counter-label">
-        عدد مرات التكرار
-      </div>
-
+      <strong id="counter">0 / 1</strong>
+      <span>عدد مرات التكرار</span>
     </div>
 
     <button class="tap" onclick="tap()">
       📿 اضغط للعد
     </button>
 
-    <div class="reader-actions">
+    <div class="reader-buttons">
 
       <button id="prevBtn" onclick="prev()">
         → السابق
       </button>
 
-      <button onclick="copyDhikr()">
-        📋 نسخ
-      </button>
-
       <button onclick="skip()">
         تخطي ←
-      </button>
-
-    </div>
-
-    <div class="reader-actions">
-
-      <button onclick="shareDhikr()">
-        📤 مشاركة
-      </button>
-
-      <button onclick="changeFont(-1)">
-        🔤 أصغر
-      </button>
-
-      <button onclick="changeFont(1)">
-        🔠 أكبر
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- FAVORITES -->
-
-<section id="favoritesPage" class="hidden">
-
-  <div class="topbar">
-
-    <div class="top-title">
-      <h2>❤️ المفضلة</h2>
-      <small>الأذكار التي اخترتها</small>
-    </div>
-
-  </div>
-
-  <div id="favoriteList"></div>
-
-</section>
-
-
-<!-- SETTINGS -->
-
-<section id="settingsPage" class="hidden">
-
-  <div class="topbar">
-
-    <div class="top-title">
-      <h2>⚙️ الإعدادات</h2>
-      <small>خصص تجربة الاستخدام</small>
-    </div>
-
-  </div>
-
-
-  <div class="setting">
-
-    <div class="setting-row">
-
-      <div>
-        <div class="setting-title">
-          🌙 الوضع الليلي
-        </div>
-
-        <div class="setting-desc">
-          تغيير مظهر التطبيق
-        </div>
-      </div>
-
-      <button onclick="toggleDark()" id="darkBtn">
-        تفعيل
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="setting">
-
-    <div class="setting-title">
-      🔤 حجم خط الذكر
-    </div>
-
-    <div class="setting-desc">
-      اختر الحجم المناسب للقراءة
-    </div>
-
-    <div class="font-buttons" style="margin-top:12px">
-
-      <button onclick="setFont(21)">
-        صغير
-      </button>
-
-      <button onclick="setFont(25)">
-        متوسط
-      </button>
-
-      <button onclick="setFont(29)">
-        كبير
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="setting">
-
-    <div class="setting-row">
-
-      <div>
-        <div class="setting-title">
-          💾 حفظ التقدم
-        </div>
-
-        <div class="setting-desc">
-          يتم حفظ آخر موضع وصلت إليه تلقائيًا
-        </div>
-      </div>
-
-      <button onclick="clearProgress()">
-        إعادة
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="setting">
-
-    <div class="setting-row">
-
-      <div>
-        <div class="setting-title">
-          ❤️ المفضلة
-        </div>
-
-        <div class="setting-desc">
-          حذف جميع الأذكار المحفوظة
-        </div>
-      </div>
-
-      <button
-        class="danger"
-        onclick="clearFavorites()"
-      >
-        حذف الكل
       </button>
 
     </div>
@@ -1114,227 +1001,89 @@ body.dark .progress{
 
 </main>
 
+</div>
 
-<!-- BOTTOM NAV -->
+
+<!-- ================= NAVIGATION ================= -->
 
 <nav class="bottom-nav">
 
-  <button
-    id="navHome"
-    class="nav-btn active"
-    onclick="goHome()"
-  >
-    <span>🏠</span>
+  <button id="navHome" class="nav-btn active" onclick="showPage('home')">
+    <div>🏠</div>
     الرئيسية
   </button>
 
-  <button
-    id="navSections"
-    class="nav-btn"
-    onclick="goSections()"
-  >
-    <span>📚</span>
+  <button id="navSections" class="nav-btn" onclick="showPage('sections')">
+    <div>📚</div>
     الأقسام
   </button>
 
-  <button
-    id="navFavorites"
-    class="nav-btn"
-    onclick="goFavorites()"
-  >
-    <span>❤️</span>
+  <button id="navFavorites" class="nav-btn" onclick="showPage('favoritesPage')">
+    <div>⭐</div>
     المفضلة
-  </button>
-
-  <button
-    id="navSettings"
-    class="nav-btn"
-    onclick="goSettings()"
-  >
-    <span>⚙️</span>
-    الإعدادات
   </button>
 
 </nav>
 
-</div>
-
 
 <script>
 
-/* =========================
-   SETTINGS
-========================= */
+/* =====================================================
+   الإعدادات
+===================================================== */
 
-const REMOTE_URL="./azkar.json";
+const REMOTE_URL = "./azkar.json";
 
-const CACHE_KEY="azkar_muslim_content_v3";
+const CACHE_KEY = "azkar_muslim_content_v3";
 
-const FAVORITES_KEY="azkar_muslim_favorites_v2";
+const FAVORITES_KEY = "azkar_muslim_favorites_v2";
 
-const PROGRESS_KEY="azkar_muslim_progress_v1";
-
-const SETTINGS_KEY="azkar_muslim_settings_v1";
+const PROGRESS_KEY = "azkar_muslim_progress_v1";
 
 
-let data=[];
+/* =====================================================
+   المتغيرات
+===================================================== */
 
-let view=[];
+let data = [];
 
-let i=0;
+let view = [];
 
-let n=0;
+let currentCategory = "";
 
-let favorites=new Set();
+let i = 0;
 
-let progress={};
+let n = 0;
 
-let settings={
-  dark:false,
-  font:25
-};
+let favorites = new Set();
 
-
-/* =========================
-   HELPERS
-========================= */
-
-function $(id){
-  return document.getElementById(id);
-}
-
-function esc(v){
-
-  return String(v??"").replace(
-    /[&<>"']/g,
-    m=>({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-    }[m])
-  );
-
-}
+let progressData = {};
 
 
-/* =========================
-   SETTINGS LOAD
-========================= */
+/* =====================================================
+   العناصر
+===================================================== */
 
-function loadSettings(){
-
-  try{
-
-    const x=
-      JSON.parse(
-        localStorage.getItem(SETTINGS_KEY)||"{}"
-      );
-
-    settings={
-      ...settings,
-      ...x
-    };
-
-  }catch(e){}
-
-  applySettings();
-
-}
+const $ = id => document.getElementById(id);
 
 
-function saveSettings(){
-
-  localStorage.setItem(
-    SETTINGS_KEY,
-    JSON.stringify(settings)
-  );
-
-}
-
-
-function applySettings(){
-
-  document.body.classList.toggle(
-    "dark",
-    !!settings.dark
-  );
-
-  if($("darkBtn")){
-
-    $("darkBtn").textContent=
-      settings.dark
-      ?"إيقاف"
-      :"تفعيل";
-
-  }
-
-}
-
-
-function toggleDark(){
-
-  settings.dark=!settings.dark;
-
-  saveSettings();
-
-  applySettings();
-
-}
-
-
-function setFont(size){
-
-  settings.font=size;
-
-  saveSettings();
-
-  if($("rx"))
-    $("rx").style.fontSize=size+"px";
-
-}
-
-
-function changeFont(amount){
-
-  let size=
-    Number(settings.font)||25;
-
-  size+=amount*2;
-
-  size=Math.max(19,Math.min(34,size));
-
-  settings.font=size;
-
-  saveSettings();
-
-  if($("rx"))
-    $("rx").style.fontSize=size+"px";
-
-}
-
-
-/* =========================
-   FAVORITES
-========================= */
+/* =====================================================
+   المفضلة
+===================================================== */
 
 function loadFavorites(){
 
   try{
 
-    favorites=
-      new Set(
-        JSON.parse(
-          localStorage.getItem(
-            FAVORITES_KEY
-          )||"[]"
-        )
-      );
+    favorites = new Set(
+      JSON.parse(
+        localStorage.getItem(FAVORITES_KEY) || "[]"
+      )
+    );
 
   }catch(e){
 
-    favorites=new Set();
+    favorites = new Set();
 
   }
 
@@ -1355,6 +1104,47 @@ function saveFavorites(){
 }
 
 
+function updateFavoriteCount(){
+
+  if($("favoriteCount"))
+    $("favoriteCount").textContent =
+      favorites.size;
+
+}
+
+
+/* =====================================================
+   التقدم
+===================================================== */
+
+function loadProgress(){
+
+  try{
+
+    progressData =
+      JSON.parse(
+        localStorage.getItem(PROGRESS_KEY) || "{}"
+      );
+
+  }catch(e){
+
+    progressData = {};
+
+  }
+
+}
+
+
+function saveProgress(){
+
+  localStorage.setItem(
+    PROGRESS_KEY,
+    JSON.stringify(progressData)
+  );
+
+}
+
+
 function getKey(x){
 
   return String(
@@ -1367,23 +1157,751 @@ function getKey(x){
 }
 
 
-function updateFavoriteCount(){
+/* =====================================================
+   تحميل الأذكار
+===================================================== */
 
-  if($("favoriteCount"))
-    $("favoriteCount").textContent=
-      favorites.size;
+async function loadData(){
+
+  try{
+
+    const r =
+      await fetch(
+        REMOTE_URL,
+        {cache:"no-store"}
+      );
+
+    if(!r.ok)
+      throw new Error();
+
+    const x =
+      await r.json();
+
+    data =
+      x.items ||
+      x;
+
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify(x)
+    );
+
+    setStatus("تم تحديث الأذكار ✓");
+
+  }catch(e){
+
+    try{
+
+      const saved =
+        localStorage.getItem(CACHE_KEY);
+
+      if(saved){
+
+        const x =
+          JSON.parse(saved);
+
+        data =
+          x.items ||
+          x;
+
+        setStatus("تم تحميل الأذكار ✓");
+
+      }else{
+
+        throw new Error();
+
+      }
+
+    }catch(err){
+
+      setStatus(
+        "تعذر تحميل ملف azkar.json"
+      );
+
+    }
+
+  }
+
+  updateStats();
+
+  renderCategories();
+
+  renderHomeCategories();
+
+  renderContinue();
 
 }
 
 
-function toggleFavorite(){
+/* =====================================================
+   الحالة
+===================================================== */
 
-  const x=view[i];
+function setStatus(text){
+
+  $("status").textContent = text;
+
+}
+
+
+/* =====================================================
+   الإحصائيات
+===================================================== */
+
+function updateStats(){
+
+  const cats =
+    [
+      ...new Set(
+        data
+          .map(x => x.category)
+          .filter(Boolean)
+      )
+    ];
+
+  $("totalAzkar").textContent =
+    data.length;
+
+  $("totalCategories").textContent =
+    cats.length;
+
+  updateFavoriteCount();
+
+}
+
+
+/* =====================================================
+   التنقل بين الصفحات
+===================================================== */
+
+function showPage(page){
+
+  [
+    "home",
+    "sections",
+    "favoritesPage",
+    "list",
+    "reader"
+  ].forEach(id => {
+
+    $(id).classList.toggle(
+      "hidden",
+      id !== page
+    );
+
+  });
+
+  updateNav(page);
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+
+  if(page === "sections")
+    renderCategories();
+
+  if(page === "favoritesPage")
+    renderFavorites();
+
+  if(page === "home")
+    renderContinue();
+
+}
+
+
+function updateNav(page){
+
+  $("navHome").classList.remove("active");
+  $("navSections").classList.remove("active");
+  $("navFavorites").classList.remove("active");
+
+  if(page === "home")
+    $("navHome").classList.add("active");
+
+  if(page === "sections")
+    $("navSections").classList.add("active");
+
+  if(page === "favoritesPage")
+    $("navFavorites").classList.add("active");
+
+}
+
+
+/* =====================================================
+   الصفحة الرئيسية
+===================================================== */
+
+function renderHomeCategories(){
+
+  const box = $("cats");
+
+  box.innerHTML = "";
+
+  getCategories().forEach(
+    (category,index) => {
+
+      box.appendChild(
+        createCategory(category,index)
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   صفحة الأقسام
+===================================================== */
+
+function renderCategories(){
+
+  const box =
+    $("allCategories");
+
+  box.innerHTML = "";
+
+  getCategories().forEach(
+    (category,index) => {
+
+      box.appendChild(
+        createCategory(category,index)
+      );
+
+    }
+  );
+
+}
+
+
+function getCategories(){
+
+  return [
+    ...new Set(
+      data
+        .map(x => x.category)
+        .filter(Boolean)
+    )
+  ];
+
+}
+
+
+/* =====================================================
+   إنشاء بطاقة قسم
+===================================================== */
+
+function createCategory(category,index){
+
+  const items =
+    data.filter(
+      x => x.category === category
+    );
+
+  const button =
+    document.createElement("button");
+
+  button.className =
+    "category";
+
+  button.innerHTML = `
+
+    <div class="category-icon">
+      ${categoryIcon(category,index)}
+    </div>
+
+    <div class="category-title">
+      ${esc(category)}
+    </div>
+
+    <div class="category-count">
+      ${items.length} أذكار
+    </div>
+
+  `;
+
+  button.onclick =
+    () => openCategory(category);
+
+  return button;
+
+}
+
+
+/* =====================================================
+   أيقونات الأقسام
+===================================================== */
+
+function categoryIcon(name,index){
+
+  const n =
+    String(name).toLowerCase();
+
+  if(n.includes("صباح"))
+    return "☀️";
+
+  if(n.includes("مساء"))
+    return "🌅";
+
+  if(n.includes("نوم"))
+    return "🌙";
+
+  if(n.includes("استيق"))
+    return "🌞";
+
+  if(n.includes("صلاة") || n.includes("صل"))
+    return "🕌";
+
+  if(n.includes("مسجد"))
+    return "🕌";
+
+  if(n.includes("بيت") || n.includes("منزل"))
+    return "🏠";
+
+  if(n.includes("سفر"))
+    return "🧳";
+
+  if(n.includes("طعام") || n.includes("أكل"))
+    return "🍃";
+
+  if(n.includes("دعاء"))
+    return "🤲";
+
+  if(n.includes("قرآن") || n.includes("قران"))
+    return "📖";
+
+  return [
+    "📿",
+    "🌿",
+    "🤲",
+    "✨",
+    "🕊️",
+    "📖"
+  ][index % 6];
+
+}
+
+
+/* =====================================================
+   فتح قسم
+===================================================== */
+
+function openCategory(category){
+
+  currentCategory =
+    category;
+
+  view =
+    data.filter(
+      x => x.category === category
+    );
+
+  i = 0;
+
+  showPage("list");
+
+  $("listTitle").textContent =
+    category;
+
+  $("summaryTitle").textContent =
+    category;
+
+  $("listCount").textContent =
+    view.length + " أذكار";
+
+  $("summaryCount").textContent =
+    view.length + " أذكار في هذا القسم";
+
+  renderList();
+
+}
+
+
+/* =====================================================
+   قائمة القسم
+===================================================== */
+
+function renderList(){
+
+  const box =
+    $("ls");
+
+  box.innerHTML = "";
+
+  let completed = 0;
+
+  view.forEach((x,j)=>{
+
+    const key =
+      getKey(x);
+
+    if(progressData[key]?.completed)
+      completed++;
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "dhikr" +
+      (progressData[key]?.completed
+        ? " done"
+        : "");
+
+    button.innerHTML = `
+
+      <div class="number">
+        ${
+          progressData[key]?.completed
+          ? "✓"
+          : j + 1
+        }
+      </div>
+
+      <div class="dhikr-info">
+
+        <div class="dhikr-title">
+          ${esc(x.title || "ذكر")}
+        </div>
+
+        <div class="dhikr-count">
+          التكرار: ${esc(x.count ?? 1)}
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ‹
+      </div>
+
+    `;
+
+    button.onclick =
+      () => openReader(j);
+
+    box.appendChild(button);
+
+  });
+
+  updateSectionProgress(
+    completed
+  );
+
+}
+
+
+/* =====================================================
+   تقدم القسم
+===================================================== */
+
+function updateSectionProgress(completed){
+
+  const total =
+    view.length;
+
+  const percent =
+    total
+    ? Math.round(
+        completed / total * 100
+      )
+    : 0;
+
+  $("sectionProgress")
+    .style.width =
+      percent + "%";
+
+  $("sectionPercent")
+    .textContent =
+      percent + "%";
+
+}
+
+
+/* =====================================================
+   القارئ
+===================================================== */
+
+function openReader(index){
+
+  i = index;
+
+  const x =
+    view[i];
 
   if(!x)
     return;
 
-  const key=getKey(x);
+  const key =
+    getKey(x);
+
+  n =
+    progressData[key]?.count || 0;
+
+  $("readerTitle").textContent =
+    x.title || "ذكر";
+
+  $("readerText").textContent =
+    x.text || "";
+
+  $("readerSource").textContent =
+    [
+      x.source,
+      x.grade || x.status
+    ]
+    .filter(Boolean)
+    .join(" — ");
+
+  updateReader();
+
+  showPage("reader");
+
+}
+
+
+/* =====================================================
+   تحديث القارئ
+===================================================== */
+
+function updateReader(){
+
+  const x =
+    view[i];
+
+  if(!x)
+    return;
+
+  let count =
+    Number(x.count);
+
+  if(!Number.isFinite(count) || count < 1)
+    count = 1;
+
+  n =
+    Math.min(
+      n,
+      count
+    );
+
+  const percent =
+    Math.round(
+      n / count * 100
+    );
+
+  $("counter").textContent =
+    n + " / " + count;
+
+  $("readerPercent").textContent =
+    percent + "%";
+
+  $("readerProgressText").textContent =
+    "التكرار " + n + " من " + count;
+
+  $("readerProgress").style.width =
+    percent + "%";
+
+  $("prevBtn").disabled =
+    i === 0;
+
+  updateFavoriteButton();
+
+}
+
+
+/* =====================================================
+   العد
+===================================================== */
+
+function tap(){
+
+  const x =
+    view[i];
+
+  if(!x)
+    return;
+
+  let count =
+    Number(x.count);
+
+  if(!Number.isFinite(count) || count < 1)
+    count = 1;
+
+  n++;
+
+  if(n >= count){
+
+    n = count;
+
+    markCompleted(x);
+
+    updateReader();
+
+    saveCurrentProgress();
+
+    setTimeout(()=>{
+
+      if(i < view.length - 1){
+
+        i++;
+
+        n = 0;
+
+        openReader(i);
+
+      }else{
+
+        showComplete();
+
+      }
+
+    },220);
+
+    return;
+
+  }
+
+  saveCurrentProgress();
+
+  updateReader();
+
+}
+
+
+/* =====================================================
+   حفظ تقدم الذكر
+===================================================== */
+
+function saveCurrentProgress(){
+
+  const x =
+    view[i];
+
+  if(!x)
+    return;
+
+  const key =
+    getKey(x);
+
+  progressData[key] = {
+    count:n,
+    completed:
+      progressData[key]?.completed || false,
+    category:x.category || ""
+  };
+
+  saveProgress();
+
+}
+
+
+/* =====================================================
+   إكمال الذكر
+===================================================== */
+
+function markCompleted(x){
+
+  const key =
+    getKey(x);
+
+  progressData[key] = {
+    count:Number(x.count) || 1,
+    completed:true,
+    category:x.category || ""
+  };
+
+  saveProgress();
+
+}
+
+
+/* =====================================================
+   السابق
+===================================================== */
+
+function prev(){
+
+  if(i > 0){
+
+    saveCurrentProgress();
+
+    i--;
+
+    openReader(i);
+
+  }
+
+}
+
+
+/* =====================================================
+   التخطي
+===================================================== */
+
+function skip(){
+
+  if(i < view.length - 1){
+
+    saveCurrentProgress();
+
+    i++;
+
+    openReader(i);
+
+  }else{
+
+    showComplete();
+
+  }
+
+}
+
+
+/* =====================================================
+   إتمام القسم
+===================================================== */
+
+function showComplete(){
+
+  alert(
+    "أحسنت 🌿\n\nلقد أتممت جميع أذكار هذا القسم."
+  );
+
+  renderList();
+
+  showPage("list");
+
+}
+
+
+/* =====================================================
+   الرجوع من القارئ
+===================================================== */
+
+function backFromReader(){
+
+  saveCurrentProgress();
+
+  showPage("list");
+
+  renderList();
+
+}
+
+
+/* =====================================================
+   المفضلة
+===================================================== */
+
+function toggleFavorite(){
+
+  const x =
+    view[i];
+
+  if(!x)
+    return;
+
+  const key =
+    getKey(x);
 
   if(favorites.has(key))
     favorites.delete(key);
@@ -1399,1115 +1917,369 @@ function toggleFavorite(){
 
 function updateFavoriteButton(){
 
-  const x=view[i];
+  const x =
+    view[i];
 
   if(!x)
     return;
 
-  const key=getKey(x);
+  const key =
+    getKey(x);
 
-  $("favoriteBtn").textContent=
+  $("favoriteBtn").textContent =
     favorites.has(key)
-    ?"★"
-    :"☆";
+      ? "★"
+      : "☆";
 
 }
 
 
-/* =========================
-   PROGRESS
-========================= */
+/* =====================================================
+   صفحة المفضلة
+===================================================== */
 
-function loadProgress(){
+function renderFavorites(){
 
-  try{
+  const box =
+    $("favoritesList");
 
-    progress=
-      JSON.parse(
-        localStorage.getItem(
-          PROGRESS_KEY
-        )||"{}"
-      );
+  box.innerHTML = "";
 
-  }catch(e){
-
-    progress={};
-
-  }
-
-}
-
-
-function saveProgress(){
-
-  localStorage.setItem(
-    PROGRESS_KEY,
-    JSON.stringify(progress)
-  );
-
-}
-
-
-function saveCurrentProgress(){
-
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  progress[getKey(x)]=n;
-
-  saveProgress();
-
-  showContinue();
-
-}
-
-
-function showContinue(){
-
-  const keys=
-    Object.keys(progress);
-
-  if(!keys.length){
-
-    $("continueBox")
-      .classList.remove("show");
-
-    return;
-
-  }
-
-  let key=
-    keys[keys.length-1];
-
-  const x=
-    data.find(
-      z=>getKey(z)===key
+  const items =
+    data.filter(
+      x => favorites.has(getKey(x))
     );
 
-  if(!x || Number(progress[key])<=0){
+  if(!items.length){
 
-    $("continueBox")
-      .classList.remove("show");
+    box.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-icon">⭐</div>
+
+        <strong>لا توجد أذكار مفضلة</strong>
+
+        اضغط ☆ داخل أي ذكر لإضافته هنا.
+
+      </div>
+
+    `;
 
     return;
 
   }
 
-  $("continueTitle").textContent=
-    x.title||"ذكر";
+  items.forEach(x=>{
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "favorite-card";
+
+    button.innerHTML = `
+
+      <div class="favorite-title">
+        ${esc(x.title || "ذكر")}
+      </div>
+
+      <div class="favorite-preview">
+        ${esc(
+          String(x.text || "")
+            .replace(/\s+/g," ")
+            .slice(0,150)
+        )}
+      </div>
+
+    `;
+
+    button.onclick = ()=>{
+
+      view =
+        data.filter(
+          z => z.category === x.category
+        );
+
+      currentCategory =
+        x.category;
+
+      openReader(
+        view.findIndex(
+          z => getKey(z) === getKey(x)
+        )
+      );
+
+    };
+
+    box.appendChild(button);
+
+  });
+
+}
+
+
+/* =====================================================
+   البحث
+===================================================== */
+
+function renderSearch(){
+
+  const q =
+    $("q")
+      .value
+      .trim()
+      .toLowerCase();
+
+  $("clearBtn").style.display =
+    q ? "block" : "none";
+
+  if(!q){
+
+    $("homeCategories")
+      .classList.remove("hidden");
+
+    $("searchBox")
+      .classList.add("hidden");
+
+    return;
+
+  }
+
+  $("homeCategories")
+    .classList.add("hidden");
+
+  $("searchBox")
+    .classList.remove("hidden");
+
+  const results =
+    $("searchResults");
+
+  results.innerHTML = "";
+
+  const found =
+    data.filter(x=>{
+
+      const text =
+        (
+          (x.text || "") +
+          " " +
+          (x.title || "") +
+          " " +
+          (x.category || "")
+        ).toLowerCase();
+
+      return text.includes(q);
+
+    });
+
+  if(!found.length){
+
+    results.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-icon">🔎</div>
+
+        <strong>لم نجد ما تبحث عنه</strong>
+
+        جرّب كلمة أخرى.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  found.forEach(x=>{
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "result";
+
+    button.innerHTML = `
+
+      <div class="result-title">
+        ${esc(x.title || "ذكر")}
+      </div>
+
+      <div class="result-text">
+        ${esc(
+          String(x.text || "")
+            .replace(/\s+/g," ")
+            .slice(0,150)
+        )}
+        ${String(x.text || "").length > 150 ? "…" : ""}
+      </div>
+
+    `;
+
+    button.onclick = ()=>{
+
+      view =
+        data.filter(
+          z => z.category === x.category
+        );
+
+      currentCategory =
+        x.category;
+
+      openReader(
+        view.findIndex(
+          z => getKey(z) === getKey(x)
+        )
+      );
+
+    };
+
+    results.appendChild(button);
+
+  });
+
+}
+
+
+function clearSearch(){
+
+  $("q").value = "";
+
+  renderSearch();
+
+}
+
+
+/* =====================================================
+   آخر قراءة
+===================================================== */
+
+function renderContinue(){
+
+  let last = null;
+
+  for(const key in progressData){
+
+    if(
+      progressData[key] &&
+      progressData[key].count > 0 &&
+      !progressData[key].completed
+    ){
+
+      last =
+        data.find(
+          x => getKey(x) === key
+        );
+
+    }
+
+  }
+
+  if(!last){
+
+    $("continueBox")
+      .classList.add("hidden");
+
+    return;
+
+  }
 
   $("continueBox")
-    .classList.add("show");
+    .classList.remove("hidden");
+
+  $("continueName")
+    .textContent =
+      last.title || "متابعة الذكر";
 
 }
 
 
 function continueReading(){
 
-  const keys=
-    Object.keys(progress);
-
-  if(!keys.length)
-    return;
-
-  const key=
-    keys[keys.length-1];
-
-  const x=
-    data.find(
-      z=>getKey(z)===key
-    );
-
-  if(!x)
-    return;
-
-  view=
-    data.filter(
-      z=>z.category===x.category
-    );
-
-  i=
-    view.findIndex(
-      z=>getKey(z)===key
-    );
-
-  n=
-    Number(progress[key])||0;
-
-  openReader(i);
-
-}
-
-
-function clearProgress(){
-
-  if(!confirm("هل تريد إعادة حذف تقدم القراءة؟"))
-    return;
-
-  progress={};
-
-  saveProgress();
-
-  showContinue();
-
-}
-
-
-/* =========================
-   DATA
-========================= */
-
-async function loadData(){
-
-  try{
-
-    const r=
-      await fetch(
-        REMOTE_URL,
-        {cache:"no-store"}
-      );
-
-    if(!r.ok)
-      throw new Error();
-
-    const x=
-      await r.json();
-
-    data=
-      x.items||x;
-
-    localStorage.setItem(
-      CACHE_KEY,
-      JSON.stringify(x)
-    );
-
-    setStatus("تم تحميل الأذكار ✓");
-
-    updateStats();
-
-    renderHome();
-
-    return;
-
-  }catch(e){}
-
-
-  try{
-
-    const saved=
-      localStorage.getItem(
-        CACHE_KEY
-      );
-
-    if(saved){
-
-      const x=
-        JSON.parse(saved);
-
-      data=
-        x.items||x;
-
-      setStatus(
-        "تم تشغيل النسخة المحفوظة ✓"
-      );
-
-      updateStats();
-
-      renderHome();
-
-      return;
-
-    }
-
-  }catch(e){}
-
-
-  setStatus(
-    "تعذر تحميل ملف azkar.json"
-  );
-
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-function setStatus(text){
-
-  $("status").textContent=text;
-
-}
-
-
-/* =========================
-   STATS
-========================= */
-
-function updateStats(){
-
-  const cats=
-    [
-      ...new Set(
-        data
-          .map(x=>x.category)
-          .filter(Boolean)
-      )
-    ];
-
-  $("totalAzkar").textContent=
-    data.length;
-
-  $("totalCategories").textContent=
-    cats.length;
-
-  updateFavoriteCount();
-
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-function hideAll(){
-
-  [
-    "home",
-    "list",
-    "reader",
-    "favoritesPage",
-    "settingsPage"
-  ].forEach(id=>{
-    $(id).classList.add("hidden");
-  });
-
-}
-
-
-function navActive(id){
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(x=>
-      x.classList.remove("active")
-    );
-
-  $(id).classList.add("active");
-
-}
-
-
-function goHome(){
-
-  hideAll();
-
-  $("home").classList.remove("hidden");
-
-  navActive("navHome");
-
-  renderHome();
-
-  scrollTop();
-
-}
-
-
-function goSections(){
-
-  hideAll();
-
-  $("home").classList.remove("hidden");
-
-  navActive("navSections");
-
-  $("q").value="";
-
-  renderHome();
-
-  scrollTop();
-
-}
-
-
-function goFavorites(){
-
-  hideAll();
-
-  $("favoritesPage")
-    .classList.remove("hidden");
-
-  navActive("navFavorites");
-
-  renderFavorites();
-
-  scrollTop();
-
-}
-
-
-function goSettings(){
-
-  hideAll();
-
-  $("settingsPage")
-    .classList.remove("hidden");
-
-  navActive("navSettings");
-
-  scrollTop();
-
-}
-
-
-function scrollTop(){
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* =========================
-   HOME
-========================= */
-
-function renderHome(){
-
-  const q=
-    $("q").value
-      .trim()
-      .toLowerCase();
-
-  $("clearSearch").style.display=
-    q?"block":"none";
-
-  const cats=
-    [
-      ...new Set(
-        data
-          .map(x=>x.category)
-          .filter(Boolean)
-      )
-    ];
-
-  const box=$("cats");
-
-  const results=$("results");
-
-  const searchResults=$("searchResults");
-
-  box.innerHTML="";
-
-  searchResults.innerHTML="";
-
-  showContinue();
-
-
-  if(q){
-
-    results.classList.remove(
-      "hidden"
-    );
-
-    const found=
-      data.filter(x=>
-        (
-          (x.text||"")+" "+
-          (x.title||"")+" "+
-          (x.category||"")
-        )
-        .toLowerCase()
-        .includes(q)
-      );
-
-
-    if(!found.length){
-
-      searchResults.innerHTML=`
-
-        <div class="empty">
-
-          <div class="empty-icon">🔎</div>
-
-          <strong>
-            لم نجد ما تبحث عنه
-          </strong>
-
-          جرّب كلمة أخرى
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
-
-    found.forEach(x=>{
-
-      const b=
-        document.createElement(
-          "button"
+  let last = null;
+
+  for(const key in progressData){
+
+    if(
+      progressData[key] &&
+      progressData[key].count > 0 &&
+      !progressData[key].completed
+    ){
+
+      last =
+        data.find(
+          x => getKey(x) === key
         );
 
-      b.className="result";
-
-      b.innerHTML=`
-
-        <div class="result-title">
-          ${esc(x.title||"ذكر")}
-        </div>
-
-        <div class="result-preview">
-          ${esc(
-            String(x.text||"")
-              .replace(/\s+/g," ")
-              .slice(0,150)
-          )}
-          ${String(x.text||"").length>150?"…":""}
-        </div>
-
-      `;
-
-      b.onclick=()=>{
-
-        view=[x];
-
-        i=0;
-
-        openReader(0);
-
-      };
-
-      searchResults.appendChild(b);
-
-    });
-
-    return;
+    }
 
   }
 
+  if(!last)
+    return;
 
-  results.classList.add("hidden");
-
-
-  cats.forEach((c,index)=>{
-
-    const count=
-      data.filter(
-        x=>x.category===c
-      ).length;
-
-    const b=
-      document.createElement(
-        "button"
-      );
-
-    b.className="category";
-
-    b.innerHTML=`
-
-      <div class="cat-icon">
-        ${categoryIcon(c,index)}
-      </div>
-
-      <div class="cat-title">
-        ${esc(c)}
-      </div>
-
-      <div class="cat-count">
-        ${count} أذكار
-      </div>
-
-    `;
-
-    b.onclick=
-      ()=>openCat(c);
-
-    box.appendChild(b);
-
-  });
-
-}
-
-
-/* =========================
-   CATEGORY ICON
-========================= */
-
-function categoryIcon(name,index){
-
-  const n=
-    String(name||"")
-      .toLowerCase();
-
-  if(n.includes("صباح")||n.includes("مساء"))
-    return "☀️";
-
-  if(n.includes("نوم")||n.includes("استيق"))
-    return "🌙";
-
-  if(n.includes("صلاة")||n.includes("صل"))
-    return "🕌";
-
-  if(n.includes("بيت")||n.includes("منزل"))
-    return "🏠";
-
-  if(n.includes("طعام")||n.includes("أكل"))
-    return "🍃";
-
-  if(n.includes("سفر"))
-    return "🧳";
-
-  if(n.includes("قرآن")||n.includes("قران"))
-    return "📖";
-
-  if(n.includes("دعاء"))
-    return "🤲";
-
-  return [
-    "📿",
-    "🌿",
-    "🤲",
-    "✨",
-    "🕊️",
-    "📖"
-  ][index%6];
-
-}
-
-
-/* =========================
-   LIST
-========================= */
-
-function openCat(category){
-
-  view=
+  view =
     data.filter(
-      x=>x.category===category
+      x => x.category === last.category
     );
 
-  i=0;
-
-  $("lt").textContent=
-    category;
-
-  $("listCount").textContent=
-    view.length+" أذكار";
-
-  hideAll();
-
-  $("list").classList.remove(
-    "hidden"
-  );
-
-  renderList();
-
-  scrollTop();
-
-}
-
-
-function renderList(){
-
-  const box=$("ls");
-
-  box.innerHTML="";
-
-  view.forEach((x,j)=>{
-
-    const b=
-      document.createElement(
-        "button"
-      );
-
-    b.className="item";
-
-    b.innerHTML=`
-
-      <div class="number">
-        ${j+1}
-      </div>
-
-      <div class="item-info">
-
-        <div class="item-title">
-          ${esc(x.title||"ذكر")}
-        </div>
-
-        <div class="item-count">
-          التكرار: ${esc(x.count??1)}
-        </div>
-
-      </div>
-
-      <div class="arrow">
-        ‹
-      </div>
-
-    `;
-
-    b.onclick=
-      ()=>openReader(j);
-
-    box.appendChild(b);
-
-  });
-
-}
-
-
-/* =========================
-   READER
-========================= */
-
-function openReader(index){
-
-  i=index;
-
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  if(
-    progress[getKey(x)]!==undefined &&
-    progress[getKey(x)]>0 &&
-    progress[getKey(x)]<
-      Number(x.count||1)
-  ){
-
-    n=
-      Number(progress[getKey(x)]);
-
-  }else{
-
-    n=0;
-
-  }
-
-  $("rt").textContent=
-    x.title||"ذكر";
-
-  $("rx").textContent=
-    x.text||"";
-
-  $("rx").style.fontSize=
-    (settings.font||25)+"px";
-
-  $("rs").textContent=
-    [
-      x.source,
-      x.grade||x.status
-    ]
-    .filter(Boolean)
-    .join(" — ");
-
-  hideAll();
-
-  $("reader").classList.remove(
-    "hidden"
-  );
-
-  updateReader();
-
-  scrollTop();
-
-}
-
-
-function updateReader(){
-
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  const count=
-    Math.max(
-      1,
-      Number(x.count)||1
-    );
-
-  $("rc").textContent=
-    n+" / "+count;
-
-  const percent=
-    Math.min(
-      100,
-      Math.round(
-        (n/count)*100
-      )
-    );
-
-  $("progressBar")
-    .style.width=
-    percent+"%";
-
-  $("progressPercent")
-    .textContent=
-    percent+"%";
-
-  $("progressText")
-    .textContent=
-    "التكرار "+n+" من "+count;
-
-  $("prevBtn").disabled=
-    i===0;
-
-  updateFavoriteButton();
-
-}
-
-
-/* =========================
-   TAP
-========================= */
-
-function tap(){
-
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  const count=
-    Math.max(
-      1,
-      Number(x.count)||1
-    );
-
-  n++;
-
-  saveCurrentProgress();
-
-  if(n>=count){
-
-    n=count;
-
-    updateReader();
-
-    setTimeout(()=>{
-
-      if(i<view.length-1){
-
-        i++;
-
-        n=0;
-
-        openReader(i);
-
-      }else{
-
-        showComplete();
-
-      }
-
-    },180);
-
-    return;
-
-  }
-
-  updateReader();
-
-}
-
-
-/* =========================
-   PREV
-========================= */
-
-function prev(){
-
-  if(i>0){
-
-    i--;
-
-    n=0;
-
-    openReader(i);
-
-  }
-
-}
-
-
-/* =========================
-   SKIP
-========================= */
-
-function skip(){
-
-  if(i<view.length-1){
-
-    i++;
-
-    n=0;
-
-    openReader(i);
-
-  }else{
-
-    showComplete();
-
-  }
-
-}
-
-
-/* =========================
-   COMPLETE
-========================= */
-
-function showComplete(){
-
-  alert(
-    "أحسنت 🌿\n\nلقد أتممت جميع أذكار هذا القسم."
-  );
-
-  back();
-
-}
-
-
-function back(){
-
-  hideAll();
-
-  $("list").classList.remove(
-    "hidden"
-  );
-
-  renderList();
-
-  scrollTop();
-
-}
-
-
-/* =========================
-   FAVORITES PAGE
-========================= */
-
-function renderFavorites(){
-
-  const box=
-    $("favoriteList");
-
-  box.innerHTML="";
-
-  const list=
-    data.filter(
-      x=>favorites.has(
-        getKey(x)
-      )
-    );
-
-
-  if(!list.length){
-
-    box.innerHTML=`
-
-      <div class="favorite-empty">
-
-        <div>🤍</div>
-
-        لا توجد أذكار في المفضلة بعد.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  list.forEach(x=>{
-
-    const b=
-      document.createElement(
-        "button"
-      );
-
-    b.className="item";
-
-    b.innerHTML=`
-
-      <div class="number">
-        ❤️
-      </div>
-
-      <div class="item-info">
-
-        <div class="item-title">
-          ${esc(x.title||"ذكر")}
-        </div>
-
-        <div class="item-count">
-          ${esc(x.category||"")}
-        </div>
-
-      </div>
-
-      <div class="arrow">
-        ‹
-      </div>
-
-    `;
-
-    b.onclick=()=>{
-
-      view=[x];
-
-      i=0;
-
-      openReader(0);
-
-    };
-
-    box.appendChild(b);
-
-  });
-
-}
-
-
-/* =========================
-   CLEAR FAVORITES
-========================= */
-
-function clearFavorites(){
-
-  if(!favorites.size)
-    return;
-
-  if(
-    !confirm(
-      "هل تريد حذف جميع الأذكار من المفضلة؟"
+  openReader(
+    view.findIndex(
+      x => getKey(x) === getKey(last)
     )
-  )
-    return;
-
-  favorites.clear();
-
-  saveFavorites();
-
-  renderFavorites();
-
-  updateFavoriteButton();
+  );
 
 }
 
 
-/* =========================
-   SEARCH
-========================= */
+/* =====================================================
+   ابدأ الذكر
+===================================================== */
 
-function clearSearch(){
+function startDhikr(){
 
-  $("q").value="";
+  if(!data.length)
+    return;
 
-  $("q").focus();
+  const firstCategory =
+    getCategories()[0];
 
-  renderHome();
+  openCategory(
+    firstCategory
+  );
+
+  if(view.length)
+    openReader(0);
 
 }
 
 
-/* =========================
-   COPY
-========================= */
+/* =====================================================
+   حماية النص
+===================================================== */
 
-async function copyDhikr(){
+function esc(v){
 
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  const text=
-    [
-      x.title,
-      x.text,
-      x.source
-    ]
-    .filter(Boolean)
-    .join("\n\n");
-
-  try{
-
-    await navigator.clipboard.writeText(
-      text
+  return String(v ?? "")
+    .replace(
+      /[&<>"']/g,
+      m => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+      }[m])
     );
 
-    alert("تم نسخ الذكر ✓");
-
-  }catch(e){
-
-    alert("تعذر النسخ على هذا الجهاز.");
-
-  }
-
 }
 
 
-/* =========================
-   SHARE
-========================= */
-
-async function shareDhikr(){
-
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  const text=
-    [
-      x.title,
-      x.text,
-      x.source
-    ]
-    .filter(Boolean)
-    .join("\n\n");
-
-
-  if(
-    navigator.share
-  ){
-
-    try{
-
-      await navigator.share({
-        title:x.title||"أذكار المسلم",
-        text:text
-      });
-
-    }catch(e){}
-
-    return;
-
-  }
-
-  await copyDhikr();
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-loadSettings();
+/* =====================================================
+   تشغيل
+===================================================== */
 
 loadFavorites();
 
@@ -2516,24 +2288,20 @@ loadProgress();
 loadData();
 
 
-/* =========================
-   SERVICE WORKER
-========================= */
+/* =====================================================
+   Service Worker
+===================================================== */
 
-if(
-  "serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
   window.addEventListener(
     "load",
     ()=>{
-
       navigator.serviceWorker
         .register(
           "./service-worker.js"
         )
         .catch(()=>{});
-
     }
   );
 
@@ -2542,4 +2310,4 @@ if(
 </script>
 
 </body>
-  </html>
+    </html>
