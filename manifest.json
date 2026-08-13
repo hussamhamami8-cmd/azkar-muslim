@@ -1,0 +1,12 @@
+{
+  "name": "أذكار مسلم",
+  "short_name": "أذكار مسلم",
+  "description": "تطبيق أذكار مسلم يعمل بدون إنترنت",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a7a3a",
+  "dir": "rtl",
+  "lang": "ar"
+}
