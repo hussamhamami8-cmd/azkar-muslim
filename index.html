@@ -5,13 +5,15 @@
 <style>
 body{margin:0;background:#f5f7f6;color:#17312e;font-family:system-ui,Tahoma,sans-serif}
 header{background:#0f766e;color:white;text-align:center;padding:22px}main{max-width:760px;margin:auto;padding:15px}
-h1{margin:0}.search{width:100%;padding:14px;border:1px solid #ccd8d5;border-radius:14px;font-size:16px;margin:12px 0}
+h1{margin:0}.search{width:100%;padding:14px;border:1px solid #ccd8d5;border-radius:14px;font-size:16px;margin:12px 0;box-sizing:border-box}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}button,.card{border:0;border-radius:16px;padding:15px;background:white;box-shadow:0 2px 10px #0001;font-size:16px}
 button{cursor:pointer;color:#164b45}.primary{background:#0f766e;color:white}.top{display:flex;gap:8px;align-items:center}
 .hidden{display:none}.text{font-size:24px;line-height:2.1;margin:18px 0}.source{font-size:13px;color:#657773}.count{text-align:center;margin:12px;font-weight:700}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.wide{grid-column:1/-1}.title{font-weight:700;font-size:19px}
+#status{font-size:12px;text-align:center;margin:8px;color:#657773}
 </style></head><body>
 <header><h1>📿 أذكار المسلم</h1><div>موسوعة أذكار تعمل دون إنترنت</div></header><main>
+<div id="status">جارٍ تحميل الأذكار...</div>
 <section id="home"><input id="q" class="search" placeholder="🔍 ابحث في جميع الأذكار" oninput="renderHome()"><div id="cats" class="grid"></div></section>
 <section id="list" class="hidden"><div class="top"><button onclick="home()">←</button><h2 id="lt"></h2></div><div id="ls"></div></section>
 <section id="reader" class="hidden"><div class="top"><button onclick="back()">← القائمة</button></div><div class="card">
@@ -19,18 +21,75 @@ button{cursor:pointer;color:#164b45}.primary{background:#0f766e;color:white}.top
 <div class="actions"><button class="primary wide" onclick="tap()">اضغط للعد</button><button onclick="prev()">↩ السابق</button><button onclick="skip()">⏭ تخطي</button></div>
 </div></section></main>
 <script>
+/*
+  نظام المحتوى:
+  1) يحاول جلب أحدث نسخة من Azkar.json من المستودع.
+  2) يحفظ آخر نسخة ناجحة في الجهاز.
+  3) إذا انقطع الإنترنت يستخدم النسخة المحفوظة.
+  4) إذا لم توجد نسخة محفوظة يستخدم ملف azkar.json المحلي.
+  غيّر REMOTE_URL إلى رابط ملف azkar.json في مستودعك عندما يكون لديك الرابط النهائي.
+*/
+const REMOTE_URL = ""; // مثال: https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/azkar.json
+const CACHE_KEY = "azkar_muslim_content_v2";
+
 let data=[],view=[],i=0,n=0;
-fetch('azkar.json').then(x=>x.json()).then(x=>{data=x.items||x;renderHome()});
-function S(id){['home','list','reader'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id))}
-function home(){S('home');renderHome()} function back(){S('list');renderList()}
-function renderHome(){let q=document.getElementById('q').value.trim(), cs=[...new Set(data.map(x=>x.category))],b=document.getElementById('cats');b.innerHTML='';
-cs.filter(c=>!q||data.some(x=>x.category==c&&(x.text+x.title).includes(q))).forEach(c=>{let z=document.createElement('button');z.textContent='📖 '+c;z.onclick=()=>openCat(c);b.appendChild(z)});
-if(q){data.filter(x=>(x.text+x.title).includes(q)).forEach(x=>{let z=document.createElement('button');z.textContent='🔎 '+x.title;z.onclick=()=>{view=[x];i=0;openReader(0)};b.appendChild(z)})}}
-function openCat(c){view=data.filter(x=>x.category==c);i=0;document.getElementById('lt').textContent=c;S('list');renderList()}
-function renderList(){let b=document.getElementById('ls');b.innerHTML='';view.forEach((x,j)=>{let z=document.createElement('button');z.className='card';z.style.width='100%';z.innerHTML='<div class="title">'+x.title+'</div><small>التكرار: '+x.count+'</small>';z.onclick=()=>openReader(j);b.appendChild(z)})}
-function openReader(j){i=j;n=0;let x=view[i];document.getElementById('rt').textContent=x.title;document.getElementById('rx').textContent=x.text;document.getElementById('rs').textContent=(x.source||'')+' — '+(x.grade||'');upd();S('reader')}
-function upd(){document.getElementById('rc').textContent=n+' / '+view[i].count}
+
+async function loadData(){
+  let remote=null;
+  if(REMOTE_URL){
+    try{
+      const r=await fetch(REMOTE_URL,{cache:"no-store"});
+      if(!r.ok) throw new Error("remote");
+      remote=await r.json();
+      if(remote && (Array.isArray(remote)||Array.isArray(remote.items))){
+        localStorage.setItem(CACHE_KEY,JSON.stringify(remote));
+        data=remote.items||remote;
+        setStatus("تم تحديث الأذكار من المستودع ✓");
+        renderHome(); return;
+      }
+    }catch(e){}
+  }
+  try{
+    const saved=localStorage.getItem(CACHE_KEY);
+    if(saved){
+      const x=JSON.parse(saved); data=x.items||x;
+      setStatus("تعمل الآن بالنسخة المحفوظة دون إنترنت ✓");
+      renderHome(); return;
+    }
+  }catch(e){}
+  try{
+    const r=await fetch("azkar.json",{cache:"no-store"});
+    const x=await r.json(); data=x.items||x;
+    localStorage.setItem(CACHE_KEY,JSON.stringify(x));
+    setStatus("تم تحميل النسخة المحلية وحفظها ✓");
+    renderHome();
+  }catch(e){
+    setStatus("تعذر تحميل الأذكار. تأكد من وجود ملف azkar.json.");
+  }
+}
+function setStatus(t){document.getElementById("status").textContent=t}
+function S(id){["home","list","reader"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id))}
+function home(){S("home");renderHome()}
+function back(){S("list");renderList()}
+function renderHome(){
+  let q=document.getElementById("q").value.trim(),cs=[...new Set(data.map(x=>x.category))],b=document.getElementById("cats");b.innerHTML="";
+  cs.filter(c=>!q||data.some(x=>x.category==c&&((x.text||"")+(x.title||"")).includes(q))).forEach(c=>{
+    let z=document.createElement("button");z.textContent="📖 "+c;z.onclick=()=>openCat(c);b.appendChild(z)
+  });
+  if(q)data.filter(x=>((x.text||"")+(x.title||"")).includes(q)).forEach(x=>{
+    let z=document.createElement("button");z.textContent="🔎 "+x.title;
+    z.onclick=()=>{view=[x];i=0;openReader(0)};b.appendChild(z)
+  })
+}
+function openCat(c){view=data.filter(x=>x.category==c);i=0;document.getElementById("lt").textContent=c;S("list");renderList()}
+function renderList(){let b=document.getElementById("ls");b.innerHTML="";view.forEach((x,j)=>{
+  let z=document.createElement("button");z.className="card";z.style.width="100%";z.innerHTML="<div class='title'>"+esc(x.title)+"</div><small>التكرار: "+esc(x.count)+"</small>";z.onclick=()=>openReader(j);b.appendChild(z)
+})}
+function openReader(j){i=j;n=0;let x=view[i];document.getElementById("rt").textContent=x.title;document.getElementById("rx").textContent=x.text;document.getElementById("rs").textContent=(x.source||"")+" — "+(x.grade||x.status||"");upd();S("reader")}
+function upd(){document.getElementById("rc").textContent=n+" / "+view[i].count}
 function tap(){n++;if(n>=view[i].count)skip();else upd()}
-function skip(){if(i<view.length-1){i++;n=0;openReader(i)}else{alert('اكتمل القسم 🌿');back()}}
+function skip(){if(i<view.length-1){i++;n=0;openReader(i)}else{alert("اكتمل القسم 🌿");back()}}
 function prev(){if(i>0){i--;n=0;openReader(i)}}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+loadData();
 </script></body></html>
