@@ -4,12 +4,12 @@
   "description": "تطبيق أذكار مسلم يعمل بدون إنترنت",
   "start_url": "./",
   "scope": "./",
+  "id": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0a7a3a",
   "dir": "rtl",
   "lang": "ar",
-  "id": "/azkar-muslim/",
   "icons": [
     {
       "src": "./icon.png",
