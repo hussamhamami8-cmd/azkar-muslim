@@ -58,7 +58,7 @@ async function loadData(){
     }
   }catch(e){}
   try{
-    const r=await fetch("azkar.json",{cache:"no-store"});
+    const r=await fetch("./azkar.json",{cache:"no-store"});
     const x=await r.json(); data=x.items||x;
     localStorage.setItem(CACHE_KEY,JSON.stringify(x));
     setStatus("تم تحميل النسخة المحلية وحفظها ✓");
