@@ -197,6 +197,64 @@
             background: #e5e9e6;
         }
 
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .login-box {
+            background: #fff;
+            border-radius: 28px;
+            padding: 40px 30px;
+            max-width: 380px;
+            width: 95%;
+            text-align: center;
+        }
+        .login-box h2 {
+            color: #075c52;
+            margin-bottom: 10px;
+        }
+        .login-box p {
+            color: #71807c;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e5e9e6;
+            border-radius: 14px;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .login-box input:focus {
+            border-color: #075c52;
+            outline: none;
+        }
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: #075c52;
+            color: #fff;
+            border: 0;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-box .error {
+            color: #b52339;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
         @media(max-width:600px) {
             .admin-form { grid-template-columns: 1fr; }
             .admin-header { flex-direction: column; gap: 10px; }
@@ -208,11 +266,28 @@
 </head>
 <body>
 
-<div class="admin-container">
+<!-- =========================================================
+     شاشة تسجيل الدخول إلى لوحة التحكم
+========================================================= -->
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+        <h2>🔐 لوحة التحكم</h2>
+        <p>أدخل كلمة المرور للوصول إلى لوحة إدارة الحجاج</p>
+        <input type="password" id="adminPasswordInput" placeholder="أدخل كلمة المرور" />
+        <button onclick="checkAdminPassword()">دخول</button>
+        <div class="error" id="loginError">كلمة المرور غير صحيحة</div>
+    </div>
+</div>
+
+<!-- =========================================================
+     لوحة التحكم (تظهر بعد تسجيل الدخول)
+========================================================= -->
+<div class="admin-container" id="adminContent" style="display:none;">
     <div class="admin-header">
         <h1>🕋 لوحة تحكم دليل الحاج</h1>
         <div>
             <a href="./" target="_blank">📱 فتح التطبيق</a>
+            <button onclick="logoutAdmin()" style="background:#b52339;color:#fff;border:0;padding:8px 16px;border-radius:12px;font-weight:700;cursor:pointer;margin-right:8px;">🚪 خروج</button>
         </div>
     </div>
 
@@ -280,7 +355,40 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
     // =========================================================
-    // إعدادات Supabase (نفس اللي في التطبيق)
+    // كلمة المرور
+    // =========================================================
+    const ADMIN_PASSWORD = "20002000";
+
+    function checkAdminPassword() {
+        const input = document.getElementById('adminPasswordInput');
+        const error = document.getElementById('loginError');
+        if (input.value === ADMIN_PASSWORD) {
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('adminContent').style.display = 'block';
+            loadPilgrims();
+        } else {
+            error.style.display = 'block';
+            input.value = '';
+            input.focus();
+        }
+    }
+
+    function logoutAdmin() {
+        document.getElementById('loginOverlay').style.display = 'flex';
+        document.getElementById('adminContent').style.display = 'none';
+        document.getElementById('adminPasswordInput').value = '';
+        document.getElementById('loginError').style.display = 'none';
+    }
+
+    // السماح بالدخول بضغط Enter
+    document.getElementById('adminPasswordInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            checkAdminPassword();
+        }
+    });
+
+    // =========================================================
+    // إعدادات Supabase
     // =========================================================
     const SUPABASE_URL = "https://tmmspfxkmqsivpxchfkk.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_e_UeWsqQTEk0GUhdpMDHYg_nAC3b7vZ";
@@ -411,7 +519,7 @@
     }
 
     // =========================================================
-    // تحديد الموقع (مودال + خريطة)
+    // تحديد الموقع
     // =========================================================
     let locationPilgrimId = null;
 
@@ -420,7 +528,6 @@
         document.getElementById('locationPilgrimName').textContent = 'الحاج: ' + name;
         document.getElementById('locationModal').classList.add('show');
 
-        // تهيئة الخريطة
         if (map) {
             map.remove();
             map = null;
@@ -431,7 +538,6 @@
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-        // تحميل الموقع الحالي إذا وجد
         supabase
             .from('pilgrim_locations')
             .select('*')
@@ -446,7 +552,6 @@
                     map.setView([lat, lng], 13);
                     marker = L.marker([lat, lng]).addTo(map);
                 } else {
-                    // حاول تحديد موقع المستخدم الحالي
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition((pos) => {
                             const lat = pos.coords.latitude;
@@ -460,7 +565,6 @@
                 }
             });
 
-        // النقر على الخريطة لتحديد الموقع
         map.on('click', (e) => {
             const lat = e.latlng.lat;
             const lng = e.latlng.lng;
@@ -521,9 +625,9 @@
     document.getElementById('refreshBtn').addEventListener('click', loadPilgrims);
 
     // =========================================================
-    // تحميل عند فتح الصفحة
+    // تحميل تلقائي عند فتح الصفحة (إذا كان مسجل دخول)
     // =========================================================
-    document.addEventListener('DOMContentLoaded', loadPilgrims);
+    // ملاحظة: التحميل يتم بعد نجاح تسجيل الدخول
 </script>
 </body>
 </html>
