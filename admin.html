@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم دليل الحاج</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f0f4f3;
+            padding: 20px;
+            color: #173530;
+        }
+        .admin-container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e5e9e6;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .admin-header h1 {
+            font-size: 24px;
+            color: #075c52;
+        }
+        .admin-header a {
+            background: #075c52;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .admin-form {
+            background: #f8faf9;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+        .admin-form label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #71807c;
+            margin-bottom: 4px;
+        }
+        .admin-form input, .admin-form select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #dce3e0;
+            border-radius: 12px;
+            font-size: 14px;
+            background: #fff;
+            color: #173530;
+        }
+        .admin-form button {
+            background: #075c52;
+            color: #fff;
+            border: 0;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            height: 44px;
+        }
+        .admin-form button.danger {
+            background: #b52339;
+        }
+        .admin-form button.gold {
+            background: #c99625;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th {
+            background: #075c52;
+            color: #fff;
+            padding: 12px 10px;
+            text-align: right;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e9e6;
+        }
+        td .btn-sm {
+            border: 0;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        .btn-sm.edit {
+            background: #c99625;
+            color: #fff;
+        }
+        .btn-sm.delete {
+            background: #b52339;
+            color: #fff;
+        }
+        .btn-sm.location {
+            background: #075c52;
+            color: #fff;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #173530;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-size: 14px;
+            z-index: 999;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .toast.show { opacity: 1; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal.show { display: flex; }
+        .modal-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-box h2 { margin-bottom: 15px; color: #075c52; }
+        .modal-box label { display: block; margin: 10px 0 4px; font-weight: 700; font-size: 13px; }
+        .modal-box input, .modal-box select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dce3e0;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+        .modal-box .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .modal-box .btn-group button {
+            flex: 1;
+            border: 0;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .modal-box .btn-group .save { background: #075c52; color: #fff; }
+        .modal-box .btn-group .cancel { background: #e5e9e6; color: #173530; }
+        .modal-box .btn-group .delete-confirm { background: #b52339; color: #fff; }
+
+        #map {
+            height: 350px;
+            border-radius: 16px;
+            margin: 15px 0;
+            background: #e5e9e6;
+        }
+
+        @media(max-width:600px) {
+            .admin-form { grid-template-columns: 1fr; }
+            .admin-header { flex-direction: column; gap: 10px; }
+        }
+    </style>
+    <!-- Leaflet للخريطة -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<div class="admin-container">
+    <div class="admin-header">
+        <h1>🕋 لوحة تحكم دليل الحاج</h1>
+        <div>
+            <a href="./" target="_blank">📱 فتح التطبيق</a>
+        </div>
+    </div>
+
+    <!-- نموذج إضافة حاج -->
+    <div class="admin-form" id="addForm">
+        <div>
+            <label>اسم الحاج</label>
+            <input id="adminName" placeholder="مثال: أحمد" />
+        </div>
+        <div>
+            <label>الشفرة</label>
+            <input id="adminCode" placeholder="مثال: 1234" />
+        </div>
+        <div>
+            <label>معرف المستخدم (اختياري)</label>
+            <input id="adminUserId" placeholder="UUID" />
+        </div>
+        <div>
+            <button id="addBtn">➕ إضافة حاج</button>
+            <button id="refreshBtn" class="gold" style="margin-top:5px;">🔄 تحديث</button>
+        </div>
+    </div>
+
+    <!-- جدول الحجاج -->
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>الاسم</th>
+                    <th>الكود</th>
+                    <th>المعرف</th>
+                    <th>تاريخ التسجيل</th>
+                    <th>الموقع</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="pilgrimsTable">
+                <tr><td colspan="7" style="text-align:center;color:#71807c;">جاري التحميل...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- مودال تحديد الموقع -->
+<div class="modal" id="locationModal">
+    <div class="modal-box">
+        <h2>📍 تحديد موقع الحاج</h2>
+        <p style="color:#71807c;font-size:13px;" id="locationPilgrimName">الحاج: ---</p>
+        <div id="map"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+            <input id="locLat" placeholder="خط العرض" />
+            <input id="locLng" placeholder="خط الطول" />
+        </div>
+        <div class="btn-group">
+            <button class="save" onclick="saveLocation()">💾 حفظ الموقع</button>
+            <button class="cancel" onclick="closeLocationModal()">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    // =========================================================
+    // إعدادات Supabase (نفس اللي في التطبيق)
+    // =========================================================
+    const SUPABASE_URL = "https://tmmspfxkmqsivpxchfkk.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_e_UeWsqQTEk0GUhdpMDHYg_nAC3b7vZ";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let currentPilgrimId = null;
+    let map = null;
+    let marker = null;
+
+    // =========================================================
+    // أدوات مساعدة
+    // =========================================================
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(t._timer);
+        t._timer = setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function loadPilgrims() {
+        const tbody = document.getElementById('pilgrimsTable');
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#71807c;">جاري التحميل...</td></tr>';
+
+        supabase
+            .from('pilgrims')
+            .select('*')
+            .order('id', { ascending: false })
+            .then(({ data, error }) => {
+                if (error) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#b52339;">خطأ: ${error.message}</td></tr>`;
+                    return;
+                }
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#71807c;">لا يوجد حجاج مسجلين</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map((p, i) => `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td><strong>${p.name}</strong></td>
+                        <td>${p.code}</td>
+                        <td style="font-size:11px;direction:ltr;">${p.user_id || '—'}</td>
+                        <td style="font-size:11px;">${p.created_at ? new Date(p.created_at).toLocaleDateString('ar-SA') : '—'}</td>
+                        <td>
+                            <button class="btn-sm location" onclick="openLocationModal('${p.id}','${p.name}')">📍</button>
+                        </td>
+                        <td>
+                            <button class="btn-sm edit" onclick="editPilgrim('${p.id}','${p.name}','${p.code}','${p.user_id || ''}')">✏️</button>
+                            <button class="btn-sm delete" onclick="deletePilgrim('${p.id}','${p.name}')">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('');
+            });
+    }
+
+    // =========================================================
+    // إضافة حاج
+    // =========================================================
+    document.getElementById('addBtn').addEventListener('click', async () => {
+        const name = document.getElementById('adminName').value.trim();
+        const code = document.getElementById('adminCode').value.trim();
+        const userId = document.getElementById('adminUserId').value.trim() || '00000000-0000-0000-0000-000000000000';
+
+        if (!name || !code) {
+            showToast('⚠️ يرجى إدخال الاسم والشفرة');
+            return;
+        }
+
+        const { error } = await supabase
+            .from('pilgrims')
+            .insert([{ name, code, user_id: userId }]);
+
+        if (error) {
+            showToast('❌ خطأ: ' + error.message);
+            return;
+        }
+
+        showToast('✅ تم إضافة الحاج ' + name);
+        document.getElementById('adminName').value = '';
+        document.getElementById('adminCode').value = '';
+        document.getElementById('adminUserId').value = '';
+        loadPilgrims();
+    });
+
+    // =========================================================
+    // حذف حاج
+    // =========================================================
+    function deletePilgrim(id, name) {
+        if (!confirm(`هل تريد حذف الحاج "${name}" نهائياً؟`)) return;
+
+        supabase
+            .from('pilgrims')
+            .delete()
+            .eq('id', id)
+            .then(({ error }) => {
+                if (error) {
+                    showToast('❌ خطأ: ' + error.message);
+                    return;
+                }
+                showToast('🗑️ تم حذف ' + name);
+                loadPilgrims();
+            });
+    }
+
+    // =========================================================
+    // تعديل حاج
+    // =========================================================
+    function editPilgrim(id, name, code, userId) {
+        const newName = prompt('اسم الحاج:', name);
+        if (newName === null) return;
+        const newCode = prompt('الشفرة:', code);
+        if (newCode === null) return;
+        const newUserId = prompt('معرف المستخدم (UUID):', userId || '00000000-0000-0000-0000-000000000000');
+
+        supabase
+            .from('pilgrims')
+            .update({ name: newName, code: newCode, user_id: newUserId })
+            .eq('id', id)
+            .then(({ error }) => {
+                if (error) {
+                    showToast('❌ خطأ: ' + error.message);
+                    return;
+                }
+                showToast('✅ تم التحديث');
+                loadPilgrims();
+            });
+    }
+
+    // =========================================================
+    // تحديد الموقع (مودال + خريطة)
+    // =========================================================
+    let locationPilgrimId = null;
+
+    function openLocationModal(id, name) {
+        locationPilgrimId = id;
+        document.getElementById('locationPilgrimName').textContent = 'الحاج: ' + name;
+        document.getElementById('locationModal').classList.add('show');
+
+        // تهيئة الخريطة
+        if (map) {
+            map.remove();
+            map = null;
+        }
+
+        map = L.map('map').setView([21.4225, 39.8262], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // تحميل الموقع الحالي إذا وجد
+        supabase
+            .from('pilgrim_locations')
+            .select('*')
+            .eq('pilgrim_id', id)
+            .maybeSingle()
+            .then(({ data }) => {
+                if (data && data.latitude && data.longitude) {
+                    const lat = parseFloat(data.latitude);
+                    const lng = parseFloat(data.longitude);
+                    document.getElementById('locLat').value = lat;
+                    document.getElementById('locLng').value = lng;
+                    map.setView([lat, lng], 13);
+                    marker = L.marker([lat, lng]).addTo(map);
+                } else {
+                    // حاول تحديد موقع المستخدم الحالي
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition((pos) => {
+                            const lat = pos.coords.latitude;
+                            const lng = pos.coords.longitude;
+                            document.getElementById('locLat').value = lat;
+                            document.getElementById('locLng').value = lng;
+                            map.setView([lat, lng], 13);
+                            marker = L.marker([lat, lng]).addTo(map);
+                        });
+                    }
+                }
+            });
+
+        // النقر على الخريطة لتحديد الموقع
+        map.on('click', (e) => {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+            document.getElementById('locLat').value = lat;
+            document.getElementById('locLng').value = lng;
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([lat, lng]).addTo(map);
+        });
+    }
+
+    function closeLocationModal() {
+        document.getElementById('locationModal').classList.remove('show');
+        if (map) {
+            map.remove();
+            map = null;
+        }
+        locationPilgrimId = null;
+    }
+
+    function saveLocation() {
+        const lat = parseFloat(document.getElementById('locLat').value);
+        const lng = parseFloat(document.getElementById('locLng').value);
+
+        if (isNaN(lat) || isNaN(lng)) {
+            showToast('⚠️ يرجى إدخال إحداثيات صحيحة');
+            return;
+        }
+
+        if (!locationPilgrimId) {
+            showToast('⚠️ خطأ: لم يتم تحديد الحاج');
+            return;
+        }
+
+        supabase
+            .from('pilgrim_locations')
+            .upsert({
+                pilgrim_id: locationPilgrimId,
+                latitude: lat,
+                longitude: lng,
+                updated_at: new Date().toISOString()
+            }, { onConflict: 'pilgrim_id' })
+            .then(({ error }) => {
+                if (error) {
+                    showToast('❌ خطأ: ' + error.message);
+                    return;
+                }
+                showToast('✅ تم حفظ موقع الحاج');
+                closeLocationModal();
+                loadPilgrims();
+            });
+    }
+
+    // =========================================================
+    // تحديث يدوي
+    // =========================================================
+    document.getElementById('refreshBtn').addEventListener('click', loadPilgrims);
+
+    // =========================================================
+    // تحميل عند فتح الصفحة
+    // =========================================================
+    document.addEventListener('DOMContentLoaded', loadPilgrims);
+</script>
+</body>
+</html>
