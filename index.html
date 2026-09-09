@@ -4,7 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b7a70">
+
+<!-- PWA & Favicon Icons -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📿</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📿</text></svg>">
 <link rel="manifest" href="./manifest.json">
+
 <title>أذكار المسلم | بلال بن رباح</title>
 
 <style>
@@ -52,6 +57,50 @@ button{
   max-width:850px;
   margin:auto;
   padding-bottom:90px;
+}
+
+/* SPLASH SCREEN */
+
+#splash{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(145deg, #0b7a70, #05443f);
+  color:#fff;
+  z-index:9999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transition:opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#splash.fade-out{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.splash-logo{
+  font-size:75px;
+  animation:pulse 1.8s infinite ease-in-out;
+}
+
+.splash-title{
+  font-size:26px;
+  font-weight:800;
+  margin-top:15px;
+  letter-spacing:0.5px;
+}
+
+.splash-sub{
+  font-size:13px;
+  opacity:0.8;
+  margin-top:6px;
+}
+
+@keyframes pulse{
+  0%, 100%{ transform:scale(1); opacity:0.9; }
+  50%{ transform:scale(1.12); opacity:1; }
 }
 
 /* HEADER */
@@ -415,9 +464,10 @@ main{
   align-items:center;
   justify-content:space-between;
   margin-bottom:14px;
+  gap:10px;
 }
 
-.favorite-btn{
+.favorite-btn, .audio-btn{
   width:44px;
   height:44px;
   border:1px solid var(--border);
@@ -426,6 +476,10 @@ main{
   border-radius:15px;
   box-shadow:var(--shadow);
   font-size:21px;
+}
+
+.audio-btn{
+  color:var(--primary);
 }
 
 .reader-card{
@@ -516,6 +570,11 @@ main{
   padding:17px;
   font-weight:800;
   box-shadow:0 9px 20px #0b7a7030;
+  transition:transform 0.1s ease;
+}
+
+.tap-button:active{
+  transform:scale(0.97);
 }
 
 .reader-actions{
@@ -706,7 +765,6 @@ main{
 }
 
 @media(prefers-color-scheme:dark){
-
   :root{
     --bg:#0f1d1b;
     --card:#172825;
@@ -732,7 +790,6 @@ main{
 }
 
 @media(min-width:650px){
-
   .grid{
     grid-template-columns:repeat(3,1fr);
   }
@@ -743,7 +800,6 @@ main{
 }
 
 @media(max-width:360px){
-
   .brand h1{
     font-size:22px;
   }
@@ -756,6 +812,13 @@ main{
 </head>
 
 <body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-logo">📿</div>
+  <div class="splash-title">أذكار المسلم</div>
+  <div class="splash-sub">المدرسة الشرعية الخامسة عشرة - بلال بن رباح</div>
+</div>
 
 <div class="app">
 
@@ -893,11 +956,20 @@ main{
       onclick="back()"
     >→</button>
 
-    <button
-      id="favoriteBtn"
-      class="favorite-btn"
-      onclick="toggleFavorite()"
-    >☆</button>
+    <div style="display:flex; gap:8px;">
+      <button
+        id="audioBtn"
+        class="audio-btn"
+        onclick="toggleAudio()"
+        title="استمع للذكر"
+      >🔊</button>
+
+      <button
+        id="favoriteBtn"
+        class="favorite-btn"
+        onclick="toggleFavorite()"
+      >☆</button>
+    </div>
 
   </div>
 
@@ -1274,31 +1346,31 @@ main{
 <script>
 
 const REMOTE_URL="./azkar.json";
-
-const CACHE_KEY=
-  "azkar_muslim_content_v2";
-
-const FAVORITES_KEY=
-  "azkar_muslim_favorites_v1";
-
-const FONT_KEY=
-  "azkar_muslim_font_v1";
-
-const THEME_KEY=
-  "azkar_muslim_theme_v1";
+const CACHE_KEY="azkar_muslim_content_v2";
+const FAVORITES_KEY="azkar_muslim_favorites_v1";
+const FONT_KEY="azkar_muslim_font_v1";
+const THEME_KEY="azkar_muslim_theme_v1";
 
 let data=[];
 let view=[];
 let i=0;
 let n=0;
-
 let favorites=new Set();
-
 let historyReady=false;
+let currentSpeech=null;
 
+/* HAPTIC FEEDBACK */
+function triggerHaptic(type='click'){
+  if('vibrate' in navigator){
+    if(type === 'click'){
+      navigator.vibrate(35);
+    } else if(type === 'complete'){
+      navigator.vibrate([80, 40, 80]);
+    }
+  }
+}
 
 /* HELPERS */
-
 function $(id){
   return document.getElementById(id);
 }
@@ -1308,1670 +1380,624 @@ function setStatus(t){
 }
 
 function toast(t){
-
   const el=$("toast");
-
   el.textContent=t;
-
   el.classList.add("show");
-
   clearTimeout(window.toastTimer);
-
   window.toastTimer=setTimeout(()=>{
     el.classList.remove("show");
   },2200);
 }
 
+/* AUDIO / TTS PLAYER */
+function toggleAudio(){
+  if('speechSynthesis' in window){
+    if(window.speechSynthesis.speaking){
+      window.speechSynthesis.cancel();
+      $("audioBtn").textContent="🔊";
+      toast("تم إيقاف الصوت");
+      return;
+    }
+
+    const x = view[i];
+    if(!x || !x.text) return;
+
+    currentSpeech = new SpeechSynthesisUtterance(x.text);
+    currentSpeech.lang = 'ar';
+    currentSpeech.rate = 0.85;
+
+    currentSpeech.onend = () => {
+      $("audioBtn").textContent="🔊";
+    };
+
+    window.speechSynthesis.speak(currentSpeech);
+    $("audioBtn").textContent="⏹️";
+    toast("جارٍ قراءة الذكر...");
+  } else {
+    toast("خاصية القراءة الصوتية غير مدعومة في متصفحك");
+  }
+}
 
 /* FAVORITES */
-
 function loadFavorites(){
-
   try{
-
     favorites=new Set(
       JSON.parse(
-        localStorage.getItem(
-          FAVORITES_KEY
-        )||"[]"
+        localStorage.getItem(FAVORITES_KEY)||"[]"
       )
     );
-
   }catch(e){
-
     favorites=new Set();
-
   }
-
   updateFavoriteCount();
 }
 
 function saveFavorites(){
-
   localStorage.setItem(
     FAVORITES_KEY,
     JSON.stringify([...favorites])
   );
-
   updateFavoriteCount();
 }
 
 function getKey(x){
-
-  return String(
-    x.id??
-    x.title??
-    x.text??
-    ""
-  );
+  return String(x.id??x.title??x.text??"");
 }
 
 function updateFavoriteCount(){
-
   if($("favoriteCount"))
-    $("favoriteCount").textContent=
-      favorites.size;
+    $("favoriteCount").textContent=favorites.size;
 }
 
-
 /* DATA */
-
 async function loadData(){
-
   try{
-
-    const r=await fetch(
-      REMOTE_URL,
-      {
-        cache:"no-store"
-      }
-    );
-
-    if(!r.ok)
-      throw new Error();
+    const r=await fetch(REMOTE_URL,{cache:"no-store"});
+    if(!r.ok) throw new Error();
 
     const x=await r.json();
+    if(!(Array.isArray(x)||Array.isArray(x.items))) throw new Error();
 
-    if(
-      !(
-        Array.isArray(x)||
-        Array.isArray(x.items)
-      )
-    )
-      throw new Error();
-
-    localStorage.setItem(
-      CACHE_KEY,
-      JSON.stringify(x)
-    );
-
+    localStorage.setItem(CACHE_KEY, JSON.stringify(x));
     data=x.items||x;
-
-    setStatus(
-      "تم تحديث الأذكار من المستودع ✓"
-    );
-
+    setStatus("تم تحديث الأذكار من المستودع ✓");
     updateStats();
     renderHome();
-
     return;
-
   }catch(e){}
 
-
   try{
-
-    const saved=
-      localStorage.getItem(
-        CACHE_KEY
-      );
-
+    const saved=localStorage.getItem(CACHE_KEY);
     if(saved){
-
       const x=JSON.parse(saved);
-
       data=x.items||x;
-
-      setStatus(
-        "تم تشغيل النسخة المحفوظة ✓"
-      );
-
+      setStatus("تم تشغيل النسخة المحفوظة ✓");
       updateStats();
       renderHome();
-
       return;
     }
-
   }catch(e){}
 
-
   try{
-
-    const r=
-      await fetch("./azkar.json");
-
+    const r=await fetch("./azkar.json");
     const x=await r.json();
-
     data=x.items||x;
-
-    localStorage.setItem(
-      CACHE_KEY,
-      JSON.stringify(x)
-    );
-
-    setStatus(
-      "تم تحميل البيانات ✓"
-    );
-
+    localStorage.setItem(CACHE_KEY, JSON.stringify(x));
+    setStatus("تم تحميل البيانات ✓");
     updateStats();
     renderHome();
-
   }catch(e){
-
-    setStatus(
-      "تعذر تحميل الأذكار. تأكد من وجود azkar.json"
-    );
-
+    setStatus("تعذر تحميل الأذكار. تأكد من وجود azkar.json");
   }
 }
 
 function refreshData(){
-
-  toast(
-    "جارٍ تحديث البيانات..."
-  );
-
+  triggerHaptic('click');
+  toast("جارٍ تحديث البيانات...");
   loadData().then(()=>{
-    toast(
-      "تم تحديث البيانات ✓"
-    );
+    toast("تم تحديث البيانات ✓");
   });
 }
 
-
 /* STATS */
-
 function updateStats(){
-
-  const cats=[
-    ...new Set(
-      data
-      .map(x=>x.category)
-      .filter(Boolean)
-    )
-  ];
-
-  $("totalAzkar").textContent=
-    data.length;
-
-  $("totalCategories").textContent=
-    cats.length;
-
+  const cats=[...new Set(data.map(x=>x.category).filter(Boolean))];
+  $("totalAzkar").textContent=data.length;
+  $("totalCategories").textContent=cats.length;
   updateFavoriteCount();
 }
 
-
-/* =====================================================
-   NAVIGATION SYSTEM
-   ===================================================== */
-
+/* NAVIGATION SYSTEM */
 function hideAll(){
-
-  [
-    "home",
-    "list",
-    "reader",
-    "favoritesPage",
-    "settingsPage"
-  ].forEach(id=>{
-
+  ["home","list","reader","favoritesPage","settingsPage"].forEach(id=>{
     const el=$(id);
-
-    if(el)
-      el.classList.add("hidden");
-
+    if(el) el.classList.add("hidden");
   });
-
 }
-
 
 function setNav(active){
-
-  [
-    "navHome",
-    "navSections",
-    "navFavorites",
-    "navSettings"
-  ].forEach(id=>{
-
+  ["navHome","navSections","navFavorites","navSettings"].forEach(id=>{
     const el=$(id);
-
-    if(el)
-      el.classList.remove("active");
-
+    if(el) el.classList.remove("active");
   });
-
-  if(active && $(active))
-    $(active).classList.add("active");
-
+  if(active && $(active)) $(active).classList.add("active");
 }
-
-
-/*
-  إضافة حالة جديدة لسجل التطبيق
-*/
 
 function pushRoute(state){
-
-  if(!historyReady)
-    return;
-
-  history.pushState(
-    {
-      ...state,
-      app:true
-    },
-    "",
-    location.href
-  );
-
+  if(!historyReady) return;
+  history.pushState({...state, app:true}, "", location.href);
 }
-
 
 /* HOME */
-
-function showPage(
-  id,
-  push=true
-){
-
+function showPage(id, push=true){
+  triggerHaptic('click');
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
   hideAll();
 
-  if($(id))
-    $(id).classList.remove(
-      "hidden"
-    );
+  if($(id)) $(id).classList.remove("hidden");
 
   setNav(
-    id==="home"
-      ?"navHome"
-      :id==="favoritesPage"
-      ?"navFavorites"
-      :id==="settingsPage"
-      ?"navSettings"
-      :"navSections"
+    id==="home"?"navHome":
+    id==="favoritesPage"?"navFavorites":
+    id==="settingsPage"?"navSettings":"navSections"
   );
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(id==="home")
-    renderHome();
-
-  if(push){
-
-    pushRoute({
-      page:id
-    });
-
-  }
+  window.scrollTo({top:0, behavior:"smooth"});
+  if(id==="home") renderHome();
+  if(push) pushRoute({page:id});
 }
 
-
-function home(
-  push=true
-){
-
-  showPage(
-    "home",
-    push
-  );
-
+function home(push=true){
+  showPage("home", push);
 }
-
 
 /* الأقسام */
-
-function showSections(
-  push=true
-){
-
+function showSections(push=true){
+  triggerHaptic('click');
   hideAll();
+  $("list").classList.remove("hidden");
+  setNav("navSections");
 
-  $("list").classList.remove(
-    "hidden"
-  );
-
-  setNav(
-    "navSections"
-  );
-
-  $("lt").textContent=
-    "الأقسام";
-
-  $("listCount").textContent=
-    "اختر قسمًا للبدء";
-
+  $("lt").textContent="الأقسام";
+  $("listCount").textContent="اختر قسمًا للبدء";
   renderSectionList();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(push){
-
-    pushRoute({
-      page:"sections"
-    });
-
-  }
+  window.scrollTo({top:0, behavior:"smooth"});
+  if(push) pushRoute({page:"sections"});
 }
-
 
 /* المفضلة */
-
-function showFavorites(
-  push=true
-){
-
+function showFavorites(push=true){
+  triggerHaptic('click');
   hideAll();
-
-  $("favoritesPage")
-    .classList.remove(
-      "hidden"
-    );
-
-  setNav(
-    "navFavorites"
-  );
-
+  $("favoritesPage").classList.remove("hidden");
+  setNav("navFavorites");
   renderFavorites();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(push){
-
-    pushRoute({
-      page:"favorites"
-    });
-
-  }
+  window.scrollTo({top:0, behavior:"smooth"});
+  if(push) pushRoute({page:"favorites"});
 }
-
 
 /* الإعدادات */
-
-function showSettings(
-  push=true
-){
-
+function showSettings(push=true){
+  triggerHaptic('click');
   hideAll();
+  $("settingsPage").classList.remove("hidden");
+  setNav("navSettings");
 
-  $("settingsPage")
-    .classList.remove(
-      "hidden"
-    );
-
-  setNav(
-    "navSettings"
-  );
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(push){
-
-    pushRoute({
-      page:"settings"
-    });
-
-  }
+  window.scrollTo({top:0, behavior:"smooth"});
+  if(push) pushRoute({page:"settings"});
 }
-
-
-/*
-  زر الرجوع داخل التطبيق
-*/
 
 function back(){
-
+  triggerHaptic('click');
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
   if(historyReady){
-
     history.back();
-
     return;
-
   }
-
   showSections(false);
-
 }
 
+window.addEventListener("popstate", function(event){
+  const state=event.state;
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
 
-/*
-  =====================================================
-  زر الرجوع في الهاتف
-  =====================================================
-
-  هذا هو الإصلاح الأساسي.
-
-  عند وجود صفحة داخلية:
-  رجوع الهاتف يعيد الصفحة السابقة داخل التطبيق.
-
-  عند الوصول إلى الرئيسية:
-  لا نقوم بإجبار المستخدم على الخروج
-  من الموقع بسبب حالة غير معروفة.
-*/
-
-window.addEventListener(
-  "popstate",
-  function(event){
-
-    const state=
-      event.state;
-
-
-    /*
-      حالة غير تابعة للتطبيق
-    */
-
-    if(!state || !state.app){
-
-      history.pushState(
-        {
-          page:"home",
-          app:true
-        },
-        "",
-        location.href
-      );
-
-      showPage(
-        "home",
-        false
-      );
-
-      return;
-    }
-
-
-    /*
-      الرئيسية
-    */
-
-    if(
-      state.page==="home"
-    ){
-
-      showPage(
-        "home",
-        false
-      );
-
-      return;
-    }
-
-
-    /*
-      الأقسام
-    */
-
-    if(
-      state.page==="sections"
-    ){
-
-      showSections(false);
-
-      return;
-    }
-
-
-    /*
-      المفضلة
-    */
-
-    if(
-      state.page==="favorites"
-    ){
-
-      showFavorites(false);
-
-      return;
-    }
-
-
-    /*
-      الإعدادات
-    */
-
-    if(
-      state.page==="settings"
-    ){
-
-      showSettings(false);
-
-      return;
-    }
-
-
-    /*
-      قسم محدد
-    */
-
-    if(
-      state.page==="category"
-    ){
-
-      if(state.category){
-
-        openCat(
-          state.category,
-          false
-        );
-
-      }else{
-
-        showSections(false);
-
-      }
-
-      return;
-    }
-
-
-    /*
-      قارئ الذكر
-    */
-
-    if(
-      state.page==="reader"
-    ){
-
-      const ids=
-        Array.isArray(
-          state.viewIds
-        )
-        ?state.viewIds
-        :[];
-
-      const restored=[];
-
-      ids.forEach(id=>{
-
-        const found=
-          data.find(
-            x=>
-              getKey(x)===
-              String(id)
-          );
-
-        if(found)
-          restored.push(found);
-
-      });
-
-
-      if(restored.length){
-
-        view=restored;
-
-        openReader(
-          Number(state.index)||0,
-          false
-        );
-
-        return;
-      }
-
-
-      showSections(false);
-
-    }
-
+  if(!state || !state.app){
+    history.pushState({page:"home", app:true}, "", location.href);
+    showPage("home", false);
+    return;
   }
-);
 
+  if(state.page==="home"){ showPage("home", false); return; }
+  if(state.page==="sections"){ showSections(false); return; }
+  if(state.page==="favorites"){ showFavorites(false); return; }
+  if(state.page==="settings"){ showSettings(false); return; }
 
-/*
-  تهيئة سجل التطبيق
-*/
+  if(state.page==="category"){
+    if(state.category) openCat(state.category, false);
+    else showSections(false);
+    return;
+  }
+
+  if(state.page==="reader"){
+    const ids=Array.isArray(state.viewIds)?state.viewIds:[];
+    const restored=[];
+    ids.forEach(id=>{
+      const found=data.find(x=>getKey(x)===String(id));
+      if(found) restored.push(found);
+    });
+
+    if(restored.length){
+      view=restored;
+      openReader(Number(state.index)||0, false);
+      return;
+    }
+    showSections(false);
+  }
+});
 
 function initHistory(){
-
-  /*
-    الحالة الحالية = الرئيسية
-  */
-
-  history.replaceState(
-    {
-      page:"home",
-      app:true
-    },
-    "",
-    location.href
-  );
-
-  /*
-    نقطة إضافية للرئيسية.
-    وجودها يمنع أول رجوع من إخراج
-    التطبيق مباشرة.
-  */
-
-  history.pushState(
-    {
-      page:"home",
-      app:true
-    },
-    "",
-    location.href
-  );
-
+  history.replaceState({page:"home", app:true}, "", location.href);
+  history.pushState({page:"home", app:true}, "", location.href);
   historyReady=true;
-
 }
 
-
-/* HOME */
-
+/* HOME RENDER */
 function renderHome(){
-
-  const q=
-    $("q")
-    .value
-    .trim()
-    .toLowerCase();
-
-  const cats=[
-    ...new Set(
-      data
-      .map(x=>x.category)
-      .filter(Boolean)
-    )
-  ];
-
+  const q=$("q").value.trim().toLowerCase();
+  const cats=[...new Set(data.map(x=>x.category).filter(Boolean))];
   const box=$("cats");
-
   const results=$("results");
-
   const sr=$("searchResults");
 
   box.innerHTML="";
-
   sr.innerHTML="";
-
-  $("clearSearch").style.display=
-    q
-      ?"block"
-      :"none";
-
+  $("clearSearch").style.display=q?"block":"none";
 
   if(!q){
-
-    results.classList.add(
-      "hidden"
-    );
-
-    cats.forEach(
-      (c,index)=>{
-
-        const items=
-          data.filter(
-            x=>
-              x.category===c
-          );
-
-        const b=
-          document.createElement(
-            "button"
-          );
-
-        b.className=
-          "category";
-
-        b.innerHTML=`
-
-          <div class="category-icon">
-            ${categoryIcon(c,index)}
-          </div>
-
-          <div class="category-title">
-            ${esc(c)}
-          </div>
-
-          <div class="category-count">
-            ${items.length} أذكار
-          </div>
-
-        `;
-
-        b.onclick=()=>{
-          openCat(c);
-        };
-
-        box.appendChild(b);
-
-      }
-    );
-
+    results.classList.add("hidden");
+    cats.forEach((c,index)=>{
+      const items=data.filter(x=>x.category===c);
+      const b=document.createElement("button");
+      b.className="category";
+      b.innerHTML=`
+        <div class="category-icon">${categoryIcon(c,index)}</div>
+        <div class="category-title">${esc(c)}</div>
+        <div class="category-count">${items.length} أذكار</div>
+      `;
+      b.onclick=()=>{ triggerHaptic('click'); openCat(c); };
+      box.appendChild(b);
+    });
     return;
   }
 
-
-  results.classList.remove(
-    "hidden"
-  );
-
-
-  const found=
-    data.filter(x=>{
-
-      const text=(
-        (x.text||"")+" "+
-        (x.title||"")+" "+
-        (x.category||"")
-      ).toLowerCase();
-
-      return text.includes(q);
-
-    });
-
+  results.classList.remove("hidden");
+  const found=data.filter(x=>{
+    const text=((x.text||"")+" "+(x.title||"")+" "+(x.category||"")).toLowerCase();
+    return text.includes(q);
+  });
 
   if(!found.length){
-
     sr.innerHTML=`
-
       <div class="empty">
-
-        <div class="empty-icon">
-          🔎
-        </div>
-
-        <strong>
-          لم نجد ما تبحث عنه
-        </strong>
-
+        <div class="empty-icon">🔎</div>
+        <strong>لم نجد ما تبحث عنه</strong>
         جرّب كلمة أخرى
-
       </div>
-
     `;
-
     return;
   }
-
 
   found.forEach(x=>{
-
-    const b=
-      document.createElement(
-        "button"
-      );
-
-    b.className=
-      "result";
-
+    const b=document.createElement("button");
+    b.className="result";
     b.innerHTML=`
-
-      <div class="result-title">
-        ${esc(x.title||"ذكر")}
-      </div>
-
-      <div class="result-preview">
-        ${esc(
-          String(x.text||"")
-          .replace(/\s+/g," ")
-          .slice(0,130)
-        )}
-        ${
-          String(x.text||"").length>130
-            ?"…"
-            :""
-        }
-      </div>
-
+      <div class="result-title">${esc(x.title||"ذكر")}</div>
+      <div class="result-preview">${esc(String(x.text||"").replace(/\s+/g," ").slice(0,130))}${String(x.text||"").length>130?"…":""}</div>
     `;
-
     b.onclick=()=>{
-
+      triggerHaptic('click');
       view=[x];
-
       i=0;
-
       openReader(0);
-
     };
-
     sr.appendChild(b);
-
   });
-
 }
-
 
 function clearSearch(){
-
+  triggerHaptic('click');
   $("q").value="";
-
   renderHome();
-
 }
-
 
 /* SECTION LIST */
-
 function renderSectionList(){
-
   const box=$("ls");
-
   box.innerHTML="";
-
-  const cats=[
-    ...new Set(
-      data
-      .map(x=>x.category)
-      .filter(Boolean)
-    )
-  ];
-
+  const cats=[...new Set(data.map(x=>x.category).filter(Boolean))];
 
   if(!cats.length){
-
-    box.innerHTML=`
-
-      <div class="empty">
-        لا توجد أقسام
-      </div>
-
-    `;
-
+    box.innerHTML=`<div class="empty">لا توجد أقسام</div>`;
     return;
   }
 
-
-  cats.forEach(
-    (c,index)=>{
-
-      const count=
-        data.filter(
-          x=>x.category===c
-        ).length;
-
-      const b=
-        document.createElement(
-          "button"
-        );
-
-      b.className=
-        "dhikr-item";
-
-      b.innerHTML=`
-
-        <div class="dhikr-number">
-          ${categoryIcon(c,index)}
-        </div>
-
-        <div class="dhikr-info">
-
-          <div class="dhikr-title">
-            ${esc(c)}
-          </div>
-
-          <div class="dhikr-count">
-            ${count} أذكار
-          </div>
-
-        </div>
-
-        <div class="dhikr-arrow">
-          ‹
-        </div>
-
-      `;
-
-      b.onclick=()=>{
-        openCat(c);
-      };
-
-      box.appendChild(b);
-
-    }
-  );
+  cats.forEach((c,index)=>{
+    const count=data.filter(x=>x.category===c).length;
+    const b=document.createElement("button");
+    b.className="dhikr-item";
+    b.innerHTML=`
+      <div class="dhikr-number">${categoryIcon(c,index)}</div>
+      <div class="dhikr-info">
+        <div class="dhikr-title">${esc(c)}</div>
+        <div class="dhikr-count">${count} أذكار</div>
+      </div>
+      <div class="dhikr-arrow">‹</div>
+    `;
+    b.onclick=()=>{ triggerHaptic('click'); openCat(c); };
+    box.appendChild(b);
+  });
 }
-
 
 /* CATEGORY */
-
-function categoryIcon(
-  name,
-  index
-){
-
-  const n=
-    String(name||"")
-    .toLowerCase();
-
-
-  if(
-    n.includes("صباح")||
-    n.includes("مساء")
-  )
-    return "☀️";
-
-
-  if(
-    n.includes("نوم")||
-    n.includes("استيق")
-  )
-    return "🌙";
-
-
-  if(
-    n.includes("صلاة")||
-    n.includes("صل")
-  )
-    return "🕌";
-
-
-  if(
-    n.includes("منزل")||
-    n.includes("بيت")
-  )
-    return "🏠";
-
-
-  if(
-    n.includes("طعام")||
-    n.includes("أكل")
-  )
-    return "🍃";
-
-
-  if(
-    n.includes("سفر")
-  )
-    return "🧳";
-
-
-  if(
-    n.includes("قرآن")||
-    n.includes("قران")
-  )
-    return "📖";
-
-
-  if(
-    n.includes("دعاء")
-  )
-    return "🤲";
-
-
-  return [
-    "📿",
-    "🌿",
-    "🤲",
-    "✨",
-    "🕊️",
-    "📖"
-  ][index%6];
-
+function categoryIcon(name, index){
+  const n=String(name||"").toLowerCase();
+  if(n.includes("صباح")||n.includes("مساء")) return "☀️";
+  if(n.includes("نوم")||n.includes("استيق")) return "🌙";
+  if(n.includes("صلاة")||n.includes("صل")) return "🕌";
+  if(n.includes("منزل")||n.includes("بيت")) return "🏠";
+  if(n.includes("طعام")||n.includes("أكل")) return "🍃";
+  if(n.includes("سفر")) return "🧳";
+  if(n.includes("قرآن")||n.includes("قران")) return "📖";
+  if(n.includes("دعاء")) return "🤲";
+  return ["📿","🌿","🤲","✨","🕊️","📖"][index%6];
 }
 
-
-function openCat(
-  c,
-  push=true
-){
-
-  view=
-    data.filter(
-      x=>x.category===c
-    );
-
+function openCat(c, push=true){
+  view=data.filter(x=>x.category===c);
   i=0;
-
   $("lt").textContent=c;
-
-  $("listCount").textContent=
-    view.length+" أذكار";
+  $("listCount").textContent=view.length+" أذكار";
 
   hideAll();
-
-  $("list").classList.remove(
-    "hidden"
-  );
-
-  setNav(
-    "navSections"
-  );
-
+  $("list").classList.remove("hidden");
+  setNav("navSections");
   renderList();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-
-  if(push){
-
-    pushRoute({
-      page:"category",
-      category:c
-    });
-
-  }
+  window.scrollTo({top:0, behavior:"smooth"});
+  if(push) pushRoute({page:"category", category:c});
 }
-
 
 function renderList(){
-
   const box=$("ls");
-
   box.innerHTML="";
 
-
-  view.forEach(
-    (x,j)=>{
-
-      const b=
-        document.createElement(
-          "button"
-        );
-
-      b.className=
-        "dhikr-item";
-
-      b.innerHTML=`
-
-        <div class="dhikr-number">
-          ${j+1}
-        </div>
-
-        <div class="dhikr-info">
-
-          <div class="dhikr-title">
-            ${esc(
-              x.title||"ذكر"
-            )}
-          </div>
-
-          <div class="dhikr-count">
-            التكرار:
-            ${esc(
-              x.count??1
-            )}
-          </div>
-
-        </div>
-
-        <div class="dhikr-arrow">
-          ‹
-        </div>
-
-      `;
-
-      b.onclick=()=>{
-        openReader(j);
-      };
-
-      box.appendChild(b);
-
-    }
-  );
+  view.forEach((x,j)=>{
+    const b=document.createElement("button");
+    b.className="dhikr-item";
+    b.innerHTML=`
+      <div class="dhikr-number">${j+1}</div>
+      <div class="dhikr-info">
+        <div class="dhikr-title">${esc(x.title||"ذكر")}</div>
+        <div class="dhikr-count">التكرار: ${esc(x.count??1)}</div>
+      </div>
+      <div class="dhikr-arrow">‹</div>
+    `;
+    b.onclick=()=>{ triggerHaptic('click'); openReader(j); };
+    box.appendChild(b);
+  });
 }
 
-
 /* READER */
-
-function openReader(
-  j,
-  push=true
-){
+function openReader(j, push=true){
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+  $("audioBtn").textContent="🔊";
 
   i=j;
-
   n=0;
-
   const x=view[i];
+  if(!x) return;
 
-  if(!x)
-    return;
-
-
-  $("rt").textContent=
-    x.title||"ذكر";
-
-  $("rx").textContent=
-    x.text||"";
-
-
-  $("rs").textContent=[
-    x.source,
-    x.grade||x.status
-  ]
-  .filter(Boolean)
-  .join(" — ");
-
+  $("rt").textContent=x.title||"ذكر";
+  $("rx").textContent=x.text||"";
+  $("rs").textContent=[x.source, x.grade||x.status].filter(Boolean).join(" — ");
 
   updateReader();
-
-
   hideAll();
-
-  $("reader")
-    .classList.remove(
-      "hidden"
-    );
-
+  $("reader").classList.remove("hidden");
   setNav("");
 
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-
+  window.scrollTo({top:0, behavior:"smooth"});
   if(push){
-
-    pushRoute({
-      page:"reader",
-      index:i,
-      viewIds:
-        view.map(
-          x=>getKey(x)
-        )
-    });
-
+    pushRoute({page:"reader", index:i, viewIds:view.map(x=>getKey(x))});
   }
 }
 
-
 function updateReader(){
-
   const x=view[i];
+  if(!x) return;
 
-  if(!x)
-    return;
+  let count=Number(x.count);
+  if(!Number.isFinite(count)||count<1) count=1;
 
+  $("rc").textContent=n+" / "+count;
+  const percent=Math.min(100, Math.round((n/count)*100));
 
-  let count=
-    Number(x.count);
-
-
-  if(
-    !Number.isFinite(count)||
-    count<1
-  )
-    count=1;
-
-
-  $("rc").textContent=
-    n+" / "+count;
-
-
-  const percent=
-    Math.min(
-      100,
-      Math.round(
-        (n/count)*100
-      )
-    );
-
-
-  $("progressBar")
-    .style.width=
-      percent+"%";
-
-
-  $("progressPercent")
-    .textContent=
-      percent+"%";
-
-
-  $("progressText")
-    .textContent=
-      "التكرار "+
-      n+
-      " من "+
-      count;
-
-
-  $("prevBtn").disabled=
-    i===0;
-
+  $("progressBar").style.width=percent+"%";
+  $("progressPercent").textContent=percent+"%";
+  $("progressText").textContent="التكرار "+n+" من "+count;
+  $("prevBtn").disabled=(i===0);
 
   updateFavoriteButton();
 }
 
-
 function tap(){
-
   const x=view[i];
+  if(!x) return;
 
-  if(!x)
-    return;
-
-
-  let count=
-    Number(x.count);
-
-
-  if(
-    !Number.isFinite(count)||
-    count<1
-  )
-    count=1;
-
+  let count=Number(x.count);
+  if(!Number.isFinite(count)||count<1) count=1;
 
   n++;
 
-
   if(n>=count){
-
     n=count;
-
     updateReader();
-
+    triggerHaptic('complete');
 
     setTimeout(()=>{
-
       if(i<view.length-1){
-
         i++;
-
         n=0;
-
-        /*
-          الانتقال التلقائي لا يضيف
-          سجلًا جديدًا.
-        */
-
-        openReader(
-          i,
-          false
-        );
-
+        openReader(i, false);
       }else{
-
-        toast(
-          "أحسنت 🌿 أتممت القسم"
-        );
-
+        toast("أحسنت 🌿 أتممت القسم");
       }
-
     },180);
-
     return;
   }
 
-
+  triggerHaptic('click');
   updateReader();
 }
 
-
 function prev(){
-
+  triggerHaptic('click');
   if(i>0){
-
     i--;
-
     n=0;
-
     openReader(i);
-
   }
 }
-
 
 function skip(){
-
+  triggerHaptic('click');
   if(i<view.length-1){
-
     i++;
-
     n=0;
-
     openReader(i);
-
   }else{
-
-    toast(
-      "أتممت جميع أذكار هذا القسم 🌿"
-    );
-
+    toast("أتممت جميع أذكار هذا القسم 🌿");
     showSections();
-
   }
-
 }
-
 
 /* FAVORITES */
-
 function toggleFavorite(){
-
+  triggerHaptic('click');
   const x=view[i];
-
-  if(!x)
-    return;
-
+  if(!x) return;
 
   const key=getKey(x);
-
-
-  if(favorites.has(key))
-    favorites.delete(key);
-  else
-    favorites.add(key);
-
+  if(favorites.has(key)) favorites.delete(key);
+  else favorites.add(key);
 
   saveFavorites();
-
   updateFavoriteButton();
-
-
-  toast(
-    favorites.has(key)
-      ?"أضيف إلى المفضلة ⭐"
-      :"أزيل من المفضلة"
-  );
+  toast(favorites.has(key)?"أضيف إلى المفضلة ⭐":"أزيل من المفضلة");
 }
-
 
 function updateFavoriteButton(){
-
-  const b=
-    $("favoriteBtn");
-
+  const b=$("favoriteBtn");
   const x=view[i];
-
-  if(!x)
-    return;
-
-
-  b.textContent=
-    favorites.has(
-      getKey(x)
-    )
-      ?"★"
-      :"☆";
+  if(!x) return;
+  b.textContent=favorites.has(getKey(x))?"★":"☆";
 }
 
-
 function renderFavorites(){
-
-  const box=
-    $("favoriteList");
-
+  const box=$("favoriteList");
   box.innerHTML="";
 
-
-  const favs=
-    data.filter(
-      x=>
-        favorites.has(
-          getKey(x)
-        )
-    );
-
-
-  $("favPageCount")
-    .textContent=
-      favs.length+
-      " أذكار";
-
+  const favs=data.filter(x=>favorites.has(getKey(x)));
+  $("favPageCount").textContent=favs.length+" أذكار";
 
   if(!favs.length){
-
     box.innerHTML=`
-
       <div class="empty">
-
-        <div class="empty-icon">
-          ⭐
-        </div>
-
-        <strong>
-          لا توجد أذكار مفضلة
-        </strong>
-
-        أضف الأذكار التي تريد
-        الرجوع إليها لاحقًا.
-
+        <div class="empty-icon">⭐</div>
+        <strong>لا توجد أذكار مفضلة</strong>
+        أضف الأذكار التي تريد الرجوع إليها لاحقًا.
       </div>
-
     `;
-
     return;
   }
 
-
   favs.forEach(x=>{
-
-    const b=
-      document.createElement(
-        "button"
-      );
-
-    b.className=
-      "dhikr-item";
-
+    const b=document.createElement("button");
+    b.className="dhikr-item";
     b.innerHTML=`
-
-      <div class="dhikr-number">
-        ★
-      </div>
-
+      <div class="dhikr-number">★</div>
       <div class="dhikr-info">
-
-        <div class="dhikr-title">
-          ${esc(
-            x.title||"ذكر"
-          )}
-        </div>
-
-        <div class="dhikr-count">
-          ${esc(
-            x.category||""
-          )}
-        </div>
-
+        <div class="dhikr-title">${esc(x.title||"ذكر")}</div>
+        <div class="dhikr-count">${esc(x.category||"")}</div>
       </div>
-
-      <div class="dhikr-arrow">
-        ‹
-      </div>
-
+      <div class="dhikr-arrow">‹</div>
     `;
-
-
     b.onclick=()=>{
-
+      triggerHaptic('click');
       view=[x];
-
       i=0;
-
       openReader(0);
-
     };
-
-
     box.appendChild(b);
-
   });
 }
 
-
 function clearFavorites(){
-
+  triggerHaptic('click');
   if(!favorites.size){
-
-    toast(
-      "المفضلة فارغة"
-    );
-
+    toast("المفضلة فارغة");
     return;
   }
 
-
-  if(
-    !confirm(
-      "هل تريد حذف جميع الأذكار من المفضلة؟"
-    )
-  )
-    return;
-
+  if(!confirm("هل تريد حذف جميع الأذكار من المفضلة؟")) return;
 
   favorites.clear();
-
   saveFavorites();
-
   renderFavorites();
-
-  toast(
-    "تم مسح المفضلة ✓"
-  );
+  toast("تم مسح المفضلة ✓");
 }
-
 
 /* SETTINGS */
-
 function changeFont(delta){
-
-  let size=
-    Number(
-      localStorage.getItem(
-        FONT_KEY
-      )||24
-    );
-
-
+  triggerHaptic('click');
+  let size=Number(localStorage.getItem(FONT_KEY)||24);
   size+=delta*2;
+  size=Math.max(18, Math.min(34, size));
 
-
-  size=
-    Math.max(
-      18,
-      Math.min(
-        34,
-        size
-      )
-    );
-
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--font-size",
-      size+"px"
-    );
-
-
-  localStorage.setItem(
-    FONT_KEY,
-    size
-  );
-
-
-  toast(
-    "حجم النص: "+size
-  );
+  document.documentElement.style.setProperty("--font-size", size+"px");
+  localStorage.setItem(FONT_KEY, size);
+  toast("حجم النص: "+size);
 }
-
 
 function loadFont(){
-
-  const size=
-    Number(
-      localStorage.getItem(
-        FONT_KEY
-      )||24
-    );
-
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--font-size",
-      size+"px"
-    );
+  const size=Number(localStorage.getItem(FONT_KEY)||24);
+  document.documentElement.style.setProperty("--font-size", size+"px");
 }
-
 
 function toggleTheme(){
+  triggerHaptic('click');
+  const current=localStorage.getItem(THEME_KEY)||"auto";
+  const next=current==="dark"?"light":"dark";
 
-  const current=
-    localStorage.getItem(
-      THEME_KEY
-    )||"auto";
-
-
-  const next=
-    current==="dark"
-      ?"light"
-      :"dark";
-
-
-  localStorage.setItem(
-    THEME_KEY,
-    next
-  );
-
-
+  localStorage.setItem(THEME_KEY, next);
   applyTheme();
-
-
-  toast(
-    next==="dark"
-      ?"تم تفعيل الوضع الليلي 🌙"
-      :"تم تفعيل الوضع الفاتح ☀️"
-  );
+  toast(next==="dark"?"تم تفعيل الوضع الليلي 🌙":"تم تفعيل الوضع الفاتح ☀️");
 }
 
-
 function applyTheme(){
-
-  const theme=
-    localStorage.getItem(
-      THEME_KEY
-    )||"auto";
-
-
-  let style=
-    document.getElementById(
-      "customTheme"
-    );
-
+  const theme=localStorage.getItem(THEME_KEY)||"auto";
+  let style=document.getElementById("customTheme");
 
   if(!style){
-
-    style=
-      document.createElement(
-        "style"
-      );
-
-    style.id=
-      "customTheme";
-
-    document.head.appendChild(
-      style
-    );
+    style=document.createElement("style");
+    style.id="customTheme";
+    document.head.appendChild(style);
   }
 
-
   if(theme==="dark"){
-
     style.textContent=`
-
       :root{
         --bg:#0f1d1b;
         --card:#172825;
@@ -2981,95 +2007,50 @@ function applyTheme(){
         --primary-light:#173e39;
         --shadow:0 8px 25px #0003;
       }
-
-      .bottom-nav{
-        background:#172825ee
-      }
-
+      .bottom-nav{ background:#172825ee; }
     `;
-
-
-    $("themeText")
-      .textContent=
-        "الوضع الليلي مفعّل";
-
+    $("themeText").textContent="الوضع الليلي مفعّل";
   }else{
-
     style.textContent="";
-
-    $("themeText")
-      .textContent=
-        "الوضع الفاتح مفعّل";
-
+    $("themeText").textContent="الوضع الفاتح مفعّل";
   }
 }
 
-
 /* ESCAPE */
-
 function esc(v){
-
-  return String(
-    v??""
-  ).replace(
-    /[&<>"']/g,
-    m=>({
-
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-
-    }[m])
-  );
+  return String(v??"").replace(/[&<>"']/g, m=>({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[m]));
 }
 
+/* HIDE SPLASH SCREEN */
+window.addEventListener("load", ()=>{
+  setTimeout(()=>{
+    const splash = $("splash");
+    if(splash){
+      splash.classList.add("fade-out");
+    }
+  }, 1000);
+});
 
 /* START */
-
 loadFavorites();
-
 loadFont();
-
 applyTheme();
-
 loadData();
 
-
-/*
-  تسجيل Service Worker
-*/
-
-if(
-  "serviceWorker" in navigator
-){
-
-  window.addEventListener(
-    "load",
-    ()=>{
-
-      navigator.serviceWorker
-        .register(
-          "./service-worker.js"
-        )
-        .catch(
-          ()=>{}
-        );
-
-    }
-  );
-
+/* REGISTER SERVICE WORKER */
+if("serviceWorker" in navigator){
+  window.addEventListener("load", ()=>{
+    navigator.serviceWorker.register("./service-worker.js")
+      .catch(()=>{});
+  });
 }
 
-
-/*
-  تشغيل سجل التنقل
-*/
-
+/* INIT HISTORY */
 initHistory();
 
 </script>
 
 </body>
-  </html>
+</html>
