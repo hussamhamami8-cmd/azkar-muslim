@@ -1,4173 +1,5309 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b7a70">
-<meta name="description" content="أذكار المسلم — أذكار وأدعية وأوقات الصلاة">
-<link rel="manifest" href="./manifest.json">
-<title>أذكار المسلم | بلال بن رباح</title>
-
-<style>
-:root{
-  --primary:#0b7a70;
-  --primary-dark:#075e57;
-  --primary-light:#dff4f0;
-  --bg:#f4f8f7;
-  --card:#fff;
-  --text:#17312e;
-  --muted:#71827f;
-  --border:#e2ece9;
-  --danger:#c0392b;
-  --gold:#d39b00;
-  --shadow:0 7px 24px rgba(20,70,64,.08);
-  --radius:20px;
-  --font-size:24px;
-}
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;
-  min-height:100vh;
-}
-
-button,input,select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.app{
-  max-width:850px;
-  margin:auto;
-  padding-bottom:92px;
-}
-
-/* HEADER */
-
-header{
-  position:relative;
-  overflow:hidden;
-  color:#fff;
-  padding:calc(22px + env(safe-area-inset-top)) 18px 25px;
-  background:linear-gradient(145deg,#0b7a70,#075e57);
-  border-radius:0 0 30px 30px;
-  box-shadow:0 9px 28px rgba(7,94,87,.18);
-}
-
-header:before{
-  content:"";
-  position:absolute;
-  width:190px;
-  height:190px;
-  border-radius:50%;
-  background:#ffffff10;
-  left:-70px;
-  top:-80px;
-}
-
-header:after{
-  content:"";
-  position:absolute;
-  width:130px;
-  height:130px;
-  border-radius:50%;
-  background:#ffffff0d;
-  right:-45px;
-  bottom:-60px;
-}
-
-.header-content{
-  position:relative;
-  z-index:2;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.brand-icon{
-  width:52px;
-  height:52px;
-  border-radius:17px;
-  background:#ffffff20;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:27px;
-}
-
-.brand h1{
-  margin:0;
-  font-size:24px;
-  font-weight:850;
-}
-
-.brand p{
-  margin:4px 0 0;
-  font-size:12px;
-  opacity:.88;
-}
-
-.school-name{
-  margin-top:16px;
-  font-size:12px;
-  opacity:.9;
-  line-height:1.7;
-}
-
-main{
-  padding:17px 15px;
-}
-
-#status{
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:4px 0 10px;
-}
-
-/* SEARCH */
-
-.search-box{
-  position:relative;
-  margin-bottom:18px;
-}
-
-.search-box input{
-  width:100%;
-  border:1px solid var(--border);
-  outline:none;
-  background:var(--card);
-  color:var(--text);
-  padding:16px 48px 16px 45px;
-  border-radius:18px;
-  box-shadow:var(--shadow);
-}
-
-.search-box input:focus{
-  border-color:var(--primary);
-}
-
-.search-icon{
-  position:absolute;
-  right:17px;
-  top:50%;
-  transform:translateY(-50%);
-}
-
-.clear-search{
-  position:absolute;
-  left:8px;
-  top:50%;
-  transform:translateY(-50%);
-  width:35px;
-  height:35px;
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  display:none;
-}
-
-/* WELCOME */
-
-.welcome{
-  background:linear-gradient(135deg,#fff,#eef8f6);
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:20px;
-  box-shadow:var(--shadow);
-  margin-bottom:18px;
-}
-
-.welcome h2{
-  margin:0 0 7px;
-  font-size:20px;
-}
-
-.welcome p{
-  margin:0;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
-}
-
-.stats{
-  display:flex;
-  gap:9px;
-  margin-top:17px;
-}
-
-.stat{
-  flex:1;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:9px 10px;
-  text-align:center;
-}
-
-.stat strong{
-  display:block;
-  color:var(--primary);
-  font-size:19px;
-}
-
-.stat span{
-  color:var(--muted);
-  font-size:10px;
-}
-
-/* PRAYER CARD */
-
-.prayer-card{
-  position:relative;
-  overflow:hidden;
-  color:#fff;
-  background:linear-gradient(145deg,#075e57,#0b7a70);
-  border-radius:25px;
-  padding:19px;
-  margin-bottom:22px;
-  box-shadow:0 10px 28px rgba(7,94,87,.18);
-}
-
-.prayer-card:before{
-  content:"";
-  position:absolute;
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  background:#ffffff0b;
-  left:-65px;
-  bottom:-80px;
-}
-
-.prayer-card-content{
-  position:relative;
-  z-index:2;
-}
-
-.prayer-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.prayer-title{
-  font-size:18px;
-  font-weight:850;
-}
-
-.prayer-city{
-  font-size:11px;
-  opacity:.82;
-  margin-top:3px;
-}
-
-.prayer-next{
-  margin-top:15px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.next-label{
-  font-size:11px;
-  opacity:.8;
-}
-
-.next-name{
-  font-size:20px;
-  font-weight:850;
-  margin-top:2px;
-}
-
-.next-time{
-  font-size:27px;
-  font-weight:900;
-  direction:ltr;
-}
-
-.prayer-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-  margin-top:16px;
-}
-
-.prayer-time{
-  background:#ffffff14;
-  border:1px solid #ffffff16;
-  border-radius:14px;
-  padding:9px 5px;
-  text-align:center;
-}
-
-.prayer-time-name{
-  font-size:10px;
-  opacity:.82;
-}
-
-.prayer-time-value{
-  margin-top:3px;
-  font-size:14px;
-  font-weight:800;
-  direction:ltr;
-}
-
-.prayer-actions{
-  display:flex;
-  gap:8px;
-  margin-top:12px;
-}
-
-.prayer-actions button{
-  flex:1;
-  border:1px solid #ffffff24;
-  background:#ffffff14;
-  color:#fff;
-  border-radius:13px;
-  padding:9px 8px;
-  font-size:11px;
-}
-
-.prayer-loading{
-  font-size:12px;
-  opacity:.85;
-  padding:15px 0 3px;
-}
-
-/* TITLES */
-
-.section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin:21px 3px 12px;
-}
-
-.section-title h2{
-  margin:0;
-  font-size:18px;
-}
-
-.section-title span{
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* CATEGORIES */
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:11px;
-}
-
-.category{
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  border-radius:20px;
-  padding:16px 14px;
-  min-height:108px;
-  text-align:right;
-  box-shadow:var(--shadow);
-  transition:transform .16s ease;
-}
-
-.category:active,
-.dhikr-item:active,
-.result:active{
-  transform:scale(.98);
-}
-
-.category-icon{
-  width:43px;
-  height:43px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:14px;
-  background:var(--primary-light);
-  font-size:21px;
-  margin-bottom:10px;
-}
-
-.category-title{
-  font-weight:800;
-  font-size:15px;
-}
-
-.category-count{
-  margin-top:4px;
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* RESULTS */
-
-.result{
-  width:100%;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  padding:16px;
-  border-radius:18px;
-  margin-bottom:10px;
-  text-align:right;
-  box-shadow:var(--shadow);
-}
-
-.result-title{
-  font-weight:800;
-  font-size:15px;
-}
-
-.result-preview{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:7px;
-  line-height:1.7;
-}
-
-/* TOPBAR */
-
-.topbar{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:18px;
-}
-
-.back-btn{
-  width:44px;
-  height:44px;
-  border:0;
-  background:var(--card);
-  color:var(--text);
-  border-radius:15px;
-  box-shadow:var(--shadow);
-  font-size:21px;
-}
-
-.topbar-title{
-  flex:1;
-}
-
-.topbar-title h2{
-  margin:0;
-  font-size:20px;
-}
-
-.topbar-title small{
-  color:var(--muted);
-  font-size:11px;
-}
-
-/* LIST */
-
-.dhikr-item{
-  width:100%;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  border-radius:19px;
-  padding:16px;
-  margin-bottom:10px;
-  text-align:right;
-  box-shadow:var(--shadow);
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.dhikr-number{
-  width:40px;
-  height:40px;
-  flex:none;
-  border-radius:13px;
-  background:var(--primary-light);
-  color:var(--primary);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:850;
-}
-
-.dhikr-info{
-  flex:1;
-  min-width:0;
-}
-
-.dhikr-title{
-  font-weight:800;
-  font-size:15px;
-  margin-bottom:5px;
-}
-
-.dhikr-count{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.dhikr-arrow{
-  color:var(--muted);
-  font-size:19px;
-}
-
-/* READER */
-
-.reader-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:14px;
-}
-
-.reader-head-actions{
-  display:flex;
-  gap:7px;
-}
-
-.favorite-btn,
-.share-btn{
-  width:44px;
-  height:44px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:#d39b00;
-  border-radius:15px;
-  box-shadow:var(--shadow);
-  font-size:20px;
-}
-
-.share-btn{
-  color:var(--primary);
-}
-
-.reader-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:27px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-}
-
-.reader-top{
-  padding:20px 20px 10px;
-}
-
-.reader-title{
-  font-size:19px;
-  font-weight:850;
-  line-height:1.6;
-  margin-bottom:9px;
-}
-
-.reader-source{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.7;
-}
-
-.reader-text{
-  padding:12px 22px 25px;
-  font-size:var(--font-size);
-  line-height:2.3;
-  white-space:pre-wrap;
-}
-
-.progress-area{
-  padding:0 20px 15px;
-}
-
-.progress-info{
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-  font-size:11px;
-  margin-bottom:7px;
-}
-
-.progress{
-  height:8px;
-  background:#e8efed;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#0b7a70,#16a394);
-  border-radius:20px;
-  transition:.25s;
-}
-
-.counter{
-  margin:5px 20px 18px;
-  border-radius:20px;
-  background:var(--primary-light);
-  padding:15px;
-  text-align:center;
-}
-
-.counter-number{
-  font-size:27px;
-  font-weight:850;
-  color:var(--primary);
-}
-
-.counter-label{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.tap-button{
-  width:calc(100% - 30px);
-  margin:0 15px 12px;
-  border:0;
-  color:#fff;
-  background:linear-gradient(135deg,#0b7a70,#08635d);
-  border-radius:19px;
-  padding:17px;
-  font-weight:800;
-  box-shadow:0 9px 20px #0b7a7030;
-}
-
-.reader-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  padding:0 15px 18px;
-}
-
-.reader-actions button{
-  border:1px solid var(--border);
-  background:var(--bg);
-  color:var(--text);
-  border-radius:16px;
-  padding:13px;
-}
-
-.reader-actions button:disabled{
-  opacity:.4;
-}
-
-/* SETTINGS */
-
-.settings-section{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:22px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  margin-bottom:14px;
-}
-
-.settings-title{
-  padding:16px 17px 10px;
-  font-size:13px;
-  font-weight:800;
-  color:var(--primary);
-}
-
-.setting-row{
-  width:100%;
-  border:0;
-  border-top:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  padding:16px;
-  display:flex;
-  align-items:center;
-  gap:13px;
-  text-align:right;
-}
-
-.setting-icon{
-  width:42px;
-  height:42px;
-  flex:none;
-  border-radius:14px;
-  background:var(--primary-light);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-}
-
-.setting-info{
-  flex:1;
-}
-
-.setting-name{
-  font-weight:750;
-  font-size:14px;
-}
-
-.setting-desc{
-  margin-top:3px;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.setting-arrow{
-  color:var(--muted);
-}
-
-.danger .setting-icon{
-  background:#fdecea;
-}
-
-.danger .setting-name{
-  color:var(--danger);
-}
-
-.font-controls{
-  display:flex;
-  gap:7px;
-  direction:ltr;
-}
-
-.font-controls button{
-  width:35px;
-  height:35px;
-  border:1px solid var(--border);
-  background:var(--bg);
-  border-radius:10px;
-}
-
-/* PRAYER SETTINGS */
-
-.prayer-settings{
-  padding:15px 16px;
-  border-top:1px solid var(--border);
-}
-
-.prayer-settings label{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  margin-bottom:7px;
-}
-
-.prayer-settings-row{
-  display:flex;
-  gap:8px;
-}
-
-.prayer-settings input{
-  flex:1;
-  min-width:0;
-  border:1px solid var(--border);
-  background:var(--bg);
-  color:var(--text);
-  border-radius:13px;
-  padding:11px;
-  outline:none;
-}
-
-.prayer-settings button{
-  border:0;
-  background:var(--primary);
-  color:#fff;
-  border-radius:13px;
-  padding:10px 14px;
-  font-size:12px;
-}
-
-.prayer-method{
-  margin-top:9px;
-  width:100%;
-  border:1px solid var(--border);
-  background:var(--bg);
-  color:var(--text);
-  border-radius:13px;
-  padding:10px;
-}
-
-/* TOAST */
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:82px;
-  transform:translateX(-50%) translateY(20px);
-  background:#17312e;
-  color:white;
-  padding:11px 17px;
-  border-radius:14px;
-  font-size:12px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-  z-index:100;
-  max-width:90%;
-  text-align:center;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-  position:fixed;
-  z-index:50;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:min(850px,100%);
-  padding:8px 10px calc(8px + env(safe-area-inset-bottom));
-  background:#ffffffee;
-  backdrop-filter:blur(16px);
-  border-top:1px solid var(--border);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-}
-
-.nav-btn{
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  padding:7px 3px;
-  font-size:11px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:3px;
-}
-
-.nav-btn span:first-child{
-  font-size:21px;
-}
-
-.nav-btn.active{
-  color:var(--primary);
-  font-weight:800;
-}
-
-/* EMPTY */
-
-.empty{
-  text-align:center;
-  padding:45px 20px;
-  color:var(--muted);
-}
-
-.empty-icon{
-  font-size:45px;
-  margin-bottom:10px;
-}
-
-.empty strong{
-  display:block;
-  color:var(--text);
-  margin-bottom:5px;
-}
-
-/* GENERAL */
-
-.hidden{
-  display:none!important;
-}
-
-/* SHARE PREVIEW */
-
-.share-preview{
-  position:fixed;
-  inset:0;
-  z-index:200;
-  background:#0009;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-}
-
-.share-preview-box{
-  width:min(430px,100%);
-  max-height:94vh;
-  overflow:auto;
-  background:var(--card);
-  border-radius:24px;
-  padding:14px;
-}
-
-.share-preview-title{
-  font-weight:850;
-  font-size:16px;
-  margin:3px 4px 12px;
-}
-
-.share-preview canvas{
-  width:100%;
-  height:auto;
-  display:block;
-  border-radius:17px;
-  background:#fff;
-}
-
-.share-preview-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:10px;
-}
-
-.share-preview-actions button{
-  border:0;
-  background:var(--primary);
-  color:#fff;
-  border-radius:14px;
-  padding:12px;
-  font-weight:750;
-}
-
-.share-preview-actions button.secondary{
-  background:var(--bg);
-  color:var(--text);
-  border:1px solid var(--border);
-}
-
-@media(prefers-color-scheme:dark){
-
-  :root{
-    --bg:#0f1d1b;
-    --card:#172825;
-    --text:#e7f1ef;
-    --muted:#91a5a1;
-    --border:#263a36;
-    --primary-light:#173e39;
-    --shadow:0 8px 25px #0003;
-  }
-
-  .welcome{
-    background:linear-gradient(135deg,#172825,#142f2b);
-  }
-
-  .bottom-nav{
-    background:#172825ee;
-  }
-
-  .setting-row,
-  .settings-section{
-    background:var(--card);
-  }
-
-  .share-preview{
-    background:#000c;
-  }
-}
-
-@media(min-width:650px){
-
-  .grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .reader-text{
-    padding:20px 40px 30px;
-  }
-}
-
-@media(max-width:360px){
-
-  .brand h1{
-    font-size:22px;
-  }
-
-  .reader-text{
-    font-size:21px;
-  }
-
-  .prayer-grid{
-    gap:5px;
-  }
-
-  .prayer-time-value{
-    font-size:13px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b7a70">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="أذكار المسلم - أذكار وأدعية مختارة مع أوقات الصلاة والتسبيح">
+  <title>أذكار المسلم | بلال بن رباح</title>
+
+  <link rel="manifest" href="./manifest.json">
+
+  <style>
+    :root {
+      --primary: #0b7a70;
+      --primary-2: #095f58;
+      --primary-soft: #e7f5f2;
+      --accent: #c99b42;
+      --bg: #f5f8f7;
+      --surface: #ffffff;
+      --surface-2: #eef4f2;
+      --text: #172421;
+      --muted: #687773;
+      --border: #dfe8e5;
+      --danger: #c94b4b;
+      --success: #21885c;
+      --shadow: 0 10px 30px rgba(18, 52, 47, .08);
+      --radius: 22px;
+      --reader-size: 24px;
+      --line-height: 2.15;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        "Noto Sans Arabic",
+        "Noto Kufi Arabic",
+        "Segoe UI",
+        Tahoma,
+        Arial,
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: 3px solid rgba(11,122,112,.25);
+      outline-offset: 2px;
+    }
+
+    .app {
+      min-height: 100vh;
+      max-width: 900px;
+      margin: auto;
+      padding-bottom: calc(92px + var(--safe-bottom));
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 12px 14px;
+      background: rgba(245,248,247,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(223,232,229,.8);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-button {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      background: transparent;
+      color: inherit;
+      padding: 2px;
+      text-align: right;
+      flex: 1;
+    }
+
+    .brand-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, var(--primary), var(--primary-2));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      box-shadow: 0 7px 18px rgba(11,122,112,.22);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .top-action {
+      width: 43px;
+      height: 43px;
+      border-radius: 15px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,.04);
+      font-size: 19px;
+    }
+
+    /* =========================
+       PAGES
+    ========================= */
+
+    main {
+      padding: 14px;
+    }
+
+    .page {
+      display: none;
+      animation: pageIn .25s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes pageIn {
+      from {
+        opacity: 0;
+        transform: translateY(7px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 8px 2px 12px;
+    }
+
+    .section-heading h2,
+    .section-heading h3 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .section-heading span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      background:
+        radial-gradient(circle at 90% 10%, rgba(255,255,255,.16), transparent 28%),
+        linear-gradient(135deg, var(--primary), #064d48);
+      color: white;
+      border-radius: 28px;
+      padding: 23px 20px;
+      box-shadow: 0 15px 35px rgba(8,91,84,.20);
+      margin-bottom: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "﷽";
+      position: absolute;
+      left: -12px;
+      bottom: -24px;
+      font-family: serif;
+      font-size: 100px;
+      opacity: .06;
+      pointer-events: none;
+    }
+
+    .hero-small {
+      font-size: 12px;
+      opacity: .78;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .hero p {
+      margin: 9px 0 0;
+      font-size: 13px;
+      opacity: .84;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 17px;
+    }
+
+    .hero-btn {
+      padding: 11px 15px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.14);
+      color: white;
+      border: 1px solid rgba(255,255,255,.18);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .hero-btn.primary {
+      background: white;
+      color: var(--primary-2);
+    }
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-box {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 55px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      padding: 0 48px 0 18px;
+      font-size: 15px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 17px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 19px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .clear-search {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: var(--surface-2);
+      color: var(--muted);
+      display: none;
+    }
+
+    /* =========================
+       QUICK ACTIONS
+    ========================= */
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 17px;
+    }
+
+    .quick-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 15px;
+      text-align: right;
+      box-shadow: var(--shadow);
+      min-height: 105px;
+      transition: transform .18s ease;
+    }
+
+    .quick-card:active {
+      transform: scale(.98);
+    }
+
+    .quick-icon {
+      width: 39px;
+      height: 39px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 19px;
+      margin-bottom: 9px;
+    }
+
+    .quick-title {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .quick-desc {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 17px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 13px 8px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-value {
+      font-size: 21px;
+      font-weight: 950;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    /* =========================
+       PRAYER
+    ========================= */
+
+    .prayer-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 17px;
+      box-shadow: var(--shadow);
+      margin-bottom: 17px;
+    }
+
+    .prayer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 13px;
+    }
+
+    .prayer-title {
+      font-weight: 950;
+      font-size: 17px;
+    }
+
+    .prayer-location {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .prayer-refresh {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      color: var(--primary);
+    }
+
+    .prayer-next {
+      background: var(--primary-soft);
+      border-radius: 17px;
+      padding: 13px;
+      margin-bottom: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .next-name {
+      font-weight: 900;
+    }
+
+    .next-countdown {
+      color: var(--primary);
+      font-weight: 950;
+      font-size: 16px;
+      direction: ltr;
+    }
+
+    .prayer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .prayer-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 6px;
+      text-align: center;
+      background: var(--surface);
+    }
+
+    .prayer-item.current {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .prayer-name {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .prayer-time {
+      margin-top: 3px;
+      font-weight: 900;
+      font-size: 14px;
+      direction: ltr;
+    }
+
+    .prayer-loading {
+      color: var(--muted);
+      text-align: center;
+      padding: 16px 0;
+      font-size: 13px;
+    }
+
+    /* =========================
+       CATEGORIES
+    ========================= */
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .category-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px 14px;
+      min-height: 116px;
+      text-align: right;
+      box-shadow: var(--shadow);
+      transition: transform .18s ease, border-color .18s ease;
+    }
+
+    .category-card:active {
+      transform: scale(.98);
+    }
+
+    .category-emoji {
+      font-size: 25px;
+      margin-bottom: 9px;
+    }
+
+    .category-name {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .category-count {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    /* =========================
+       LIST
+    ========================= */
+
+    .page-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .back-btn {
+      width: 43px;
+      height: 43px;
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .toolbar-title {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .toolbar-title h2 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 950;
+    }
+
+    .toolbar-title p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding-bottom: 7px;
+      margin-bottom: 9px;
+      scrollbar-width: none;
+    }
+
+    .filter-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip {
+      white-space: nowrap;
+      padding: 9px 13px;
+      border-radius: 13px;
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .filter-chip.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .dhikr-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 21px;
+      padding: 16px;
+      margin-bottom: 10px;
+      box-shadow: 0 6px 20px rgba(18,52,47,.05);
+    }
+
+    .dhikr-card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+    }
+
+    .dhikr-card-title {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .dhikr-badge {
+      font-size: 9px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 5px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+
+    .dhikr-preview {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 13px;
+      margin-top: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .dhikr-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .dhikr-count {
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .open-dhikr {
+      padding: 9px 13px;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 45px 18px;
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    /* =========================
+       READER
+    ========================= */
+
+    .reader-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .reader-actions {
+      display: flex;
+      gap: 7px;
+    }
+
+    .reader-action {
+      width: 41px;
+      height: 41px;
+      border-radius: 13px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .reader-action.favorite.active {
+      color: #d79a19;
+      background: #fff7df;
+    }
+
+    .reader-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 22px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .reader-meta {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .reader-category {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .reader-title {
+      margin: 10px 0 0;
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    .reader-text {
+      font-family: "Noto Naskh Arabic", "Amiri", serif;
+      font-size: var(--reader-size);
+      line-height: var(--line-height);
+      text-align: center;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: normal;
+    }
+
+    .reader-source {
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 13px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .reader-grade {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 8px;
+      background: var(--surface-2);
+      border-radius: 7px;
+    }
+
+    .reader-progress {
+      margin-top: 18px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    .progress-track {
+      height: 7px;
+      border-radius: 99px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: var(--primary);
+      border-radius: inherit;
+      transition: width .2s ease;
+    }
+
+    .counter-box {
+      text-align: center;
+      margin: 20px 0 12px;
+    }
+
+    .counter-number {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      border: 7px solid rgba(11,122,112,.10);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      margin: auto;
+      font-size: 29px;
+      font-weight: 950;
+    }
+
+    .counter-number.done {
+      background: var(--primary);
+      color: white;
+    }
+
+    .counter-label {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .reader-main-button {
+      width: 100%;
+      height: 57px;
+      border-radius: 17px;
+      background: var(--primary);
+      color: white;
+      font-size: 16px;
+      font-weight: 950;
+      box-shadow: 0 10px 22px rgba(11,122,112,.2);
+    }
+
+    .reader-secondary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .reader-secondary button {
+      height: 45px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .reader-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .reader-nav button {
+      height: 45px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* =========================
+       TASBEEH
+    ========================= */
+
+    .tasbeeh-card {
+      background: linear-gradient(145deg, var(--primary), #07514c);
+      color: white;
+      border-radius: 29px;
+      padding: 24px 18px;
+      text-align: center;
+      box-shadow: 0 17px 35px rgba(7,81,76,.22);
+      margin-bottom: 13px;
+    }
+
+    .tasbeeh-label {
+      opacity: .75;
+      font-size: 12px;
+    }
+
+    .tasbeeh-phrase {
+      font-size: 22px;
+      font-weight: 950;
+      margin: 8px 0 18px;
+    }
+
+    .tasbeeh-number {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      margin: auto;
+      display: grid;
+      place-items: center;
+      border: 10px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.08);
+      font-size: 44px;
+      font-weight: 950;
+      direction: ltr;
+    }
+
+    .tasbeeh-target {
+      opacity: .75;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .tasbeeh-tap {
+      width: 100%;
+      height: 65px;
+      border-radius: 18px;
+      background: white;
+      color: var(--primary);
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .preset {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 12px 8px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .preset.active {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .tasbeeh-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .tasbeeh-controls button {
+      height: 46px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    /* =========================
+       DAILY
+    ========================= */
+
+    .daily-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 23px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+    }
+
+    .daily-progress {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .daily-ring {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: conic-gradient(var(--primary) var(--daily-progress, 0%), var(--surface-2) 0);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .daily-ring::before {
+      content: "";
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--surface);
+      position: absolute;
+    }
+
+    .daily-percent {
+      position: relative;
+      font-size: 14px;
+      font-weight: 950;
+      color: var(--primary);
+    }
+
+    .daily-info {
+      flex: 1;
+    }
+
+    .daily-info strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .daily-info span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    /* =========================
+       SETTINGS
+    ========================= */
+
+    .settings-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+    }
+
+    .settings-title {
+      padding: 15px 16px 8px;
+      color: var(--primary);
+      font-weight: 950;
+      font-size: 13px;
+    }
+
+    .setting-row {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .setting-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .setting-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .setting-name {
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .setting-desc {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.7;
+      margin-top: 2px;
+    }
+
+    .setting-control {
+      flex-shrink: 0;
+    }
+
+    .setting-control select,
+    .setting-control input[type="number"],
+    .setting-control input[type="text"] {
+      height: 39px;
+      min-width: 105px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface-2);
+      color: var(--text);
+      padding: 0 9px;
+      font-size: 11px;
+    }
+
+    .range-control {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .range-control input {
+      width: 100px;
+    }
+
+    .range-value {
+      width: 28px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .switch {
+      width: 48px;
+      height: 27px;
+      border-radius: 99px;
+      background: #cbd5d2;
+      position: relative;
+      transition: .2s;
+    }
+
+    .switch::after {
+      content: "";
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      transition: .2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,.15);
+    }
+
+    .switch.active {
+      background: var(--primary);
+    }
+
+    .switch.active::after {
+      right: 24px;
+    }
+
+    .settings-button {
+      width: 100%;
+      height: 45px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 800;
+      margin-top: 8px;
+    }
+
+    .settings-button.danger {
+      color: var(--danger);
+    }
+
+    /* =========================
+       METHODOLOGY / INFO
+    ========================= */
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 23px;
+      padding: 19px;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+    }
+
+    .info-card h3 {
+      margin: 0 0 9px;
+      font-size: 17px;
+    }
+
+    .info-card p,
+    .info-card li {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .info-card ul {
+      padding-right: 20px;
+    }
+
+    /* =========================
+       BOTTOM NAV
+    ========================= */
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 100;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      padding: 8px 9px calc(8px + var(--safe-bottom));
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(18px);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .nav-item {
+      background: transparent;
+      color: var(--muted);
+      padding: 5px 2px;
+      border-radius: 13px;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .nav-icon {
+      display: block;
+      font-size: 19px;
+      line-height: 24px;
+      margin-bottom: 2px;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    /* =========================
+       MODALS
+    ========================= */
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(5px);
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(100%, 560px);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 28px 28px 18px 18px;
+      padding: 18px;
+      animation: modalIn .22s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .close-modal {
+      width: 37px;
+      height: 37px;
+      border-radius: 12px;
+      background: var(--surface-2);
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .modal-actions button {
+      height: 45px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 900;
+      background: var(--surface-2);
+    }
+
+    .modal-actions .primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .template-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 13px;
+    }
+
+    .template-option {
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      background: var(--surface);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .template-option.active {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .share-preview {
+      background: #f5f8f7;
+      border-radius: 18px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .share-preview img {
+      width: 100%;
+      max-height: 430px;
+      object-fit: contain;
+      border-radius: 13px;
+      display: block;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast {
+      position: fixed;
+      z-index: 500;
+      bottom: calc(83px + var(--safe-bottom));
+      right: 50%;
+      transform: translateX(50%) translateY(15px);
+      background: #172421;
+      color: white;
+      padding: 11px 16px;
+      border-radius: 13px;
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+      max-width: calc(100% - 30px);
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(50%) translateY(0);
+    }
+
+    /* =========================
+       OFFLINE BAR
+    ========================= */
+
+    .offline-bar {
+      display: none;
+      background: #5b4630;
+      color: white;
+      text-align: center;
+      font-size: 10px;
+      padding: 6px;
+    }
+
+    .offline-bar.show {
+      display: block;
+    }
+
+    /* =========================
+       FOCUS MODE
+    ========================= */
+
+    body.reader-focus .topbar,
+    body.reader-focus .bottom-nav {
+      display: none;
+    }
+
+    body.reader-focus .app {
+      padding-bottom: 20px;
+    }
+
+    body.reader-focus main {
+      padding-top: 20px;
+    }
+
+    /* =========================
+       DARK
+    ========================= */
+
+    :root[data-theme="dark"] {
+      --bg: #101716;
+      --surface: #18201f;
+      --surface-2: #202a28;
+      --text: #edf4f2;
+      --muted: #a6b5b1;
+      --border: #2b3936;
+      --primary-soft: #173e39;
+      --shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
+
+    :root[data-theme="system"] {
+      color-scheme: light;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root[data-theme="system"] {
+        --bg: #101716;
+        --surface: #18201f;
+        --surface-2: #202a28;
+        --text: #edf4f2;
+        --muted: #a6b5b1;
+        --border: #2b3936;
+        --primary-soft: #173e39;
+        --shadow: 0 10px 30px rgba(0,0,0,.18);
+        color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+    }
+
+    @media (min-width: 650px) {
+      .quick-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .prayer-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .bottom-nav {
+        border-radius: 20px 20px 0 0;
+      }
+
+      .modal-backdrop {
+        align-items: center;
+      }
+
+      .modal {
+        border-radius: 25px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .brand-title {
+        font-size: 16px;
+      }
+
+      .brand-subtitle {
+        font-size: 10px;
+      }
+
+      .reader-text {
+        font-size: 21px;
+      }
+
+      .category-card {
+        padding: 13px 11px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
+<div class="offline-bar" id="offlineBar">
+  لا يوجد اتصال بالإنترنت — تعمل الأذكار المحفوظة دون اتصال.
+</div>
+
 <div class="app">
 
-<header>
-  <div class="header-content">
-
-    <div class="brand">
-
-      <div class="brand-icon">📿</div>
-
-      <div>
-        <h1>أذكار المسلم</h1>
-        <p>رفيقك اليومي للذكر والدعاء</p>
-      </div>
-
-    </div>
-
-    <div class="school-name">
-      المدرسة الشرعية الخامسة عشرة<br>
-      بلال بن رباح رضي الله عنه
-    </div>
-
-  </div>
-</header>
-
-<main>
-
-<div id="status">جارٍ تحميل الأذكار...</div>
-
-<!-- HOME -->
-
-<section id="home">
-
-  <div class="search-box">
-
-    <span class="search-icon">🔍</span>
-
-    <input
-      id="q"
-      type="search"
-      placeholder="ابحث عن ذكر أو دعاء..."
-      autocomplete="off"
-      oninput="renderHome()"
-    >
-
-    <button
-      id="clearSearch"
-      class="clear-search"
-      onclick="clearSearch()"
-    >✕</button>
-
-  </div>
-
-  <!-- PRAYER TIMES -->
-
-  <div class="prayer-card">
-
-    <div class="prayer-card-content">
-
-      <div class="prayer-head">
-
+  <!-- ================= HEADER ================= -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="brand-button" onclick="goHome()" aria-label="الرئيسية">
+        <div class="brand-icon">📿</div>
         <div>
-          <div class="prayer-title">
-            🕌 أوقات الصلاة
-          </div>
-
-          <div
-            class="prayer-city"
-            id="prayerCityLabel"
-          >
-            أرمناز، سوريا
+          <div class="brand-title">أذكار المسلم</div>
+          <div class="brand-subtitle">
+            المدرسة الشرعية الخامسة عشرة بلال بن رباح رضي الله عنه
           </div>
         </div>
+      </button>
 
-        <div
-          id="prayerDate"
-          class="prayer-city"
-        ></div>
+      <button class="top-action" onclick="openRandomDhikr()" aria-label="ذكر عشوائي">
+        🎲
+      </button>
 
-      </div>
+      <button class="top-action" onclick="openPage('settingsPage')" aria-label="الإعدادات">
+        ⚙️
+      </button>
+    </div>
+  </header>
 
-      <div
-        id="prayerLoading"
-        class="prayer-loading"
-      >
-        جارٍ تحميل أوقات الصلاة...
-      </div>
+  <main>
 
-      <div
-        id="prayerContent"
-        class="hidden"
-      >
+    <!-- ================= HOME ================= -->
+    <section id="homePage" class="page active">
 
-        <div class="prayer-next">
+      <div class="hero">
+        <div class="hero-small" id="todayDate">اليوم</div>
+        <h1>اذكر الله واطمئن 🤍</h1>
+        <p>
+          مجموعة من الأذكار والأدعية مع أوقات الصلاة والتسبيح،
+          في تطبيق بسيط ومريح للاستخدام اليومي.
+        </p>
 
-          <div>
-            <div class="next-label">
-              الصلاة القادمة
-            </div>
-
-            <div
-              id="nextPrayerName"
-              class="next-name"
-            >—</div>
-          </div>
-
-          <div
-            id="nextPrayerTime"
-            class="next-time"
-          >--:--</div>
-
-        </div>
-
-        <div
-          id="prayerGrid"
-          class="prayer-grid"
-        ></div>
-
-        <div class="prayer-actions">
-
-          <button onclick="loadPrayerTimes(true)">
-            🔄 تحديث
+        <div class="hero-actions">
+          <button class="hero-btn primary" onclick="openDailyDhikr()">
+            🌿 أذكار اليوم
           </button>
-
-          <button onclick="showSettings()">
-            ⚙️ المدينة
+          <button class="hero-btn" onclick="openRandomDhikr()">
+            🎲 اختر لي ذكرًا
           </button>
-
         </div>
-
       </div>
 
-    </div>
-
-  </div>
-
-  <div class="welcome">
-
-    <h2>السلام عليكم ورحمة الله 🌿</h2>
-
-    <p>
-      اجعل لسانك عامرًا بذكر الله، واختر القسم الذي تريد البدء به.
-    </p>
-
-    <div class="stats">
-
-      <div class="stat">
-        <strong id="totalAzkar">0</strong>
-        <span>ذكر</span>
-      </div>
-
-      <div class="stat">
-        <strong id="totalCategories">0</strong>
-        <span>قسم</span>
-      </div>
-
-      <div class="stat">
-        <strong id="favoriteCount">0</strong>
-        <span>مفضلة</span>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="section-title">
-    <h2>الأقسام</h2>
-    <span>اختر قسمًا</span>
-  </div>
-
-  <div id="cats" class="grid"></div>
-
-  <div id="results" class="hidden">
-
-    <div class="section-title">
-      <h2>نتائج البحث</h2>
-    </div>
-
-    <div id="searchResults"></div>
-
-  </div>
-
-</section>
-
-<!-- LIST -->
-
-<section id="list" class="hidden">
-
-  <div class="topbar">
-
-    <button
-      class="back-btn"
-      onclick="back()"
-    >→</button>
-
-    <div class="topbar-title">
-
-      <h2 id="lt"></h2>
-
-      <small id="listCount"></small>
-
-    </div>
-
-  </div>
-
-  <div id="ls"></div>
-
-</section>
-
-<!-- READER -->
-
-<section id="reader" class="hidden">
-
-  <div class="reader-head">
-
-    <button
-      class="back-btn"
-      onclick="back()"
-    >→</button>
-
-    <div class="reader-head-actions">
-
-      <button
-        id="favoriteBtn"
-        class="favorite-btn"
-        onclick="toggleFavorite()"
-        title="المفضلة"
-      >☆</button>
-
-      <button
-        class="share-btn"
-        onclick="shareCurrentDhikr()"
-        title="مشاركة"
-      >📤</button>
-
-    </div>
-
-  </div>
-
-  <div class="reader-card">
-
-    <div class="reader-top">
-
-      <div
-        class="reader-title"
-        id="rt"
-      ></div>
-
-      <div
-        class="reader-source"
-        id="rs"
-      ></div>
-
-    </div>
-
-    <div
-      class="reader-text"
-      id="rx"
-    ></div>
-
-    <div class="progress-area">
-
-      <div class="progress-info">
-
-        <span id="progressText">
-          التكرار
-        </span>
-
-        <span id="progressPercent">
-          0%
-        </span>
-
-      </div>
-
-      <div class="progress">
-
-        <div
-          id="progressBar"
-          class="progress-bar"
-        ></div>
-
-      </div>
-
-    </div>
-
-    <div class="counter">
-
-      <div
-        class="counter-number"
-        id="rc"
-      >0 / 1</div>
-
-      <div class="counter-label">
-        عدد مرات التكرار
-      </div>
-
-    </div>
-
-    <button
-      class="tap-button"
-      onclick="tap()"
-    >
-      📿 اضغط للعد
-    </button>
-
-    <div class="reader-actions">
-
-      <button
-        id="prevBtn"
-        onclick="prev()"
-      >→ السابق</button>
-
-      <button
-        onclick="skip()"
-      >تخطي ←</button>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- FAVORITES -->
-
-<section
-  id="favoritesPage"
-  class="hidden"
->
-
-  <div class="section-title">
-
-    <h2>⭐ المفضلة</h2>
-
-    <span id="favPageCount"></span>
-
-  </div>
-
-  <div id="favoriteList"></div>
-
-</section>
-
-<!-- SETTINGS -->
-
-<section
-  id="settingsPage"
-  class="hidden"
->
-
-  <div class="section-title">
-
-    <h2>⚙️ الإعدادات</h2>
-
-    <span>تخصيص التطبيق</span>
-
-  </div>
-
-  <div class="settings-section">
-
-    <div class="settings-title">
-      المظهر والقراءة
-    </div>
-
-    <div class="setting-row">
-
-      <div class="setting-icon">
-        🔤
-      </div>
-
-      <div class="setting-info">
-
-        <div class="setting-name">
-          حجم نص الذكر
-        </div>
-
-        <div class="setting-desc">
-          تحكم بحجم النص أثناء القراءة
-        </div>
-
-      </div>
-
-      <div class="font-controls">
-
-        <button onclick="changeFont(-1)">A−</button>
-        <button onclick="changeFont(1)">A+</button>
-
-      </div>
-
-    </div>
-
-    <button
-      class="setting-row"
-      onclick="toggleTheme()"
-    >
-
-      <div class="setting-icon">
-        🌙
-      </div>
-
-      <div class="setting-info">
-
-        <div class="setting-name">
-          الوضع الليلي
-        </div>
-
-        <div
-          class="setting-desc"
-          id="themeText"
-        >
-          تبديل مظهر التطبيق
-        </div>
-
-      </div>
-
-      <div class="setting-arrow">
-        ‹
-      </div>
-
-    </button>
-
-  </div>
-
-  <!-- PRAYER SETTINGS -->
-
-  <div class="settings-section">
-
-    <div class="settings-title">
-      🕌 أوقات الصلاة
-    </div>
-
-    <div class="prayer-settings">
-
-      <label>
-        المدينة
-      </label>
-
-      <div class="prayer-settings-row">
-
+      <div class="search-box">
+        <span class="search-icon">🔎</span>
         <input
-          id="cityInput"
-          type="text"
-          placeholder="مثال: أرمناز"
+          id="homeSearch"
+          type="search"
+          placeholder="ابحث عن ذكر، دعاء، مصدر أو تصنيف..."
           autocomplete="off"
         >
+        <button class="clear-search" id="clearSearch" onclick="clearSearch()">×</button>
+      </div>
 
-        <button
-          onclick="savePrayerLocation()"
-        >
-          حفظ
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statToday">0</div>
+          <div class="stat-label">قُرئت اليوم</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="statFavorites">0</div>
+          <div class="stat-label">المفضلة</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-label">إجمالي الأذكار</div>
+        </div>
+      </div>
+
+      <div class="daily-card">
+        <div class="daily-progress">
+          <div class="daily-ring" id="dailyRing">
+            <div class="daily-percent" id="dailyPercent">0%</div>
+          </div>
+
+          <div class="daily-info">
+            <strong>وردك اليومي</strong>
+            <span id="dailyText">
+              ابدأ بقراءة الأذكار اليوم وسجّل تقدمك تلقائياً.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- الصلاة -->
+      <div class="section-heading">
+        <h2>🕌 أوقات الصلاة</h2>
+        <span id="prayerDateLabel"></span>
+      </div>
+
+      <div class="prayer-card">
+        <div class="prayer-head">
+          <div>
+            <div class="prayer-title">مواقيت الصلاة</div>
+            <div class="prayer-location" id="prayerLocationLabel">
+              جارٍ التحميل...
+            </div>
+          </div>
+
+          <button
+            class="prayer-refresh"
+            onclick="loadPrayerTimes(true)"
+            aria-label="تحديث أوقات الصلاة"
+          >↻</button>
+        </div>
+
+        <div class="prayer-next" id="nextPrayerBox">
+          <div>
+            <div class="next-name" id="nextPrayerName">...</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:3px">
+              الصلاة القادمة
+            </div>
+          </div>
+          <div class="next-countdown" id="nextPrayerCountdown">--:--:--</div>
+        </div>
+
+        <div id="prayerGrid" class="prayer-grid">
+          <div class="prayer-loading">جارٍ تحميل المواقيت...</div>
+        </div>
+      </div>
+
+      <!-- الإجراءات -->
+      <div class="section-heading">
+        <h2>اختصارات سريعة</h2>
+      </div>
+
+      <div class="quick-grid">
+        <button class="quick-card" onclick="openPage('tasbeehPage')">
+          <div class="quick-icon">📿</div>
+          <div class="quick-title">التسبيح</div>
+          <div class="quick-desc">عداد ذكي مع حفظ العدد</div>
         </button>
 
+        <button class="quick-card" onclick="openFavorites()">
+          <div class="quick-icon">⭐</div>
+          <div class="quick-title">المفضلة</div>
+          <div class="quick-desc">أذكاري المحفوظة</div>
+        </button>
+
+        <button class="quick-card" onclick="openStats()">
+          <div class="quick-icon">📊</div>
+          <div class="quick-title">إحصائياتي</div>
+          <div class="quick-desc">تابع تقدمك اليومي</div>
+        </button>
+
+        <button class="quick-card" onclick="openMethodology()">
+          <div class="quick-icon">📚</div>
+          <div class="quick-title">المنهجية</div>
+          <div class="quick-desc">المصادر وطريقة الاختيار</div>
+        </button>
       </div>
 
-      <select
-        id="countryInput"
-        class="prayer-method"
-      >
-        <option value="Syria">
-          سوريا
-        </option>
-        <option value="Türkiye">
-          تركيا
-        </option>
-        <option value="Saudi Arabia">
-          السعودية
-        </option>
-        <option value="Jordan">
-          الأردن
-        </option>
-        <option value="Egypt">
-          مصر
-        </option>
-        <option value="Palestine">
-          فلسطين
-        </option>
-        <option value="Lebanon">
-          لبنان
-        </option>
-        <option value="Iraq">
-          العراق
-        </option>
-        <option value="Other">
-          دولة أخرى
-        </option>
-      </select>
-
-      <div
-        class="setting-desc"
-        style="margin-top:9px"
-      >
-        يتم تحديد المدينة يدويًا ولا يتم استخدام موقع جهازك.
+      <!-- التصنيفات -->
+      <div class="section-heading">
+        <h2>الأقسام</h2>
+        <button
+          onclick="openPage('listPage'); renderCategoriesList();"
+          style="background:none;color:var(--primary);font-size:11px;font-weight:900"
+        >عرض الكل</button>
       </div>
 
-    </div>
+      <div class="category-grid" id="homeCategories"></div>
 
-  </div>
-
-  <div class="settings-section">
-
-    <div class="settings-title">
-      البيانات
-    </div>
-
-    <button
-      class="setting-row"
-      onclick="refreshData()"
-    >
-
-      <div class="setting-icon">
-        🔄
+      <!-- نتائج البحث -->
+      <div id="homeSearchResults" style="display:none">
+        <div class="section-heading">
+          <h2>نتائج البحث</h2>
+        </div>
+        <div id="searchResultsContainer"></div>
       </div>
 
-      <div class="setting-info">
+      <!-- آخر قراءة -->
+      <div id="recentSection" style="display:none">
+        <div class="section-heading">
+          <h2>🕘 آخر ما قرأت</h2>
+        </div>
+        <div id="recentContainer"></div>
+      </div>
 
-        <div class="setting-name">
-          تحديث البيانات
+    </section>
+
+    <!-- ================= LIST ================= -->
+    <section id="listPage" class="page">
+
+      <div class="page-toolbar">
+        <button class="back-btn" onclick="goBack()">→</button>
+
+        <div class="toolbar-title">
+          <h2 id="listTitle">الأقسام</h2>
+          <p id="listSubtitle">اختر القسم الذي تريد قراءته</p>
+        </div>
+      </div>
+
+      <div id="categoriesListContainer"></div>
+
+      <div id="dhikrListContainer" style="display:none">
+        <div class="filter-row" id="listFilters"></div>
+        <div id="dhikrList"></div>
+      </div>
+
+    </section>
+
+    <!-- ================= READER ================= -->
+    <section id="readerPage" class="page">
+
+      <div class="reader-top">
+        <button class="back-btn" onclick="goBack()">→</button>
+
+        <div class="toolbar-title">
+          <h2 id="readerPageTitle">الذكر</h2>
+          <p id="readerPageSubtitle">أذكار المسلم</p>
         </div>
 
-        <div class="setting-desc">
-          تحميل أحدث نسخة من ملف الأذكار
+        <div class="reader-actions">
+          <button
+            class="reader-action"
+            onclick="toggleFavorite()"
+            id="favoriteButton"
+            aria-label="إضافة للمفضلة"
+          >☆</button>
+
+          <button
+            class="reader-action"
+            onclick="openShareModal()"
+            aria-label="مشاركة"
+          >↗</button>
+        </div>
+      </div>
+
+      <div class="reader-card">
+
+        <div class="reader-meta">
+          <div class="reader-category" id="readerCategory">ذكر</div>
+          <h1 class="reader-title" id="readerTitle">...</h1>
+        </div>
+
+        <div class="reader-text" id="readerText">...</div>
+
+        <div class="reader-source" id="readerSource"></div>
+
+        <div class="reader-progress">
+          <div class="progress-label">
+            <span>التقدم</span>
+            <span id="readerProgressText">0 / 1</span>
+          </div>
+
+          <div class="progress-track">
+            <div class="progress-bar" id="readerProgressBar"></div>
+          </div>
+        </div>
+
+        <div class="counter-box">
+          <button
+            class="counter-number"
+            id="readerCounter"
+            onclick="incrementReaderCounter()"
+            aria-label="تسجيل تكرار الذكر"
+          >0</button>
+
+          <div class="counter-label">
+            اضغط على الدائرة لتسجيل التكرار
+          </div>
+        </div>
+
+        <button
+          class="reader-main-button"
+          onclick="incrementReaderCounter()"
+          id="readerMainButton"
+        >
+          تسبيح ✓
+        </button>
+
+        <div class="reader-secondary">
+          <button onclick="copyCurrentDhikr()">📋 نسخ الذكر</button>
+          <button onclick="openShareModal()">🖼️ مشاركة كصورة</button>
+        </div>
+
+        <div class="reader-nav">
+          <button onclick="previousDhikr()">السابق ←</button>
+          <button onclick="nextDhikr()">التالي →</button>
         </div>
 
       </div>
 
-      <div class="setting-arrow">
-        ‹
+    </section>
+
+    <!-- ================= FAVORITES ================= -->
+    <section id="favoritesPage" class="page">
+
+      <div class="page-toolbar">
+        <div class="toolbar-title">
+          <h2>⭐ المفضلة</h2>
+          <p>الأذكار التي حفظتها للرجوع إليها</p>
+        </div>
       </div>
 
-    </button>
+      <div id="favoritesContainer"></div>
 
-    <button
-      class="setting-row danger"
-      onclick="clearFavorites()"
-    >
+    </section>
 
-      <div class="setting-icon">
-        🗑️
+    <!-- ================= TASBEEH ================= -->
+    <section id="tasbeehPage" class="page">
+
+      <div class="page-toolbar">
+        <div class="toolbar-title">
+          <h2>📿 التسبيح</h2>
+          <p>عداد تسبيح بسيط يحفظ تقدمك</p>
+        </div>
       </div>
 
-      <div class="setting-info">
+      <div class="tasbeeh-card">
+        <div class="tasbeeh-label">الذكر الحالي</div>
+        <div class="tasbeeh-phrase" id="tasbeehPhrase">سبحان الله</div>
 
-        <div class="setting-name">
-          مسح المفضلة
+        <div class="tasbeeh-number" id="tasbeehNumber">0</div>
+
+        <div class="tasbeeh-target">
+          الهدف: <span id="tasbeehTargetLabel">33</span>
         </div>
 
-        <div class="setting-desc">
-          حذف جميع الأذكار المحفوظة في المفضلة
+        <button class="tasbeeh-tap" onclick="incrementTasbeeh()">
+          اضغط للتسبيح
+        </button>
+      </div>
+
+      <div class="section-heading">
+        <h2>أذكار جاهزة</h2>
+      </div>
+
+      <div class="preset-grid">
+        <button class="preset active" data-phrase="سبحان الله" onclick="selectTasbeeh('سبحان الله',33,this)">
+          سبحان الله
+        </button>
+
+        <button class="preset" data-phrase="الحمد لله" onclick="selectTasbeeh('الحمد لله',33,this)">
+          الحمد لله
+        </button>
+
+        <button class="preset" data-phrase="الله أكبر" onclick="selectTasbeeh('الله أكبر',33,this)">
+          الله أكبر
+        </button>
+
+        <button class="preset" data-phrase="لا إله إلا الله" onclick="selectTasbeeh('لا إله إلا الله',100,this)">
+          لا إله إلا الله
+        </button>
+      </div>
+
+      <div class="tasbeeh-controls">
+        <button onclick="resetTasbeeh()">↺ تصفير العداد</button>
+        <button onclick="setTasbeehTarget()">🎯 تغيير الهدف</button>
+      </div>
+
+      <div class="settings-group" style="margin-top:12px">
+        <div class="settings-title">خيارات العداد</div>
+
+        <div class="setting-row">
+          <div class="setting-icon">📳</div>
+          <div class="setting-info">
+            <div class="setting-name">اهتزاز عند الضغط</div>
+            <div class="setting-desc">اهتزاز خفيف إن كان الجهاز يدعم ذلك</div>
+          </div>
+          <div class="setting-control">
+            <button class="switch" id="vibrationSwitch" onclick="toggleVibration()"></button>
+          </div>
         </div>
 
+        <div class="setting-row">
+          <div class="setting-icon">⏭️</div>
+          <div class="setting-info">
+            <div class="setting-name">الانتقال التلقائي</div>
+            <div class="setting-desc">الانتقال للذكر التالي عند إتمام العدد</div>
+          </div>
+          <div class="setting-control">
+            <button class="switch" id="autoAdvanceSwitch" onclick="toggleAutoAdvance()"></button>
+          </div>
+        </div>
       </div>
 
-      <div class="setting-arrow">
-        ‹
+    </section>
+
+    <!-- ================= STATS ================= -->
+    <section id="statsPage" class="page">
+
+      <div class="page-toolbar">
+        <div class="toolbar-title">
+          <h2>📊 إحصائياتي</h2>
+          <p>تابع تقدمك في الذكر والقراءة</p>
+        </div>
       </div>
 
-    </button>
-
-  </div>
-
-  <div class="settings-section">
-
-    <div class="settings-title">
-      حول التطبيق
-    </div>
-
-    <div class="setting-row">
-
-      <div class="setting-icon">
-        📿
-      </div>
-
-      <div class="setting-info">
-
-        <div class="setting-name">
-          أذكار المسلم
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="statsReadToday">0</div>
+          <div class="stat-label">اليوم</div>
         </div>
 
-        <div class="setting-desc">
-          تطبيق للأذكار والأدعية اليومية
+        <div class="stat-card">
+          <div class="stat-value" id="statsReadTotal">0</div>
+          <div class="stat-label">الإجمالي</div>
         </div>
 
-      </div>
-
-    </div>
-
-    <div class="setting-row">
-
-      <div class="setting-icon">
-        🏫
-      </div>
-
-      <div class="setting-info">
-
-        <div class="setting-name">
-          الجهة
+        <div class="stat-card">
+          <div class="stat-value" id="statsDays">0</div>
+          <div class="stat-label">أيام النشاط</div>
         </div>
+      </div>
 
-        <div class="setting-desc">
+      <div class="info-card">
+        <h3>🌿 إنجاز اليوم</h3>
+        <p id="statsDailyMessage">
+          لم يبدأ تسجيل نشاط اليوم بعد.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h3>📅 سجل النشاط</h3>
+        <div id="statsHistory"></div>
+      </div>
+
+    </section>
+
+    <!-- ================= METHODOLOGY ================= -->
+    <section id="methodologyPage" class="page">
+
+      <div class="page-toolbar">
+        <button class="back-btn" onclick="goBack()">→</button>
+
+        <div class="toolbar-title">
+          <h2>📚 المنهجية</h2>
+          <p>عن المحتوى والمصادر</p>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>عن تطبيق أذكار المسلم</h3>
+        <p>
+          تطبيق غير ربحي يهدف إلى تسهيل الوصول إلى الأذكار والأدعية
+          المأثورة بطريقة واضحة ومريحة للاستخدام اليومي.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h3>📖 منهج اختيار المحتوى</h3>
+        <ul>
+          <li>الاعتماد قدر الإمكان على الأحاديث والأدعية الواردة في المصادر المعتبرة.</li>
+          <li>ذكر المصدر أو درجة الحديث عندما تكون متوفرة في بيانات الذكر.</li>
+          <li>عدم نسبة كلام إلى النبي ﷺ دون مصدر معروف.</li>
+          <li>الفصل بين النص الشرعي وبين الشرح أو المعلومة الإضافية.</li>
+          <li>مراجعة المحتوى قبل إدخاله إلى التطبيق قدر الإمكان.</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>⚠️ تنبيه مهم</h3>
+        <p>
+          وجود المصدر أو العبارة التعريفية داخل التطبيق لا يعني وحده
+          الحكم النهائي على صحة كل نص؛ لذلك يُراعى الرجوع إلى المصادر
+          الشرعية المعتبرة عند الحاجة.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h3>🏫 الهوية</h3>
+        <p>
           المدرسة الشرعية الخامسة عشرة بلال بن رباح رضي الله عنه
-        </div>
-
+        </p>
       </div>
 
-    </div>
+    </section>
 
-    <div class="setting-row">
+    <!-- ================= SETTINGS ================= -->
+    <section id="settingsPage" class="page">
 
-      <div class="setting-icon">
-        ℹ️
+      <div class="page-toolbar">
+        <div class="toolbar-title">
+          <h2>⚙️ الإعدادات</h2>
+          <p>خصص التطبيق بالطريقة التي تناسبك</p>
+        </div>
       </div>
 
-      <div class="setting-info">
+      <!-- المظهر -->
+      <div class="settings-group">
+        <div class="settings-title">🎨 المظهر والقراءة</div>
 
-        <div class="setting-name">
-          الإصدار
+        <div class="setting-row">
+          <div class="setting-icon">🌗</div>
+          <div class="setting-info">
+            <div class="setting-name">المظهر</div>
+            <div class="setting-desc">فاتح أو داكن أو حسب إعداد الجهاز</div>
+          </div>
+          <div class="setting-control">
+            <select id="themeSelect" onchange="changeTheme(this.value)">
+              <option value="system">تلقائي</option>
+              <option value="light">فاتح</option>
+              <option value="dark">داكن</option>
+            </select>
+          </div>
         </div>
 
-        <div class="setting-desc">
-          أذكار المسلم — الإصدار 3.0
+        <div class="setting-row">
+          <div class="setting-icon">A</div>
+          <div class="setting-info">
+            <div class="setting-name">حجم خط الأذكار</div>
+            <div class="setting-desc">كبّر النص بما يناسب القراءة</div>
+          </div>
+
+          <div class="setting-control range-control">
+            <input
+              id="fontRange"
+              type="range"
+              min="18"
+              max="34"
+              step="1"
+              value="24"
+              oninput="changeFontSize(this.value)"
+            >
+            <span class="range-value" id="fontRangeValue">24</span>
+          </div>
         </div>
 
+        <div class="setting-row">
+          <div class="setting-icon">↕</div>
+          <div class="setting-info">
+            <div class="setting-name">تباعد الأسطر</div>
+            <div class="setting-desc">تحكم بمساحة النص أثناء القراءة</div>
+          </div>
+
+          <div class="setting-control range-control">
+            <input
+              id="lineRange"
+              type="range"
+              min="1.7"
+              max="2.8"
+              step=".1"
+              value="2.15"
+              oninput="changeLineHeight(this.value)"
+            >
+            <span class="range-value" id="lineRangeValue">2.2</span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-icon">📖</div>
+          <div class="setting-info">
+            <div class="setting-name">وضع التركيز</div>
+            <div class="setting-desc">إخفاء العناصر غير الضرورية أثناء القراءة</div>
+          </div>
+
+          <div class="setting-control">
+            <button class="settings-button" style="width:auto;padding:0 12px;margin:0" onclick="toggleFocusMode()">
+              تفعيل
+            </button>
+          </div>
+        </div>
       </div>
 
-    </div>
+      <!-- الصلاة -->
+      <div class="settings-group">
+        <div class="settings-title">🕌 أوقات الصلاة</div>
 
-  </div>
+        <div class="setting-row">
+          <div class="setting-icon">📍</div>
+          <div class="setting-info">
+            <div class="setting-name">المدينة</div>
+            <div class="setting-desc">يتم إدخالها يدوياً، ولا يتم تتبع موقعك</div>
+          </div>
 
-</section>
+          <div class="setting-control">
+            <input
+              id="cityInput"
+              type="text"
+              placeholder="أرمناز"
+            >
+          </div>
+        </div>
 
-</main>
+        <div class="setting-row">
+          <div class="setting-icon">🌍</div>
+          <div class="setting-info">
+            <div class="setting-name">الدولة</div>
+          </div>
+
+          <div class="setting-control">
+            <input
+              id="countryInput"
+              type="text"
+              placeholder="Syria"
+            >
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-icon">🧮</div>
+          <div class="setting-info">
+            <div class="setting-name">طريقة الحساب</div>
+            <div class="setting-desc">تُستخدم مع خدمة مواقيت الصلاة</div>
+          </div>
+
+          <div class="setting-control">
+            <select id="methodSelect">
+              <option value="5">طريقة 5</option>
+              <option value="3">طريقة 3</option>
+              <option value="2">طريقة 2</option>
+              <option value="4">طريقة 4</option>
+              <option value="1">طريقة 1</option>
+              <option value="8">طريقة 8</option>
+              <option value="9">طريقة 9</option>
+              <option value="10">طريقة 10</option>
+              <option value="13">طريقة 13</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="settings-button" onclick="savePrayerSettings()">
+          💾 حفظ وتحديث المواقيت
+        </button>
+      </div>
+
+      <!-- التذكيرات -->
+      <div class="settings-group">
+        <div class="settings-title">🔔 التذكيرات</div>
+
+        <div class="setting-row">
+          <div class="setting-icon">🌅</div>
+          <div class="setting-info">
+            <div class="setting-name">تذكير أذكار الصباح</div>
+            <div class="setting-desc">يعمل عندما تكون الصفحة أو التطبيق نشطاً</div>
+          </div>
+
+          <div class="setting-control">
+            <button class="switch" id="morningReminderSwitch" onclick="toggleReminder('morning')"></button>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-icon">🌇</div>
+          <div class="setting-info">
+            <div class="setting-name">تذكير أذكار المساء</div>
+            <div class="setting-desc">يعمل عندما تكون الصفحة أو التطبيق نشطاً</div>
+          </div>
+
+          <div class="setting-control">
+            <button class="switch" id="eveningReminderSwitch" onclick="toggleReminder('evening')"></button>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-icon">🌙</div>
+          <div class="setting-info">
+            <div class="setting-name">تذكير قبل النوم</div>
+            <div class="setting-desc">تذكير اختياري داخل التطبيق</div>
+          </div>
+
+          <div class="setting-control">
+            <button class="switch" id="sleepReminderSwitch" onclick="toggleReminder('sleep')"></button>
+          </div>
+        </div>
+
+        <button class="settings-button" onclick="requestNotificationPermission()">
+          🔔 تفعيل الإشعارات
+        </button>
+      </div>
+
+      <!-- البيانات -->
+      <div class="settings-group">
+        <div class="settings-title">💾 البيانات</div>
+
+        <div class="setting-row">
+          <div class="setting-icon">📤</div>
+          <div class="setting-info">
+            <div class="setting-name">تصدير بياناتي</div>
+            <div class="setting-desc">حفظ المفضلة والإعدادات والتقدم</div>
+          </div>
+
+          <div class="setting-control">
+            <button
+              class="settings-button"
+              style="width:auto;padding:0 12px;margin:0"
+              onclick="exportData()"
+            >تصدير</button>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-icon">📥</div>
+          <div class="setting-info">
+            <div class="setting-name">استيراد بيانات</div>
+            <div class="setting-desc">استعادة نسخة محفوظة سابقاً</div>
+          </div>
+
+          <div class="setting-control">
+            <button
+              class="settings-button"
+              style="width:auto;padding:0 12px;margin:0"
+              onclick="document.getElementById('importFile').click()"
+            >استيراد</button>
+            <input
+              id="importFile"
+              type="file"
+              accept=".json,application/json"
+              style="display:none"
+              onchange="importData(event)"
+            >
+          </div>
+        </div>
+
+        <button class="settings-button danger" onclick="clearFavorites()">
+          🗑️ حذف جميع المفضلة
+        </button>
+      </div>
+
+      <!-- التطبيق -->
+      <div class="settings-group">
+        <div class="settings-title">ℹ️ التطبيق</div>
+
+        <div class="setting-row">
+          <div class="setting-icon">📱</div>
+          <div class="setting-info">
+            <div class="setting-name">إصدار التطبيق</div>
+            <div class="setting-desc">أذكار المسلم</div>
+          </div>
+
+          <div class="setting-control">
+            <strong style="font-size:11px">2.0</strong>
+          </div>
+        </div>
+
+        <button class="settings-button" id="installButton" onclick="installApp()" style="display:none">
+          📲 تثبيت التطبيق
+        </button>
+
+        <button class="settings-button" onclick="openMethodology()">
+          📚 المنهجية والمصادر
+        </button>
+
+        <button class="settings-button" onclick="checkForUpdate()">
+          🔄 التحقق من التحديث
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= BOTTOM NAV ================= -->
+
+  <nav class="bottom-nav">
+
+    <button class="nav-item active" data-page="homePage" onclick="openPage('homePage')">
+      <span class="nav-icon">⌂</span>
+      الرئيسية
+    </button>
+
+    <button class="nav-item" data-page="listPage" onclick="openPage('listPage'); renderCategoriesList()">
+      <span class="nav-icon">☷</span>
+      الأقسام
+    </button>
+
+    <button class="nav-item" data-page="tasbeehPage" onclick="openPage('tasbeehPage')">
+      <span class="nav-icon">📿</span>
+      التسبيح
+    </button>
+
+    <button class="nav-item" data-page="favoritesPage" onclick="openFavorites()">
+      <span class="nav-icon">☆</span>
+      المفضلة
+    </button>
+
+    <button class="nav-item" data-page="settingsPage" onclick="openPage('settingsPage')">
+      <span class="nav-icon">⚙</span>
+      الإعدادات
+    </button>
+
+  </nav>
 
 </div>
 
-<!-- BOTTOM NAV -->
+<!-- ================= SHARE MODAL ================= -->
 
-<nav class="bottom-nav">
+<div class="modal-backdrop" id="shareModal">
+  <div class="modal">
 
-  <button
-    id="navHome"
-    class="nav-btn active"
-    onclick="showPage('home')"
-  >
-    <span>🏠</span>
-    الرئيسية
-  </button>
-
-  <button
-    id="navSections"
-    class="nav-btn"
-    onclick="showSections()"
-  >
-    <span>📚</span>
-    الأقسام
-  </button>
-
-  <button
-    id="navFavorites"
-    class="nav-btn"
-    onclick="showFavorites()"
-  >
-    <span>⭐</span>
-    المفضلة
-  </button>
-
-  <button
-    id="navSettings"
-    class="nav-btn"
-    onclick="showSettings()"
-  >
-    <span>⚙️</span>
-    الإعدادات
-  </button>
-
-</nav>
-
-<div
-  id="toast"
-  class="toast"
-></div>
-
-<!-- SHARE PREVIEW -->
-
-<div
-  id="sharePreview"
-  class="share-preview hidden"
->
-
-  <div class="share-preview-box">
-
-    <div class="share-preview-title">
-      📸 مشاركة الذكر
+    <div class="modal-head">
+      <h3>🖼️ مشاركة الذكر</h3>
+      <button class="close-modal" onclick="closeModal('shareModal')">×</button>
     </div>
 
-    <canvas id="shareCanvas"></canvas>
-
-    <div class="share-preview-actions">
-
-      <button onclick="shareGeneratedImage()">
-        📤 مشاركة
+    <div class="template-row">
+      <button
+        class="template-option active"
+        id="template1"
+        onclick="selectShareTemplate(1)"
+      >
+        🌿 قالب أخضر
       </button>
 
       <button
-        class="secondary"
-        onclick="downloadGeneratedImage()"
+        class="template-option"
+        id="template2"
+        onclick="selectShareTemplate(2)"
       >
-        💾 حفظ الصورة
+        ✨ قالب هادئ
+      </button>
+    </div>
+
+    <div class="share-preview">
+      <img id="sharePreviewImage" alt="معاينة الذكر">
+    </div>
+
+    <div class="modal-actions">
+      <button class="primary" onclick="shareGeneratedImage()">
+        ↗ مشاركة الصورة
       </button>
 
-      <button
-        class="secondary"
-        onclick="closeSharePreview()"
-        style="grid-column:1/-1"
-      >
-        إغلاق
+      <button onclick="downloadGeneratedImage()">
+        ⬇ حفظ الصورة
+      </button>
+    </div>
+
+    <div class="modal-actions">
+      <button onclick="copyCurrentDhikr()">
+        📋 نسخ النص
       </button>
 
+      <button onclick="shareText()">
+        💬 مشاركة النص
+      </button>
     </div>
 
   </div>
-
 </div>
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast" id="toast"></div>
 
 <script>
+"use strict";
 
-const REMOTE_URL="./azkar.json";
+/* =========================================================
+   CONSTANTS
+========================================================= */
 
-const CACHE_KEY="azkar_muslim_content_v2";
-const FAVORITES_KEY="azkar_muslim_favorites_v1";
-const FONT_KEY="azkar_muslim_font_v1";
-const THEME_KEY="azkar_muslim_theme_v1";
+const DATA_URL = "./azkar.json";
 
-/* PRAYER */
-
-const PRAYER_CITY_KEY="azkar_muslim_prayer_city_v1";
-const PRAYER_COUNTRY_KEY="azkar_muslim_prayer_country_v1";
-const PRAYER_CACHE_KEY="azkar_muslim_prayer_cache_v1";
-
-/*
-  طريقة الحساب:
-  5 = Egyptian General Authority of Survey
-
-  يمكن تغييرها لاحقًا إذا أردنا اعتماد طريقة
-  حساب مختلفة بحسب المنطقة.
-*/
-const PRAYER_METHOD=5;
-
-const PRAYER_NAMES={
-  Fajr:"الفجر",
-  Sunrise:"الشروق",
-  Dhuhr:"الظهر",
-  Asr:"العصر",
-  Maghrib:"المغرب",
-  Isha:"العشاء"
+const STORAGE = {
+  content: "azkar_muslim_content_v3",
+  favorites: "azkar_muslim_favorites_v2",
+  font: "azkar_muslim_font_v2",
+  line: "azkar_muslim_line_v1",
+  theme: "azkar_muslim_theme_v2",
+  city: "azkar_muslim_prayer_city_v2",
+  country: "azkar_muslim_prayer_country_v2",
+  method: "azkar_muslim_prayer_method_v1",
+  prayerCache: "azkar_muslim_prayer_cache_v2",
+  daily: "azkar_muslim_daily_v2",
+  recent: "azkar_muslim_recent_v2",
+  tasbeeh: "azkar_muslim_tasbeeh_v2",
+  settings: "azkar_muslim_settings_v2",
+  reminders: "azkar_muslim_reminders_v1",
+  history: "azkar_muslim_history_v1"
 };
 
-let data=[];
-let view=[];
-let i=0;
-let n=0;
+const DEFAULT_CITY = "Armanaz";
+const DEFAULT_COUNTRY = "Syria";
+const DEFAULT_METHOD = 5;
 
-let favorites=new Set();
-let historyReady=false;
+const PRAYERS = [
+  ["Fajr", "الفجر"],
+  ["Dhuhr", "الظهر"],
+  ["Asr", "العصر"],
+  ["Maghrib", "المغرب"],
+  ["Isha", "العشاء"]
+];
 
-let prayerData=null;
-let prayerTimer=null;
+const PRAYER_ALL = [
+  ["Fajr", "الفجر"],
+  ["Sunrise", "الشروق"],
+  ["Dhuhr", "الظهر"],
+  ["Asr", "العصر"],
+  ["Maghrib", "المغرب"],
+  ["Isha", "العشاء"]
+];
+
+let azkar = [];
+let currentDhikrIndex = -1;
+let currentReaderCount = 0;
+let readerTarget = 1;
+let currentList = [];
+let currentCategory = null;
+let previousPage = "homePage";
+let currentPage = "homePage";
+
+let prayerTimes = null;
+let prayerCountdownTimer = null;
+
+let shareCanvas = null;
+let shareBlob = null;
+let shareTemplate = 1;
+
+let deferredInstallPrompt = null;
+
+let tasbeeh = {
+  phrase: "سبحان الله",
+  count: 0,
+  target: 33
+};
+
+let appSettings = {
+  vibration: true,
+  autoAdvance: false
+};
+
+let reminders = {
+  morning: false,
+  evening: false,
+  sleep: false
+};
 
 
-/* HELPERS */
+/* =========================================================
+   HELPERS
+========================================================= */
 
-function $(id){
+function $(id) {
   return document.getElementById(id);
 }
 
-function setStatus(t){
-  $("status").textContent=t;
-}
-
-function toast(t){
-
-  const el=$("toast");
-
-  el.textContent=t;
-
-  el.classList.add("show");
-
-  clearTimeout(window.toastTimer);
-
-  window.toastTimer=setTimeout(()=>{
-    el.classList.remove("show");
-  },2200);
-}
-
-
-/* FAVORITES */
-
-function loadFavorites(){
-
-  try{
-
-    favorites=new Set(
-      JSON.parse(
-        localStorage.getItem(FAVORITES_KEY)||"[]"
-      )
-    );
-
-  }catch(e){
-
-    favorites=new Set();
-
-  }
-
-  updateFavoriteCount();
-}
-
-function saveFavorites(){
-
-  localStorage.setItem(
-    FAVORITES_KEY,
-    JSON.stringify([...favorites])
-  );
-
-  updateFavoriteCount();
-}
-
-function getKey(x){
-
-  return String(
-    x.id ??
-    x.title ??
-    x.text ??
-    ""
-  );
-}
-
-function updateFavoriteCount(){
-
-  if($("favoriteCount"))
-    $("favoriteCount").textContent=favorites.size;
-}
-
-
-/* DATA */
-
-async function loadData(){
-
-  try{
-
-    const r=await fetch(
-      REMOTE_URL,
-      {
-        cache:"no-store"
-      }
-    );
-
-    if(!r.ok)
-      throw new Error();
-
-    const x=await r.json();
-
-    if(
-      !(
-        Array.isArray(x)||
-        Array.isArray(x.items)
-      )
-    )
-      throw new Error();
-
-    localStorage.setItem(
-      CACHE_KEY,
-      JSON.stringify(x)
-    );
-
-    data=x.items||x;
-
-    setStatus(
-      "تم تحديث الأذكار من المستودع ✓"
-    );
-
-    updateStats();
-    renderHome();
-
-    return;
-
-  }catch(e){}
-
-
-  try{
-
-    const saved=
-      localStorage.getItem(CACHE_KEY);
-
-    if(saved){
-
-      const x=JSON.parse(saved);
-
-      data=x.items||x;
-
-      setStatus(
-        "تم تشغيل النسخة المحفوظة ✓"
-      );
-
-      updateStats();
-      renderHome();
-
-      return;
-    }
-
-  }catch(e){}
-
-
-  try{
-
-    const r=
-      await fetch("./azkar.json");
-
-    const x=await r.json();
-
-    data=x.items||x;
-
-    localStorage.setItem(
-      CACHE_KEY,
-      JSON.stringify(x)
-    );
-
-    setStatus(
-      "تم تحميل البيانات ✓"
-    );
-
-    updateStats();
-    renderHome();
-
-  }catch(e){
-
-    setStatus(
-      "تعذر تحميل الأذكار. تأكد من وجود azkar.json"
-    );
-
+function safeJSONParse(value, fallback) {
+  try {
+    return value ? JSON.parse(value) : fallback;
+  } catch {
+    return fallback;
   }
 }
 
-function refreshData(){
-
-  toast("جارٍ تحديث البيانات...");
-
-  loadData().then(()=>{
-    toast("تم تحديث البيانات ✓");
-  });
+function todayKey() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
-
-/* STATS */
-
-function updateStats(){
-
-  const cats=[
-    ...new Set(
-      data
-      .map(x=>x.category)
-      .filter(Boolean)
-    )
-  ];
-
-  $("totalAzkar").textContent=data.length;
-  $("totalCategories").textContent=cats.length;
-
-  updateFavoriteCount();
-}
-
-
-/* NAVIGATION */
-
-function hideAll(){
-
-  [
-    "home",
-    "list",
-    "reader",
-    "favoritesPage",
-    "settingsPage"
-  ].forEach(id=>{
-
-    const el=$(id);
-
-    if(el)
-      el.classList.add("hidden");
-
-  });
-
-}
-
-function setNav(active){
-
-  [
-    "navHome",
-    "navSections",
-    "navFavorites",
-    "navSettings"
-  ].forEach(id=>{
-
-    const el=$(id);
-
-    if(el)
-      el.classList.remove("active");
-
-  });
-
-  if(active && $(active))
-    $(active).classList.add("active");
-}
-
-function pushRoute(state){
-
-  if(!historyReady)
-    return;
-
-  history.pushState(
-    {
-      ...state,
-      app:true
-    },
-    "",
-    location.href
-  );
-}
-
-
-/* HOME */
-
-function showPage(id,push=true){
-
-  hideAll();
-
-  if($(id))
-    $(id).classList.remove("hidden");
-
-  setNav(
-    id==="home"
-      ?"navHome"
-      :id==="favoritesPage"
-      ?"navFavorites"
-      :id==="settingsPage"
-      ?"navSettings"
-      :"navSections"
-  );
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(id==="home")
-    renderHome();
-
-  if(push){
-    pushRoute({page:id});
+function formatArabicDate() {
+  try {
+    return new Intl.DateTimeFormat("ar", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    }).format(new Date());
+  } catch {
+    return "";
   }
 }
 
-function home(push=true){
-  showPage("home",push);
-}
-
-
-/* SECTIONS */
-
-function showSections(push=true){
-
-  hideAll();
-
-  $("list").classList.remove("hidden");
-
-  setNav("navSections");
-
-  $("lt").textContent="الأقسام";
-
-  $("listCount").textContent="اختر قسمًا للبدء";
-
-  renderSectionList();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(push){
-    pushRoute({page:"sections"});
-  }
-}
-
-
-/* FAVORITES */
-
-function showFavorites(push=true){
-
-  hideAll();
-
-  $("favoritesPage").classList.remove("hidden");
-
-  setNav("navFavorites");
-
-  renderFavorites();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(push){
-    pushRoute({page:"favorites"});
-  }
-}
-
-
-/* SETTINGS */
-
-function showSettings(push=true){
-
-  hideAll();
-
-  $("settingsPage").classList.remove("hidden");
-
-  setNav("navSettings");
-
-  loadPrayerSettingsIntoUI();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(push){
-    pushRoute({page:"settings"});
-  }
-}
-
-
-/* BACK */
-
-function back(){
-
-  if(historyReady){
-
-    history.back();
-
-    return;
-
-  }
-
-  showSections(false);
-}
-
-
-/* HISTORY */
-
-window.addEventListener(
-  "popstate",
-  function(event){
-
-    const state=event.state;
-
-    if(!state || !state.app){
-
-      history.pushState(
-        {
-          page:"home",
-          app:true
-        },
-        "",
-        location.href
-      );
-
-      showPage("home",false);
-
-      return;
-    }
-
-    if(state.page==="home"){
-
-      showPage("home",false);
-      return;
-
-    }
-
-    if(state.page==="sections"){
-
-      showSections(false);
-      return;
-
-    }
-
-    if(state.page==="favorites"){
-
-      showFavorites(false);
-      return;
-
-    }
-
-    if(state.page==="settings"){
-
-      showSettings(false);
-      return;
-
-    }
-
-    if(state.page==="category"){
-
-      if(state.category){
-
-        openCat(
-          state.category,
-          false
-        );
-
-      }else{
-
-        showSections(false);
-
-      }
-
-      return;
-    }
-
-    if(state.page==="reader"){
-
-      const ids=
-        Array.isArray(state.viewIds)
-        ?state.viewIds
-        :[];
-
-      const restored=[];
-
-      ids.forEach(id=>{
-
-        const found=
-          data.find(
-            x=>getKey(x)===String(id)
-          );
-
-        if(found)
-          restored.push(found);
-
-      });
-
-      if(restored.length){
-
-        view=restored;
-
-        openReader(
-          Number(state.index)||0,
-          false
-        );
-
-        return;
-      }
-
-      showSections(false);
-    }
-
-  }
-);
-
-function initHistory(){
-
-  history.replaceState(
-    {
-      page:"home",
-      app:true
-    },
-    "",
-    location.href
-  );
-
-  history.pushState(
-    {
-      page:"home",
-      app:true
-    },
-    "",
-    location.href
-  );
-
-  historyReady=true;
-}
-
-
-/* HOME RENDER */
-
-function renderHome(){
-
-  const q=
-    $("q")
-    .value
+function normalizeText(value) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
+}
 
-  const cats=[
-    ...new Set(
-      data
-      .map(x=>x.category)
-      .filter(Boolean)
-    )
-  ];
+function getDhikrKey(item) {
+  if (!item) return "";
+  return String(
+    item.id ||
+    `${item.category || ""}-${item.title || ""}-${item.text || ""}`
+  );
+}
 
-  const box=$("cats");
-  const results=$("results");
-  const sr=$("searchResults");
+function getCategoryName(item) {
+  return item?.category || item?.section || item?.type || "أذكار";
+}
 
-  box.innerHTML="";
-  sr.innerHTML="";
+function getDhikrTitle(item) {
+  return item?.title || item?.name || "ذكر";
+}
 
-  $("clearSearch").style.display=
-    q?"block":"none";
+function getDhikrText(item) {
+  return item?.text || item?.content || item?.zekr || "";
+}
 
-  if(!q){
+function getDhikrCount(item) {
+  const value = Number(item?.count ?? item?.repeat ?? item?.repetition ?? 1);
+  return Number.isFinite(value) && value > 0 ? value : 1;
+}
 
-    results.classList.add("hidden");
+function getSource(item) {
+  return item?.source || item?.reference || item?.hadith || "";
+}
 
-    cats.forEach((c,index)=>{
+function getGrade(item) {
+  return item?.grade || item?.status || item?.authenticity || "";
+}
 
-      const items=
-        data.filter(
-          x=>x.category===c
-        );
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-      const b=document.createElement("button");
+function vibrate(ms = 20) {
+  if (appSettings.vibration && navigator.vibrate) {
+    try {
+      navigator.vibrate(ms);
+    } catch {}
+  }
+}
 
-      b.className="category";
 
-      b.innerHTML=`
+/* =========================================================
+   TOAST
+========================================================= */
 
-        <div class="category-icon">
-          ${categoryIcon(c,index)}
-        </div>
+let toastTimer;
 
-        <div class="category-title">
-          ${esc(c)}
-        </div>
+function showToast(message) {
+  const toast = $("toast");
+  if (!toast) return;
 
-        <div class="category-count">
-          ${items.length} أذكار
-        </div>
+  toast.textContent = message;
+  toast.classList.add("show");
 
-      `;
+  clearTimeout(toastTimer);
 
-      b.onclick=()=>{
-        openCat(c);
-      };
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2400);
+}
 
-      box.appendChild(b);
 
+/* =========================================================
+   THEME
+========================================================= */
+
+function loadTheme() {
+  const theme = localStorage.getItem(STORAGE.theme) || "system";
+
+  document.documentElement.dataset.theme = theme;
+
+  if ($("themeSelect")) {
+    $("themeSelect").value = theme;
+  }
+}
+
+function changeTheme(theme) {
+  if (!["system", "light", "dark"].includes(theme)) {
+    theme = "system";
+  }
+
+  localStorage.setItem(STORAGE.theme, theme);
+  document.documentElement.dataset.theme = theme;
+}
+
+
+/* =========================================================
+   FONT
+========================================================= */
+
+function loadReadingSettings() {
+  const font = Number(localStorage.getItem(STORAGE.font) || 24);
+  const line = Number(localStorage.getItem(STORAGE.line) || 2.15);
+
+  changeFontSize(font);
+  changeLineHeight(line);
+}
+
+function changeFontSize(value) {
+  value = Math.max(18, Math.min(34, Number(value) || 24));
+
+  document.documentElement.style.setProperty(
+    "--reader-size",
+    value + "px"
+  );
+
+  localStorage.setItem(STORAGE.font, value);
+
+  if ($("fontRange")) $("fontRange").value = value;
+  if ($("fontRangeValue")) $("fontRangeValue").textContent = value;
+}
+
+function changeLineHeight(value) {
+  value = Math.max(1.7, Math.min(2.8, Number(value) || 2.15));
+
+  document.documentElement.style.setProperty(
+    "--line-height",
+    value
+  );
+
+  localStorage.setItem(STORAGE.line, value);
+
+  if ($("lineRange")) $("lineRange").value = value;
+  if ($("lineRangeValue")) {
+    $("lineRangeValue").textContent = Number(value).toFixed(1);
+  }
+}
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+async function loadData() {
+  const cached = localStorage.getItem(STORAGE.content);
+
+  try {
+    const response = await fetch(DATA_URL, {
+      cache: "no-cache"
     });
 
-    return;
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const json = await response.json();
+
+    if (Array.isArray(json)) {
+      azkar = json;
+    } else if (Array.isArray(json.items)) {
+      azkar = json.items;
+    } else if (Array.isArray(json.azkar)) {
+      azkar = json.azkar;
+    } else {
+      throw new Error("صيغة azkar.json غير معروفة");
+    }
+
+    localStorage.setItem(STORAGE.content, JSON.stringify(azkar));
+
+  } catch (error) {
+    if (cached) {
+      azkar = safeJSONParse(cached, []);
+      showToast("تم تشغيل النسخة المحفوظة من الأذكار");
+    } else {
+      azkar = [];
+      showToast("تعذر تحميل ملف الأذكار");
+    }
   }
 
-  results.classList.remove("hidden");
+  renderHomeCategories();
+  updateStats();
+  renderRecent();
+}
 
-  const found=
-    data.filter(x=>{
 
-      const text=(
-        (x.text||"")+" "+
-        (x.title||"")+" "+
-        (x.category||"")
-      ).toLowerCase();
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-      return text.includes(q);
+function openPage(pageId, saveHistory = true) {
+  const target = $(pageId);
 
-    });
+  if (!target) return;
 
-  if(!found.length){
-
-    sr.innerHTML=`
-
-      <div class="empty">
-
-        <div class="empty-icon">
-          🔎
-        </div>
-
-        <strong>
-          لم نجد ما تبحث عنه
-        </strong>
-
-        جرّب كلمة أخرى
-
-      </div>
-
-    `;
-
-    return;
+  if (currentPage !== pageId) {
+    previousPage = currentPage;
   }
 
-  found.forEach(x=>{
-
-    const b=document.createElement("button");
-
-    b.className="result";
-
-    b.innerHTML=`
-
-      <div class="result-title">
-        ${esc(x.title||"ذكر")}
-      </div>
-
-      <div class="result-preview">
-        ${esc(
-          String(x.text||"")
-          .replace(/\s+/g," ")
-          .slice(0,130)
-        )}
-        ${
-          String(x.text||"").length>130
-            ?"…"
-            :""
-        }
-      </div>
-
-    `;
-
-    b.onclick=()=>{
-
-      view=[x];
-      i=0;
-
-      openReader(0);
-
-    };
-
-    sr.appendChild(b);
-
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
   });
-}
 
-function clearSearch(){
+  target.classList.add("active");
 
-  $("q").value="";
-  renderHome();
+  currentPage = pageId;
 
-}
-
-
-/* SECTION LIST */
-
-function renderSectionList(){
-
-  const box=$("ls");
-
-  box.innerHTML="";
-
-  const cats=[
-    ...new Set(
-      data
-      .map(x=>x.category)
-      .filter(Boolean)
-    )
-  ];
-
-  if(!cats.length){
-
-    box.innerHTML=`
-
-      <div class="empty">
-        لا توجد أقسام
-      </div>
-
-    `;
-
-    return;
-  }
-
-  cats.forEach((c,index)=>{
-
-    const count=
-      data.filter(
-        x=>x.category===c
-      ).length;
-
-    const b=document.createElement("button");
-
-    b.className="dhikr-item";
-
-    b.innerHTML=`
-
-      <div class="dhikr-number">
-        ${categoryIcon(c,index)}
-      </div>
-
-      <div class="dhikr-info">
-
-        <div class="dhikr-title">
-          ${esc(c)}
-        </div>
-
-        <div class="dhikr-count">
-          ${count} أذكار
-        </div>
-
-      </div>
-
-      <div class="dhikr-arrow">
-        ‹
-      </div>
-
-    `;
-
-    b.onclick=()=>{
-      openCat(c);
-    };
-
-    box.appendChild(b);
-
-  });
-}
-
-
-/* CATEGORY ICON */
-
-function categoryIcon(name,index){
-
-  const n=
-    String(name||"")
-    .toLowerCase();
-
-  if(
-    n.includes("صباح")||
-    n.includes("مساء")
-  )
-    return "☀️";
-
-  if(
-    n.includes("نوم")||
-    n.includes("استيق")
-  )
-    return "🌙";
-
-  if(
-    n.includes("صلاة")||
-    n.includes("صل")
-  )
-    return "🕌";
-
-  if(
-    n.includes("منزل")||
-    n.includes("بيت")
-  )
-    return "🏠";
-
-  if(
-    n.includes("طعام")||
-    n.includes("أكل")
-  )
-    return "🍃";
-
-  if(n.includes("سفر"))
-    return "🧳";
-
-  if(
-    n.includes("قرآن")||
-    n.includes("قران")
-  )
-    return "📖";
-
-  if(n.includes("دعاء"))
-    return "🤲";
-
-  return [
-    "📿",
-    "🌿",
-    "🤲",
-    "✨",
-    "🕊️",
-    "📖"
-  ][index%6];
-}
-
-
-/* CATEGORY */
-
-function openCat(c,push=true){
-
-  view=
-    data.filter(
-      x=>x.category===c
+  document.querySelectorAll(".nav-item").forEach(btn => {
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page === pageId
     );
-
-  i=0;
-
-  $("lt").textContent=c;
-
-  $("listCount").textContent=
-    view.length+" أذكار";
-
-  hideAll();
-
-  $("list").classList.remove("hidden");
-
-  setNav("navSections");
-
-  renderList();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
   });
 
-  if(push){
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 
-    pushRoute({
-      page:"category",
-      category:c
-    });
+  if (saveHistory) {
+    try {
+      history.pushState(
+        { page: pageId },
+        "",
+        "#" + pageId
+      );
+    } catch {}
+  }
 
+  if (pageId === "favoritesPage") {
+    renderFavorites();
+  }
+
+  if (pageId === "statsPage") {
+    renderStatsPage();
+  }
+
+  if (pageId === "settingsPage") {
+    syncSettingsUI();
   }
 }
 
-function renderList(){
+function goHome() {
+  openPage("homePage");
+}
 
-  const box=$("ls");
+function goBack() {
+  if (currentPage === "readerPage") {
+    openPage(previousPage || "listPage");
+    return;
+  }
 
-  box.innerHTML="";
+  if (currentPage === "listPage" && currentCategory) {
+    currentCategory = null;
+    renderCategoriesList();
+    return;
+  }
 
-  view.forEach((x,j)=>{
+  openPage("homePage");
+}
 
-    const b=document.createElement("button");
+window.addEventListener("popstate", () => {
+  const page = location.hash.replace("#", "");
 
-    b.className="dhikr-item";
+  if ($(page)) {
+    openPage(page, false);
+  } else {
+    openPage("homePage", false);
+  }
+});
 
-    b.innerHTML=`
 
-      <div class="dhikr-number">
-        ${j+1}
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+function getCategories() {
+  const map = new Map();
+
+  azkar.forEach(item => {
+    const category = getCategoryName(item);
+
+    if (!map.has(category)) {
+      map.set(category, 0);
+    }
+
+    map.set(category, map.get(category) + 1);
+  });
+
+  return [...map.entries()].map(([name, count]) => ({
+    name,
+    count
+  }));
+}
+
+function categoryIcon(name) {
+  const text = normalizeText(name);
+
+  if (text.includes("صباح")) return "🌅";
+  if (text.includes("مساء")) return "🌇";
+  if (text.includes("نوم")) return "🌙";
+  if (text.includes("استيق")) return "☀️";
+  if (text.includes("صلاة")) return "🕌";
+  if (text.includes("سفر")) return "🧳";
+  if (text.includes("مسجد")) return "🕌";
+  if (text.includes("طعام") || text.includes("أكل")) return "🍽️";
+  if (text.includes("مرض") || text.includes("شف")) return "🤲";
+  if (text.includes("مطر")) return "🌧️";
+  if (text.includes("ريح") || text.includes("رعد")) return "🌬️";
+  if (text.includes("خوف") || text.includes("هم")) return "🤍";
+  if (text.includes("قرآن")) return "📖";
+  if (text.includes("نبي") || text.includes("أنبياء")) return "✨";
+
+  return "📿";
+}
+
+function renderHomeCategories() {
+  const container = $("homeCategories");
+  if (!container) return;
+
+  const categories = getCategories();
+
+  if (!categories.length) {
+    container.innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        <div class="empty-icon">📿</div>
+        لا توجد أقسام بعد
       </div>
-
-      <div class="dhikr-info">
-
-        <div class="dhikr-title">
-          ${esc(x.title||"ذكر")}
-        </div>
-
-        <div class="dhikr-count">
-          التكرار:
-          ${esc(x.count??1)}
-        </div>
-
-      </div>
-
-      <div class="dhikr-arrow">
-        ‹
-      </div>
-
     `;
-
-    b.onclick=()=>{
-      openReader(j);
-    };
-
-    box.appendChild(b);
-
-  });
-}
-
-
-/* READER */
-
-function openReader(j,push=true){
-
-  i=j;
-  n=0;
-
-  const x=view[i];
-
-  if(!x)
     return;
-
-  $("rt").textContent=
-    x.title||"ذكر";
-
-  $("rx").textContent=
-    x.text||"";
-
-  $("rs").textContent=[
-    x.source,
-    x.grade||x.status
-  ]
-  .filter(Boolean)
-  .join(" — ");
-
-  updateReader();
-
-  hideAll();
-
-  $("reader").classList.remove("hidden");
-
-  setNav("");
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(push){
-
-    pushRoute({
-      page:"reader",
-      index:i,
-      viewIds:
-        view.map(x=>getKey(x))
-    });
-
   }
+
+  const shown = categories.slice(0, 8);
+
+  container.innerHTML = shown.map(cat => `
+    <button class="category-card"
+      onclick="openCategory(${JSON.stringify(cat.name)})">
+      <div class="category-emoji">${categoryIcon(cat.name)}</div>
+      <div class="category-name">${escapeHTML(cat.name)}</div>
+      <div class="category-count">${cat.count} ذكر</div>
+    </button>
+  `).join("");
 }
 
-function updateReader(){
+function renderCategoriesList() {
+  currentCategory = null;
 
-  const x=view[i];
+  $("listTitle").textContent = "الأقسام";
+  $("listSubtitle").textContent = "اختر القسم الذي تريد قراءته";
 
-  if(!x)
+  $("categoriesListContainer").style.display = "block";
+  $("dhikrListContainer").style.display = "none";
+
+  const categories = getCategories();
+
+  $("categoriesListContainer").innerHTML = `
+    <div class="category-grid">
+      ${categories.map(cat => `
+        <button class="category-card"
+          onclick="openCategory(${JSON.stringify(cat.name)})">
+          <div class="category-emoji">${categoryIcon(cat.name)}</div>
+          <div class="category-name">${escapeHTML(cat.name)}</div>
+          <div class="category-count">${cat.count} ذكر</div>
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
+
+function openCategory(category) {
+  currentCategory = category;
+
+  currentList = azkar.filter(
+    item => getCategoryName(item) === category
+  );
+
+  $("listTitle").textContent = category;
+  $("listSubtitle").textContent = `${currentList.length} ذكر`;
+
+  $("categoriesListContainer").style.display = "none";
+  $("dhikrListContainer").style.display = "block";
+
+  renderListFilters();
+  renderDhikrList();
+
+  openPage("listPage");
+}
+
+function renderListFilters() {
+  const container = $("listFilters");
+
+  const filters = [
+    { id: "all", name: "الكل" },
+    { id: "source", name: "مع مصدر" },
+    { id: "short", name: "مختصر" }
+  ];
+
+  container.innerHTML = filters.map((filter, index) => `
+    <button
+      class="filter-chip ${index === 0 ? "active" : ""}"
+      onclick="applyListFilter('${filter.id}', this)"
+    >
+      ${filter.name}
+    </button>
+  `).join("");
+}
+
+function applyListFilter(filter, button) {
+  document.querySelectorAll("#listFilters .filter-chip").forEach(
+    b => b.classList.remove("active")
+  );
+
+  button.classList.add("active");
+
+  let filtered = [...currentList];
+
+  if (filter === "source") {
+    filtered = filtered.filter(item => getSource(item));
+  }
+
+  if (filter === "short") {
+    filtered = filtered.filter(
+      item => getDhikrText(item).length < 180
+    );
+  }
+
+  renderDhikrList(filtered);
+}
+
+function renderDhikrList(list = currentList) {
+  const container = $("dhikrList");
+
+  if (!list.length) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🔎</div>
+        لا توجد أذكار مطابقة
+      </div>
+    `;
     return;
+  }
 
-  let count=Number(x.count);
+  container.innerHTML = list.map(item => {
+    const index = azkar.indexOf(item);
+    const source = getSource(item);
 
-  if(
-    !Number.isFinite(count)||
-    count<1
-  )
-    count=1;
+    return `
+      <article class="dhikr-card"
+        onclick="openReader(${index})">
 
-  $("rc").textContent=
-    n+" / "+count;
+        <div class="dhikr-card-head">
+          <div class="dhikr-card-title">
+            ${escapeHTML(getDhikrTitle(item))}
+          </div>
 
-  const percent=
+          ${source
+            ? `<div class="dhikr-badge">موثق المصدر</div>`
+            : ""}
+        </div>
+
+        <div class="dhikr-preview">
+          ${escapeHTML(getDhikrText(item))}
+        </div>
+
+        <div class="dhikr-card-footer">
+          <span class="dhikr-count">
+            التكرار: ${getDhikrCount(item)}
+          </span>
+
+          <button
+            class="open-dhikr"
+            onclick="event.stopPropagation();openReader(${index})"
+          >
+            قراءة
+          </button>
+        </div>
+
+      </article>
+    `;
+  }).join("");
+}
+
+
+/* =========================================================
+   READER
+========================================================= */
+
+function openReader(index) {
+  if (!azkar[index]) return;
+
+  currentDhikrIndex = index;
+
+  const item = azkar[index];
+
+  currentReaderCount = 0;
+  readerTarget = getDhikrCount(item);
+
+  $("readerPageTitle").textContent = getDhikrTitle(item);
+  $("readerPageSubtitle").textContent = getCategoryName(item);
+
+  $("readerCategory").textContent = getCategoryName(item);
+  $("readerTitle").textContent = getDhikrTitle(item);
+  $("readerText").textContent = getDhikrText(item);
+
+  const source = getSource(item);
+  const grade = getGrade(item);
+
+  let sourceHTML = "";
+
+  if (source) {
+    sourceHTML += `<div>${escapeHTML(source)}</div>`;
+  }
+
+  if (grade) {
+    sourceHTML += `
+      <div class="reader-grade">
+        ${escapeHTML(grade)}
+      </div>
+    `;
+  }
+
+  if (!sourceHTML) {
+    sourceHTML = "المصدر غير مذكور في بيانات هذا الذكر.";
+  }
+
+  $("readerSource").innerHTML = sourceHTML;
+
+  updateReaderCounter();
+  updateFavoriteButton();
+
+  addRecent(item);
+  markRead(item);
+
+  previousPage =
+    currentCategory
+      ? "listPage"
+      : "homePage";
+
+  openPage("readerPage");
+}
+
+function updateReaderCounter() {
+  $("readerCounter").textContent = currentReaderCount;
+
+  $("readerProgressText").textContent =
+    `${Math.min(currentReaderCount, readerTarget)} / ${readerTarget}`;
+
+  const percentage =
     Math.min(
       100,
-      Math.round((n/count)*100)
+      (currentReaderCount / readerTarget) * 100
     );
 
-  $("progressBar").style.width=
-    percent+"%";
+  $("readerProgressBar").style.width =
+    percentage + "%";
 
-  $("progressPercent").textContent=
-    percent+"%";
+  $("readerCounter").classList.toggle(
+    "done",
+    currentReaderCount >= readerTarget
+  );
 
-  $("progressText").textContent=
-    "التكرار "+n+" من "+count;
-
-  $("prevBtn").disabled=i===0;
-
-  updateFavoriteButton();
+  $("readerMainButton").textContent =
+    currentReaderCount >= readerTarget
+      ? "تم الذكر ✓"
+      : "تسبيح ✓";
 }
 
-function tap(){
+function incrementReaderCounter() {
+  if (currentDhikrIndex < 0) return;
 
-  const x=view[i];
+  currentReaderCount++;
 
-  if(!x)
-    return;
+  vibrate();
 
-  let count=Number(x.count);
+  markRead(azkar[currentDhikrIndex]);
 
-  if(
-    !Number.isFinite(count)||
-    count<1
-  )
-    count=1;
+  updateReaderCounter();
 
-  n++;
-
-  if(n>=count){
-
-    n=count;
-
-    updateReader();
-
-    setTimeout(()=>{
-
-      if(i<view.length-1){
-
-        i++;
-        n=0;
-
-        openReader(i,false);
-
-      }else{
-
-        toast(
-          "أحسنت 🌿 أتممت القسم"
-        );
-
-      }
-
-    },180);
-
-    return;
-  }
-
-  updateReader();
-}
-
-function prev(){
-
-  if(i>0){
-
-    i--;
-    n=0;
-
-    openReader(i);
-
+  if (
+    currentReaderCount >= readerTarget &&
+    appSettings.autoAdvance
+  ) {
+    setTimeout(() => {
+      nextDhikr();
+    }, 350);
   }
 }
 
-function skip(){
+function nextDhikr() {
+  if (!azkar.length) return;
 
-  if(i<view.length-1){
+  let next = currentDhikrIndex + 1;
 
-    i++;
-    n=0;
-
-    openReader(i);
-
-  }else{
-
-    toast(
-      "أتممت جميع أذكار هذا القسم 🌿"
+  if (currentList.length) {
+    const position = currentList.indexOf(
+      azkar[currentDhikrIndex]
     );
 
-    showSections();
-
+    if (position >= 0) {
+      next = azkar.indexOf(
+        currentList[(position + 1) % currentList.length]
+      );
+    }
   }
+
+  if (next >= azkar.length) {
+    next = 0;
+  }
+
+  openReader(next);
+}
+
+function previousDhikr() {
+  if (!azkar.length) return;
+
+  let previous = currentDhikrIndex - 1;
+
+  if (currentList.length) {
+    const position = currentList.indexOf(
+      azkar[currentDhikrIndex]
+    );
+
+    if (position >= 0) {
+      const newPosition =
+        position <= 0
+          ? currentList.length - 1
+          : position - 1;
+
+      previous = azkar.indexOf(
+        currentList[newPosition]
+      );
+    }
+  }
+
+  if (previous < 0) {
+    previous = azkar.length - 1;
+  }
+
+  openReader(previous);
 }
 
 
-/* FAVORITES */
+/* =========================================================
+   FAVORITES
+========================================================= */
 
-function toggleFavorite(){
-
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  const key=getKey(x);
-
-  if(favorites.has(key))
-    favorites.delete(key);
-  else
-    favorites.add(key);
-
-  saveFavorites();
-
-  updateFavoriteButton();
-
-  toast(
-    favorites.has(key)
-      ?"أضيف إلى المفضلة ⭐"
-      :"أزيل من المفضلة"
+function getFavorites() {
+  return safeJSONParse(
+    localStorage.getItem(STORAGE.favorites),
+    []
   );
 }
 
-function updateFavoriteButton(){
-
-  const b=$("favoriteBtn");
-
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  b.textContent=
-    favorites.has(getKey(x))
-      ?"★"
-      :"☆";
+function saveFavorites(favorites) {
+  localStorage.setItem(
+    STORAGE.favorites,
+    JSON.stringify(favorites)
+  );
 }
 
-function renderFavorites(){
+function isFavorite(item) {
+  const key = getDhikrKey(item);
 
-  const box=$("favoriteList");
+  return getFavorites().some(
+    fav => fav === key
+  );
+}
 
-  box.innerHTML="";
+function toggleFavorite() {
+  const item = azkar[currentDhikrIndex];
 
-  const favs=
-    data.filter(
-      x=>favorites.has(getKey(x))
-    );
+  if (!item) return;
 
-  $("favPageCount").textContent=
-    favs.length+" أذكار";
+  const key = getDhikrKey(item);
+  const favorites = getFavorites();
 
-  if(!favs.length){
+  const index = favorites.indexOf(key);
 
-    box.innerHTML=`
+  if (index >= 0) {
+    favorites.splice(index, 1);
+    showToast("تمت إزالة الذكر من المفضلة");
+  } else {
+    favorites.push(key);
+    showToast("تمت إضافة الذكر إلى المفضلة ⭐");
+  }
 
+  saveFavorites(favorites);
+  updateFavoriteButton();
+  updateStats();
+}
+
+function updateFavoriteButton() {
+  const button = $("favoriteButton");
+
+  if (!button || !azkar[currentDhikrIndex]) return;
+
+  const active = isFavorite(
+    azkar[currentDhikrIndex]
+  );
+
+  button.textContent = active ? "★" : "☆";
+  button.classList.toggle("active", active);
+}
+
+function openFavorites() {
+  openPage("favoritesPage");
+  renderFavorites();
+}
+
+function renderFavorites() {
+  const container = $("favoritesContainer");
+  const favorites = getFavorites();
+
+  const items = azkar
+    .map((item, index) => ({ item, index }))
+    .filter(({ item }) => favorites.includes(getDhikrKey(item)));
+
+  if (!items.length) {
+    container.innerHTML = `
       <div class="empty">
-
-        <div class="empty-icon">
-          ⭐
+        <div class="empty-icon">⭐</div>
+        <div style="font-weight:900;color:var(--text);margin-bottom:5px">
+          لا توجد أذكار في المفضلة
         </div>
-
-        <strong>
-          لا توجد أذكار مفضلة
-        </strong>
-
-        أضف الأذكار التي تريد
-        الرجوع إليها لاحقًا.
-
+        <div>
+          اضغط على ☆ أثناء قراءة أي ذكر لحفظه هنا.
+        </div>
       </div>
-
     `;
-
     return;
   }
 
-  favs.forEach(x=>{
+  container.innerHTML = items.map(({ item, index }) => `
+    <article class="dhikr-card"
+      onclick="openReader(${index})">
 
-    const b=document.createElement("button");
-
-    b.className="dhikr-item";
-
-    b.innerHTML=`
-
-      <div class="dhikr-number">
-        ★
-      </div>
-
-      <div class="dhikr-info">
-
-        <div class="dhikr-title">
-          ${esc(x.title||"ذكر")}
+      <div class="dhikr-card-head">
+        <div class="dhikr-card-title">
+          ${escapeHTML(getDhikrTitle(item))}
         </div>
 
-        <div class="dhikr-count">
-          ${esc(x.category||"")}
-        </div>
-
+        <div class="dhikr-badge">★</div>
       </div>
 
-      <div class="dhikr-arrow">
-        ‹
+      <div class="dhikr-preview">
+        ${escapeHTML(getDhikrText(item))}
       </div>
 
-    `;
+      <div class="dhikr-card-footer">
+        <span class="dhikr-count">
+          ${escapeHTML(getCategoryName(item))}
+        </span>
 
-    b.onclick=()=>{
+        <button
+          class="open-dhikr"
+          onclick="event.stopPropagation();openReader(${index})"
+        >
+          قراءة
+        </button>
+      </div>
 
-      view=[x];
-      i=0;
-
-      openReader(0);
-
-    };
-
-    box.appendChild(b);
-
-  });
+    </article>
+  `).join("");
 }
 
-function clearFavorites(){
-
-  if(!favorites.size){
-
-    toast("المفضلة فارغة");
-
+function clearFavorites() {
+  if (!confirm("هل تريد حذف جميع الأذكار من المفضلة؟")) {
     return;
   }
 
-  if(
-    !confirm(
-      "هل تريد حذف جميع الأذكار من المفضلة؟"
-    )
-  )
-    return;
-
-  favorites.clear();
-
-  saveFavorites();
+  localStorage.removeItem(STORAGE.favorites);
 
   renderFavorites();
+  updateStats();
 
-  toast("تم مسح المفضلة ✓");
+  showToast("تم حذف المفضلة");
 }
 
 
-/* SETTINGS */
+/* =========================================================
+   DAILY PROGRESS
+========================================================= */
 
-function changeFont(delta){
+function getDailyData() {
+  return safeJSONParse(
+    localStorage.getItem(STORAGE.daily),
+    {}
+  );
+}
 
-  let size=
-    Number(
-      localStorage.getItem(FONT_KEY)||24
-    );
-
-  size+=delta*2;
-
-  size=
-    Math.max(
-      18,
-      Math.min(34,size)
-    );
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--font-size",
-      size+"px"
-    );
-
+function saveDailyData(data) {
   localStorage.setItem(
-    FONT_KEY,
-    size
-  );
-
-  toast("حجم النص: "+size);
-}
-
-function loadFont(){
-
-  const size=
-    Number(
-      localStorage.getItem(FONT_KEY)||24
-    );
-
-  document.documentElement
-    .style
-    .setProperty(
-      "--font-size",
-      size+"px"
-    );
-}
-
-function toggleTheme(){
-
-  const current=
-    localStorage.getItem(THEME_KEY)||"auto";
-
-  const next=
-    current==="dark"
-      ?"light"
-      :"dark";
-
-  localStorage.setItem(
-    THEME_KEY,
-    next
-  );
-
-  applyTheme();
-
-  toast(
-    next==="dark"
-      ?"تم تفعيل الوضع الليلي 🌙"
-      :"تم تفعيل الوضع الفاتح ☀️"
+    STORAGE.daily,
+    JSON.stringify(data)
   );
 }
 
-function applyTheme(){
+function markRead(item) {
+  if (!item) return;
 
-  const theme=
-    localStorage.getItem(THEME_KEY)||"auto";
+  const data = getDailyData();
+  const today = todayKey();
 
-  let style=
-    document.getElementById("customTheme");
-
-  if(!style){
-
-    style=
-      document.createElement("style");
-
-    style.id="customTheme";
-
-    document.head.appendChild(style);
+  if (!data[today]) {
+    data[today] = {
+      count: 0,
+      keys: []
+    };
   }
 
-  if(theme==="dark"){
+  data[today].count++;
 
-    style.textContent=`
+  const key = getDhikrKey(item);
 
-      :root{
-        --bg:#0f1d1b;
-        --card:#172825;
-        --text:#e7f1ef;
-        --muted:#91a5a1;
-        --border:#263a36;
-        --primary-light:#173e39;
-        --shadow:0 8px 25px #0003;
-      }
-
-      .bottom-nav{
-        background:#172825ee
-      }
-
-    `;
-
-    $("themeText")
-      .textContent=
-        "الوضع الليلي مفعّل";
-
-  }else{
-
-    style.textContent="";
-
-    $("themeText")
-      .textContent=
-        "الوضع الفاتح مفعّل";
-
+  if (!data[today].keys.includes(key)) {
+    data[today].keys.push(key);
   }
+
+  saveDailyData(data);
+
+  updateStats();
+  updateDailyCard();
+}
+
+function getTodayReadCount() {
+  const data = getDailyData();
+  return Number(data[todayKey()]?.count || 0);
+}
+
+function getTodayUniqueCount() {
+  const data = getDailyData();
+  return Array.isArray(data[todayKey()]?.keys)
+    ? data[todayKey()].keys.length
+    : 0;
+}
+
+function updateDailyCard() {
+  const count = getTodayUniqueCount();
+  const goal = Math.min(
+    10,
+    Math.max(5, azkar.length)
+  );
+
+  const percent = Math.min(
+    100,
+    Math.round((count / goal) * 100)
+  );
+
+  $("dailyPercent").textContent = percent + "%";
+
+  $("dailyRing").style.setProperty(
+    "--daily-progress",
+    percent + "%"
+  );
+
+  $("dailyText").textContent =
+    `قرأت ${count} أذكار مختلفة اليوم. الهدف اليومي المقترح ${goal}.`;
 }
 
 
-/* =====================================================
-   PRAYER TIMES
-   ===================================================== */
+/* =========================================================
+   RECENT
+========================================================= */
 
-function getPrayerCity(){
-
-  return localStorage.getItem(
-    PRAYER_CITY_KEY
-  ) || "Armanaz";
+function getRecent() {
+  return safeJSONParse(
+    localStorage.getItem(STORAGE.recent),
+    []
+  );
 }
 
-function getPrayerCountry(){
+function addRecent(item) {
+  const key = getDhikrKey(item);
 
-  return localStorage.getItem(
-    PRAYER_COUNTRY_KEY
-  ) || "Syria";
+  let recent = getRecent();
+
+  recent = recent.filter(
+    k => k !== key
+  );
+
+  recent.unshift(key);
+
+  recent = recent.slice(0, 5);
+
+  localStorage.setItem(
+    STORAGE.recent,
+    JSON.stringify(recent)
+  );
+
+  renderRecent();
 }
 
-function savePrayerLocation(){
+function renderRecent() {
+  const section = $("recentSection");
+  const container = $("recentContainer");
 
-  const city=
-    $("cityInput").value.trim();
+  if (!section || !container) return;
 
-  const country=
-    $("countryInput").value;
+  const recentKeys = getRecent();
 
-  if(!city){
+  const items = recentKeys
+    .map(key => {
+      const index = azkar.findIndex(
+        item => getDhikrKey(item) === key
+      );
 
-    toast("اكتب اسم المدينة أولًا");
+      return index >= 0
+        ? { item: azkar[index], index }
+        : null;
+    })
+    .filter(Boolean);
 
+  if (!items.length) {
+    section.style.display = "none";
     return;
   }
 
-  localStorage.setItem(
-    PRAYER_CITY_KEY,
-    city
-  );
+  section.style.display = "block";
 
-  localStorage.setItem(
-    PRAYER_COUNTRY_KEY,
-    country
-  );
+  container.innerHTML = items.map(({ item, index }) => `
+    <article class="dhikr-card"
+      onclick="openReader(${index})">
 
-  $("prayerCityLabel").textContent=
-    city+"، "+country;
+      <div class="dhikr-card-head">
+        <div class="dhikr-card-title">
+          ${escapeHTML(getDhikrTitle(item))}
+        </div>
+        <div class="dhikr-badge">
+          ${escapeHTML(getCategoryName(item))}
+        </div>
+      </div>
 
-  toast("تم حفظ المدينة ✓");
-
-  loadPrayerTimes(true);
-}
-
-function loadPrayerSettingsIntoUI(){
-
-  $("cityInput").value=
-    getPrayerCity();
-
-  $("countryInput").value=
-    getPrayerCountry();
-
-  $("prayerCityLabel").textContent=
-    getPrayerCity()+
-    "، "+
-    getPrayerCountry();
+      <div class="dhikr-preview">
+        ${escapeHTML(getDhikrText(item))}
+      </div>
+    </article>
+  `).join("");
 }
 
 
-/*
-  جلب أوقات الصلاة من AlAdhan.
+/* =========================================================
+   RANDOM / DAILY
+========================================================= */
 
-  لا يتم إرسال إحداثيات الجهاز.
-  يتم إرسال اسم المدينة والدولة فقط.
-*/
-
-async function loadPrayerTimes(force=false){
-
-  const city=getPrayerCity();
-  const country=getPrayerCountry();
-
-  $("prayerCityLabel").textContent=
-    city+"، "+country;
-
-  const cached=
-    localStorage.getItem(
-      PRAYER_CACHE_KEY
-    );
-
-  /*
-    نعرض البيانات المحفوظة أولًا
-    حتى لا تظهر البطاقة فارغة.
-  */
-
-  if(cached && !prayerData){
-
-    try{
-
-      const saved=JSON.parse(cached);
-
-      if(saved && saved.city===city){
-
-        prayerData=saved.data;
-
-        renderPrayerTimes();
-
-      }
-
-    }catch(e){}
-
+function openRandomDhikr() {
+  if (!azkar.length) {
+    showToast("لم يتم تحميل الأذكار بعد");
+    return;
   }
 
-  /*
-    إذا كانت البيانات موجودة اليوم
-    ولا يوجد طلب تحديث صريح، لا داعي
-    لطلب الشبكة مرة أخرى.
-  */
+  const index = Math.floor(
+    Math.random() * azkar.length
+  );
 
-  if(
-    prayerData &&
-    !force
-  ){
+  openReader(index);
+}
 
-    if(
-      prayerData.date===todayKey()
-    ){
+function findTimeBasedDhikr() {
+  const hour = new Date().getHours();
 
-      renderPrayerTimes();
+  let words = [];
+
+  if (hour >= 4 && hour < 11) {
+    words = ["صباح", "الصباح", "صبح"];
+  } else if (hour >= 16 && hour < 21) {
+    words = ["مساء", "المساء"];
+  } else if (hour >= 21 || hour < 4) {
+    words = ["نوم", "النوم", "ليل"];
+  }
+
+  let matches = azkar.filter(item => {
+    const value = normalizeText(
+      `${getCategoryName(item)} ${getDhikrTitle(item)}`
+    );
+
+    return words.some(word =>
+      value.includes(normalizeText(word))
+    );
+  });
+
+  if (!matches.length) {
+    matches = azkar;
+  }
+
+  return matches;
+}
+
+function openDailyDhikr() {
+  if (!azkar.length) return;
+
+  const matches = findTimeBasedDhikr();
+
+  const item =
+    matches[Math.floor(Math.random() * matches.length)];
+
+  const index = azkar.indexOf(item);
+
+  openReader(index);
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function searchDhikr(query) {
+  query = normalizeText(query);
+
+  if (!query) {
+    $("homeSearchResults").style.display = "none";
+    $("clearSearch").style.display = "none";
+    return;
+  }
+
+  $("clearSearch").style.display = "block";
+  $("homeSearchResults").style.display = "block";
+
+  const results = azkar
+    .map((item, index) => ({ item, index }))
+    .filter(({ item }) => {
+      const haystack = normalizeText([
+        getDhikrTitle(item),
+        getDhikrText(item),
+        getCategoryName(item),
+        getSource(item),
+        getGrade(item)
+      ].join(" "));
+
+      return haystack.includes(query);
+    })
+    .slice(0, 30);
+
+  $("searchResultsContainer").innerHTML =
+    results.length
+      ? results.map(({ item, index }) => `
+          <article class="dhikr-card"
+            onclick="openReader(${index})">
+
+            <div class="dhikr-card-head">
+              <div class="dhikr-card-title">
+                ${escapeHTML(getDhikrTitle(item))}
+              </div>
+              <div class="dhikr-badge">
+                ${escapeHTML(getCategoryName(item))}
+              </div>
+            </div>
+
+            <div class="dhikr-preview">
+              ${escapeHTML(getDhikrText(item))}
+            </div>
+
+          </article>
+        `).join("")
+      : `
+        <div class="empty">
+          <div class="empty-icon">🔎</div>
+          لا توجد نتائج مطابقة
+        </div>
+      `;
+}
+
+function clearSearch() {
+  $("homeSearch").value = "";
+  $("homeSearchResults").style.display = "none";
+  $("clearSearch").style.display = "none";
+}
+
+$("homeSearch").addEventListener("input", e => {
+  searchDhikr(e.target.value);
+});
+
+
+/* =========================================================
+   COPY / TEXT SHARE
+========================================================= */
+
+async function copyCurrentDhikr() {
+  const item = azkar[currentDhikrIndex];
+
+  if (!item) return;
+
+  const text =
+    `${getDhikrTitle(item)}\n\n` +
+    `${getDhikrText(item)}\n\n` +
+    `${getSource(item) || ""}`;
+
+  try {
+    await navigator.clipboard.writeText(text.trim());
+
+    showToast("تم نسخ الذكر 📋");
+  } catch {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const textarea = document.createElement("textarea");
+
+  textarea.value = text;
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+
+  document.body.appendChild(textarea);
+
+  textarea.select();
+
+  try {
+    document.execCommand("copy");
+    showToast("تم نسخ الذكر 📋");
+  } catch {
+    showToast("تعذر نسخ النص");
+  }
+
+  textarea.remove();
+}
+
+async function shareText() {
+  const item = azkar[currentDhikrIndex];
+
+  if (!item) return;
+
+  const text =
+    `${getDhikrTitle(item)}\n\n` +
+    `${getDhikrText(item)}\n\n` +
+    `أذكار المسلم | مدرسة بلال بن رباح`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: getDhikrTitle(item),
+        text
+      });
 
       return;
-    }
+    } catch {}
   }
 
-  $("prayerLoading").textContent=
-    "جارٍ تحميل أوقات الصلاة...";
-
-  $("prayerLoading").classList.remove("hidden");
-
-  $("prayerContent").classList.add("hidden");
-
-  const url=
-    "https://api.aladhan.com/v1/timingsByCity"
-    +"?city="+encodeURIComponent(city)
-    +"&country="+encodeURIComponent(country)
-    +"&method="+PRAYER_METHOD;
-
-  try{
-
-    const r=await fetch(url);
-
-    if(!r.ok)
-      throw new Error();
-
-    const json=await r.json();
-
-    if(
-      !json||
-      json.code!==200||
-      !json.data||
-      !json.data.timings
-    )
-      throw new Error();
-
-    prayerData={
-      timings:json.data.timings,
-      date:todayKey(),
-      hijri:json.data.date?.hijri?.date||"",
-      gregorian:json.data.date?.gregorian?.date||"",
-      city,
-      country
-    };
-
-    localStorage.setItem(
-      PRAYER_CACHE_KEY,
-      JSON.stringify({
-        city,
-        country,
-        data:prayerData
-      })
-    );
-
-    renderPrayerTimes();
-
-    toast("تم تحديث أوقات الصلاة ✓");
-
-  }catch(e){
-
-    if(prayerData){
-
-      renderPrayerTimes();
-
-      toast(
-        "تعذر التحديث، تم استخدام آخر بيانات محفوظة"
-      );
-
-    }else{
-
-      $("prayerLoading").textContent=
-        "تعذر تحميل أوقات الصلاة. تحقق من الاتصال بالإنترنت.";
-
-    }
-
-  }
-}
-
-function todayKey(){
-
-  const d=new Date();
-
-  return [
-    d.getFullYear(),
-    String(d.getMonth()+1).padStart(2,"0"),
-    String(d.getDate()).padStart(2,"0")
-  ].join("-");
+  await copyCurrentDhikr();
 }
 
 
-/*
-  تحويل 24 ساعة إلى صيغة واضحة.
-*/
+/* =========================================================
+   SHARE IMAGE
+========================================================= */
 
-function cleanTime(value){
+function openShareModal() {
+  const item = azkar[currentDhikrIndex];
 
-  if(!value)
-    return "--:--";
+  if (!item) return;
 
-  const match=
-    String(value).match(/^(\d{1,2}):(\d{2})/);
+  shareTemplate = 1;
 
-  if(!match)
-    return value;
+  $("template1").classList.add("active");
+  $("template2").classList.remove("active");
 
-  let h=Number(match[1]);
-  const m=match[2];
+  $("shareModal").classList.add("open");
 
-  if(h===0)
-    h=12;
-
-  return String(h).padStart(2,"0")+":"+m;
+  generateShareImage();
 }
 
-function timeToMinutes(value){
-
-  const match=
-    String(value||"").match(/^(\d{1,2}):(\d{2})/);
-
-  if(!match)
-    return null;
-
-  return Number(match[1])*60+
-         Number(match[2]);
+function closeModal(id) {
+  $(id)?.classList.remove("open");
 }
 
-function renderPrayerTimes(){
+function selectShareTemplate(template) {
+  shareTemplate = template;
 
-  if(
-    !prayerData||
-    !prayerData.timings
-  )
-    return;
+  $("template1").classList.toggle(
+    "active",
+    template === 1
+  );
 
-  const t=prayerData.timings;
+  $("template2").classList.toggle(
+    "active",
+    template === 2
+  );
 
-  $("prayerLoading").classList.add("hidden");
-  $("prayerContent").classList.remove("hidden");
-
-  const order=[
-    "Fajr",
-    "Sunrise",
-    "Dhuhr",
-    "Asr",
-    "Maghrib",
-    "Isha"
-  ];
-
-  const grid=$("prayerGrid");
-
-  grid.innerHTML="";
-
-  order.forEach(key=>{
-
-    const div=
-      document.createElement("div");
-
-    div.className="prayer-time";
-
-    div.innerHTML=`
-
-      <div class="prayer-time-name">
-        ${PRAYER_NAMES[key]}
-      </div>
-
-      <div class="prayer-time-value">
-        ${cleanTime(t[key])}
-      </div>
-
-    `;
-
-    grid.appendChild(div);
-
-  });
-
-  $("prayerDate").textContent=
-    prayerData.hijri||"";
-
-  updateNextPrayer();
-
-  clearInterval(prayerTimer);
-
-  prayerTimer=
-    setInterval(
-      updateNextPrayer,
-      30000
-    );
+  generateShareImage();
 }
 
-function updateNextPrayer(){
-
-  if(
-    !prayerData||
-    !prayerData.timings
-  )
-    return;
-
-  const now=new Date();
-
-  const currentMinutes=
-    now.getHours()*60+
-    now.getMinutes()+
-    now.getSeconds()/60;
-
-  const order=[
-    "Fajr",
-    "Dhuhr",
-    "Asr",
-    "Maghrib",
-    "Isha"
-  ];
-
-  let next=null;
-
-  for(const key of order){
-
-    const mins=
-      timeToMinutes(
-        prayerData.timings[key]
-      );
-
-    if(
-      mins!==null &&
-      mins>currentMinutes
-    ){
-
-      next={
-        key,
-        minutes:mins
-      };
-
-      break;
-    }
-  }
-
-  /*
-    إذا انتهت صلاة العشاء،
-    تكون الصلاة القادمة فجر اليوم التالي.
-  */
-
-  let difference;
-
-  if(!next){
-
-    const fajr=
-      timeToMinutes(
-        prayerData.timings.Fajr
-      );
-
-    next={
-      key:"Fajr",
-      minutes:fajr
-    };
-
-    difference=
-      (24*60-currentMinutes)+fajr;
-
-  }else{
-
-    difference=
-      next.minutes-currentMinutes;
-
-  }
-
-  $("nextPrayerName").textContent=
-    PRAYER_NAMES[next.key];
-
-  $("nextPrayerTime").textContent=
-    cleanTime(
-      prayerData.timings[next.key]
-    );
-
-  /*
-    نعرض الوقت المتبقي داخل عنوان صغير
-    دون تغيير تصميم البطاقة.
-  */
-
-  const label=
-    document.querySelector(".next-label");
-
-  if(label){
-
-    const totalSeconds=
-      Math.max(
-        0,
-        Math.round(difference*60)
-      );
-
-    const h=
-      Math.floor(totalSeconds/3600);
-
-    const m=
-      Math.floor(
-        (totalSeconds%3600)/60
-      );
-
-    const s=
-      totalSeconds%60;
-
-    label.textContent=
-      "الصلاة القادمة · متبقي "+
-      String(h).padStart(2,"0")+
-      ":"+
-      String(m).padStart(2,"0")+
-      ":"+
-      String(s).padStart(2,"0");
-
-  }
-}
-
-
-/* =====================================================
-   SHARE AS IMAGE
-   ===================================================== */
-
-async function shareCurrentDhikr(){
-
-  const x=view[i];
-
-  if(!x)
-    return;
-
-  toast("جارٍ تجهيز الصورة...");
-
-  try{
-
-    await createShareImage(x);
-
-    $("sharePreview")
-      .classList.remove("hidden");
-
-  }catch(e){
-
-    console.error(e);
-
-    toast(
-      "تعذر إنشاء صورة المشاركة"
-    );
-
-  }
-}
-
-function closeSharePreview(){
-
-  $("sharePreview")
-    .classList.add("hidden");
-}
-
-
-/*
-  رسم صورة مشاركة عربية واضحة
-  باستخدام Canvas.
-
-  لا تحتاج إلى ملف صورة خارجي،
-  لذلك تعمل حتى دون إضافة صور جديدة
-  إلى المستودع.
-*/
-
-async function createShareImage(x){
-
-  const canvas=$("shareCanvas");
-
-  const ctx=canvas.getContext("2d");
-
-  const width=1080;
-
-  const text=
-    String(x.text||"").trim();
-
-  const title=
-    String(x.title||"ذكر");
-
-  const source=[
-    x.source,
-    x.grade||x.status
-  ]
-  .filter(Boolean)
-  .join(" — ");
-
-  /*
-    نحسب الارتفاع بحسب طول النص.
-  */
-
-  const tempCanvas=
-    document.createElement("canvas");
-
-  const tempCtx=
-    tempCanvas.getContext("2d");
-
-  tempCtx.font=
-    "38px Arial, Tahoma, sans-serif";
-
-  const maxWidth=900;
-
-  const lines=
-    wrapArabicText(
-      tempCtx,
-      text,
-      maxWidth
-    );
-
-  const height=
-    Math.max(
-      1250,
-      350+
-      lines.length*70+
-      (source?100:0)
-    );
-
-  canvas.width=width;
-  canvas.height=height;
-
-  /*
-    الخلفية
-  */
-
-  const gradient=
-    ctx.createLinearGradient(
-      0,
-      0,
-      width,
-      height
-    );
-
-  gradient.addColorStop(
-    0,
-    "#f4f8f7"
-  );
-
-  gradient.addColorStop(
-    1,
-    "#ffffff"
-  );
-
-  ctx.fillStyle=gradient;
-
-  ctx.fillRect(
-    0,
-    0,
-    width,
-    height
-  );
-
-  /*
-    شريط الهوية العلوي
-  */
-
-  const headerGradient=
-    ctx.createLinearGradient(
-      0,
-      0,
-      width,
-      0
-    );
-
-  headerGradient.addColorStop(
-    0,
-    "#075e57"
-  );
-
-  headerGradient.addColorStop(
-    1,
-    "#0b7a70"
-  );
-
-  ctx.fillStyle=headerGradient;
-
-  roundRect(
-    ctx,
-    0,
-    0,
-    width,
-    260,
-    0
-  );
-
-  ctx.fill();
-
-  /*
-    شعار رمزي بسيط
-  */
-
-  ctx.fillStyle="#ffffff22";
-
-  ctx.beginPath();
-
-  ctx.arc(
-    930,
-    80,
-    95,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fill();
-
-  ctx.fillStyle="#fff";
-
-  ctx.font=
-    "bold 50px Arial";
-
-  ctx.textAlign="right";
-  ctx.direction="rtl";
-
-  ctx.fillText(
-    "📿 أذكار المسلم",
-    930,
-    92
-  );
-
-  ctx.font=
-    "28px Arial";
-
-  ctx.fillText(
-    "رفيقك اليومي للذكر والدعاء",
-    930,
-    145
-  );
-
-  /*
-    العنوان
-  */
-
-  ctx.fillStyle="#17312e";
-
-  ctx.font=
-    "bold 42px Arial";
-
-  ctx.textAlign="right";
-  ctx.direction="rtl";
-
-  ctx.fillText(
-    title,
-    930,
-    345
-  );
-
-  /*
-    خط زخرفي بسيط
-  */
-
-  ctx.fillStyle="#0b7a70";
-
-  roundRect(
-    ctx,
-    850,
-    380,
-    80,
-    7,
-    4
-  );
-
-  ctx.fill();
-
-  /*
-    نص الذكر
-  */
-
-  ctx.fillStyle="#17312e";
-
-  ctx.font=
-    "38px Arial";
-
-  ctx.textAlign="right";
-  ctx.direction="rtl";
-
-  let y=455;
-
-  lines.forEach(line=>{
-
-    ctx.fillText(
-      line,
-      930,
-      y
-    );
-
-    y+=70;
-
-  });
-
-  /*
-    المصدر
-  */
-
-  if(source){
-
-    y+=20;
-
-    ctx.fillStyle="#71827f";
-
-    ctx.font=
-      "25px Arial";
-
-    ctx.fillText(
-      source,
-      930,
-      y
-    );
-
-  }
-
-  /*
-    هوية المدرسة أسفل الصورة
-  */
-
-  const footerY=
-    height-150;
-
-  ctx.fillStyle="#dff4f0";
-
-  roundRect(
-    ctx,
-    70,
-    footerY,
-    width-140,
-    90,
-    22
-  );
-
-  ctx.fill();
-
-  ctx.fillStyle="#075e57";
-
-  ctx.font=
-    "bold 25px Arial";
-
-  ctx.textAlign="center";
-
-  ctx.fillText(
-    "المدرسة الشرعية الخامسة عشرة بلال بن رباح رضي الله عنه",
-    width/2,
-    footerY+38
-  );
-
-  ctx.font=
-    "21px Arial";
-
-  ctx.fillStyle="#71827f";
-
-  ctx.fillText(
-    "أذكار المسلم",
-    width/2,
-    footerY+68
-  );
-
-  return canvas;
-}
-
-
-/*
-  تقسيم النص العربي إلى أسطر.
-*/
-
-function wrapArabicText(
+function wrapCanvasText(
   ctx,
   text,
   maxWidth
-){
+) {
+  const words = String(text || "").split(/\s+/);
+  const lines = [];
+  let line = "";
 
-  const words=
-    text.split(/\s+/);
+  for (const word of words) {
+    const test =
+      line ? `${line} ${word}` : word;
 
-  const lines=[];
-
-  let line="";
-
-  words.forEach(word=>{
-
-    const test=
-      line
-        ?line+" "+word
-        :word;
-
-    if(
-      ctx.measureText(test).width>
-      maxWidth &&
-      line
-    ){
-
-      lines.push(line);
-
-      line=word;
-
-    }else{
-
-      line=test;
-
+    if (ctx.measureText(test).width <= maxWidth) {
+      line = test;
+    } else {
+      if (line) lines.push(line);
+      line = word;
     }
+  }
 
-  });
-
-  if(line)
+  if (line) {
     lines.push(line);
+  }
 
   return lines;
+}
+
+async function generateShareImage() {
+  const item = azkar[currentDhikrIndex];
+
+  if (!item) return;
+
+  const canvas = document.createElement("canvas");
+
+  canvas.width = 1080;
+  canvas.height = 1350;
+
+  const ctx = canvas.getContext("2d");
+
+  const W = canvas.width;
+  const H = canvas.height;
+
+  /* خلفية */
+  if (shareTemplate === 1) {
+    const gradient = ctx.createLinearGradient(
+      0, 0, W, H
+    );
+
+    gradient.addColorStop(0, "#0b7a70");
+    gradient.addColorStop(1, "#064c48");
+
+    ctx.fillStyle = gradient;
+  } else {
+    const gradient = ctx.createLinearGradient(
+      0, 0, W, H
+    );
+
+    gradient.addColorStop(0, "#f5f1e8");
+    gradient.addColorStop(1, "#e7eee9");
+
+    ctx.fillStyle = gradient;
+  }
+
+  ctx.fillRect(0, 0, W, H);
+
+  /* زخرفة */
+  ctx.beginPath();
+  ctx.arc(
+    W - 70,
+    80,
+    230,
+    0,
+    Math.PI * 2
+  );
+
+  ctx.fillStyle =
+    shareTemplate === 1
+      ? "rgba(255,255,255,.05)"
+      : "rgba(11,122,112,.05)";
+
+  ctx.fill();
+
+  /* العنوان */
+  ctx.textAlign = "center";
+  ctx.direction = "rtl";
+
+  ctx.font = "bold 58px Arial";
+
+  ctx.fillStyle =
+    shareTemplate === 1
+      ? "#ffffff"
+      : "#0b625b";
+
+  ctx.fillText(
+    "أذكار المسلم",
+    W / 2,
+    105
+  );
+
+  ctx.font = "bold 27px Arial";
+
+  ctx.fillStyle =
+    shareTemplate === 1
+      ? "rgba(255,255,255,.75)"
+      : "#60736e";
+
+  ctx.fillText(
+    "المدرسة الشرعية الخامسة عشرة",
+    W / 2,
+    148
+  );
+
+  ctx.font = "bold 30px Arial";
+
+  ctx.fillText(
+    "بلال بن رباح رضي الله عنه",
+    W / 2,
+    188
+  );
+
+  /* البطاقة */
+  const cardX = 75;
+  const cardY = 270;
+  const cardW = W - 150;
+  const cardH = 790;
+
+  ctx.fillStyle =
+    shareTemplate === 1
+      ? "rgba(255,255,255,.97)"
+      : "rgba(255,255,255,.98)";
+
+  roundRect(
+    ctx,
+    cardX,
+    cardY,
+    cardW,
+    cardH,
+    38
+  );
+
+  ctx.fill();
+
+  /* اسم الذكر */
+  ctx.fillStyle = "#0b625b";
+  ctx.font = "bold 37px Arial";
+
+  ctx.fillText(
+    getDhikrTitle(item),
+    W / 2,
+    cardY + 78
+  );
+
+  /* النص */
+  ctx.font = "42px Arial";
+  ctx.fillStyle = "#1d2d29";
+
+  const text = getDhikrText(item);
+
+  const lines = wrapCanvasText(
+    ctx,
+    text,
+    cardW - 120
+  );
+
+  const maxLines = 12;
+  const visibleLines = lines.slice(0, maxLines);
+
+  const lineHeight = 62;
+
+  let startY =
+    cardY + 155;
+
+  visibleLines.forEach(line => {
+    ctx.fillText(
+      line,
+      W / 2,
+      startY
+    );
+
+    startY += lineHeight;
+  });
+
+  if (lines.length > maxLines) {
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "#73817e";
+
+    ctx.fillText(
+      "…",
+      W / 2,
+      startY
+    );
+  }
+
+  /* المصدر */
+  const source = getSource(item);
+
+  if (source) {
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#6c7b77";
+
+    const sourceLines =
+      wrapCanvasText(
+        ctx,
+        source,
+        cardW - 130
+      ).slice(0, 3);
+
+    let sourceY =
+      cardY + cardH - 120;
+
+    sourceLines.forEach(line => {
+      ctx.fillText(
+        line,
+        W / 2,
+        sourceY
+      );
+
+      sourceY += 36;
+    });
+  }
+
+  /* التذييل */
+  ctx.font = "bold 24px Arial";
+
+  ctx.fillStyle =
+    shareTemplate === 1
+      ? "rgba(255,255,255,.75)"
+      : "#71817c";
+
+  ctx.fillText(
+    "اللهم اجعلها صدقة جارية",
+    W / 2,
+    H - 75
+  );
+
+  ctx.font = "20px Arial";
+
+  ctx.fillText(
+    "أذكار المسلم",
+    W / 2,
+    H - 38
+  );
+
+  shareCanvas = canvas;
+
+  shareBlob = await canvasToBlob(canvas);
+
+  const preview = $("sharePreviewImage");
+
+  if (preview && shareBlob) {
+    const url = URL.createObjectURL(shareBlob);
+
+    if (preview.dataset.objectUrl) {
+      URL.revokeObjectURL(
+        preview.dataset.objectUrl
+      );
+    }
+
+    preview.dataset.objectUrl = url;
+    preview.src = url;
+  }
 }
 
 function roundRect(
   ctx,
   x,
   y,
-  w,
-  h,
-  r
-){
-
-  const radius=
-    Math.min(
-      r,
-      w/2,
-      h/2
-    );
+  width,
+  height,
+  radius
+) {
+  const r = Math.min(
+    radius,
+    width / 2,
+    height / 2
+  );
 
   ctx.beginPath();
 
-  ctx.moveTo(
-    x+radius,
-    y
-  );
+  ctx.moveTo(x + r, y);
 
   ctx.arcTo(
-    x+w,
+    x + width,
     y,
-    x+w,
-    y+h,
-    radius
+    x + width,
+    y + height,
+    r
   );
 
   ctx.arcTo(
-    x+w,
-    y+h,
+    x + width,
+    y + height,
     x,
-    y+h,
-    radius
+    y + height,
+    r
   );
 
   ctx.arcTo(
     x,
-    y+h,
+    y + height,
     x,
     y,
-    radius
+    r
   );
 
   ctx.arcTo(
     x,
     y,
-    x+w,
+    x + width,
     y,
-    radius
+    r
   );
 
   ctx.closePath();
 }
 
-
-/* SHARE / DOWNLOAD */
-
-function canvasToBlob(){
-
-  return new Promise(resolve=>{
-
-    $("shareCanvas")
-      .toBlob(
-        blob=>resolve(blob),
-        "image/png"
-      );
-
+function canvasToBlob(canvas) {
+  return new Promise(resolve => {
+    canvas.toBlob(
+      blob => resolve(blob),
+      "image/png",
+      1
+    );
   });
 }
 
-async function shareGeneratedImage(){
+async function shareGeneratedImage() {
+  if (!shareBlob) {
+    await generateShareImage();
+  }
 
-  const blob=
-    await canvasToBlob();
+  if (!shareBlob) {
+    showToast("تعذر إنشاء الصورة");
+    return;
+  }
 
-  if(!blob){
+  const item = azkar[currentDhikrIndex];
 
-    toast(
-      "تعذر تجهيز الصورة"
+  const file = new File(
+    [shareBlob],
+    "azkar-muslim-dhikr.png",
+    {
+      type: "image/png"
+    }
+  );
+
+  if (
+    navigator.share &&
+    navigator.canShare &&
+    navigator.canShare({ files: [file] })
+  ) {
+    try {
+      await navigator.share({
+        title: getDhikrTitle(item),
+        text: "أذكار المسلم | مدرسة بلال بن رباح",
+        files: [file]
+      });
+
+      return;
+    } catch {}
+  }
+
+  downloadGeneratedImage();
+}
+
+function downloadGeneratedImage() {
+  if (!shareBlob) {
+    showToast("جارٍ تجهيز الصورة...");
+    return;
+  }
+
+  const url = URL.createObjectURL(
+    shareBlob
+  );
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+  link.download = "azkar-muslim-dhikr.png";
+
+  document.body.appendChild(link);
+
+  link.click();
+
+  link.remove();
+
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+  }, 1500);
+
+  showToast("تم تجهيز الصورة للحفظ");
+}
+
+
+/* =========================================================
+   TASBEEH
+========================================================= */
+
+function loadTasbeeh() {
+  const saved = safeJSONParse(
+    localStorage.getItem(STORAGE.tasbeeh),
+    null
+  );
+
+  if (saved && typeof saved === "object") {
+    tasbeeh = {
+      ...tasbeeh,
+      ...saved
+    };
+  }
+
+  renderTasbeeh();
+}
+
+function saveTasbeeh() {
+  localStorage.setItem(
+    STORAGE.tasbeeh,
+    JSON.stringify(tasbeeh)
+  );
+}
+
+function renderTasbeeh() {
+  $("tasbeehPhrase").textContent =
+    tasbeeh.phrase;
+
+  $("tasbeehNumber").textContent =
+    tasbeeh.count;
+
+  $("tasbeehTargetLabel").textContent =
+    tasbeeh.target;
+}
+
+function selectTasbeeh(
+  phrase,
+  target,
+  button
+) {
+  tasbeeh.phrase = phrase;
+  tasbeeh.target = target;
+  tasbeeh.count = 0;
+
+  document.querySelectorAll(".preset").forEach(
+    b => b.classList.remove("active")
+  );
+
+  button?.classList.add("active");
+
+  saveTasbeeh();
+  renderTasbeeh();
+
+  showToast("تم اختيار الذكر");
+}
+
+function incrementTasbeeh() {
+  tasbeeh.count++;
+
+  vibrate(18);
+
+  if (
+    tasbeeh.count >= tasbeeh.target
+  ) {
+    vibrate(50);
+
+    showToast("أتممت العدد المحدد ✓");
+
+    if (
+      appSettings.autoAdvance
+    ) {
+      setTimeout(() => {
+        tasbeeh.count = 0;
+        saveTasbeeh();
+        renderTasbeeh();
+      }, 500);
+    }
+  }
+
+  saveTasbeeh();
+  renderTasbeeh();
+}
+
+function resetTasbeeh() {
+  tasbeeh.count = 0;
+
+  saveTasbeeh();
+  renderTasbeeh();
+
+  showToast("تم تصفير العداد");
+}
+
+function setTasbeehTarget() {
+  const value = prompt(
+    "أدخل العدد المطلوب:",
+    String(tasbeeh.target)
+  );
+
+  if (value === null) return;
+
+  const target = Number(value);
+
+  if (
+    !Number.isFinite(target) ||
+    target < 1 ||
+    target > 99999
+  ) {
+    showToast("العدد غير صالح");
+    return;
+  }
+
+  tasbeeh.target = Math.floor(target);
+  tasbeeh.count = 0;
+
+  saveTasbeeh();
+  renderTasbeeh();
+}
+
+function toggleVibration() {
+  appSettings.vibration =
+    !appSettings.vibration;
+
+  saveAppSettings();
+  syncSettingsUI();
+
+  if (appSettings.vibration) {
+    vibrate(30);
+  }
+}
+
+function toggleAutoAdvance() {
+  appSettings.autoAdvance =
+    !appSettings.autoAdvance;
+
+  saveAppSettings();
+  syncSettingsUI();
+}
+
+function saveAppSettings() {
+  localStorage.setItem(
+    STORAGE.settings,
+    JSON.stringify(appSettings)
+  );
+}
+
+function loadAppSettings() {
+  const saved = safeJSONParse(
+    localStorage.getItem(STORAGE.settings),
+    null
+  );
+
+  if (saved) {
+    appSettings = {
+      ...appSettings,
+      ...saved
+    };
+  }
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats() {
+  const favorites = getFavorites();
+
+  if ($("statToday")) {
+    $("statToday").textContent =
+      getTodayReadCount();
+  }
+
+  if ($("statFavorites")) {
+    $("statFavorites").textContent =
+      favorites.length;
+  }
+
+  if ($("statTotal")) {
+    $("statTotal").textContent =
+      azkar.length;
+  }
+
+  updateDailyCard();
+}
+
+function getActiveDays() {
+  const data = getDailyData();
+
+  return Object.keys(data)
+    .filter(key => {
+      return Number(data[key]?.count || 0) > 0;
+    }).length;
+}
+
+function renderStatsPage() {
+  const data = getDailyData();
+
+  $("statsReadToday").textContent =
+    getTodayReadCount();
+
+  $("statsReadTotal").textContent =
+    Object.values(data).reduce(
+      (sum, day) =>
+        sum + Number(day?.count || 0),
+      0
     );
+
+  $("statsDays").textContent =
+    getActiveDays();
+
+  const today = getTodayReadCount();
+
+  $("statsDailyMessage").textContent =
+    today > 0
+      ? `ما شاء الله، سجلت ${today} عملية قراءة اليوم. استمر على الذكر.`
+      : "لم يبدأ تسجيل نشاط اليوم بعد. افتح أي ذكر وابدأ القراءة.";
+
+  const entries = Object.entries(data)
+    .sort((a,b) => b[0].localeCompare(a[0]))
+    .slice(0, 14);
+
+  if (!entries.length) {
+    $("statsHistory").innerHTML =
+      `<p>لا يوجد سجل نشاط بعد.</p>`;
+    return;
+  }
+
+  $("statsHistory").innerHTML =
+    entries.map(([date, value]) => `
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        padding:10px 0;
+        border-bottom:1px solid var(--border);
+        font-size:12px;
+      ">
+        <span>${escapeHTML(date)}</span>
+        <strong style="color:var(--primary)">
+          ${Number(value?.count || 0)} قراءة
+        </strong>
+      </div>
+    `).join("");
+}
+
+function openStats() {
+  openPage("statsPage");
+  renderStatsPage();
+}
+
+
+/* =========================================================
+   PRAYER TIMES
+========================================================= */
+
+function getPrayerSettings() {
+  return {
+    city:
+      localStorage.getItem(STORAGE.city) ||
+      DEFAULT_CITY,
+
+    country:
+      localStorage.getItem(STORAGE.country) ||
+      DEFAULT_COUNTRY,
+
+    method:
+      Number(
+        localStorage.getItem(STORAGE.method) ||
+        DEFAULT_METHOD
+      )
+  };
+}
+
+function cleanPrayerTime(value) {
+  if (!value) return "--:--";
+
+  const raw = String(value)
+    .split(" ")[0]
+    .trim();
+
+  const parts = raw.split(":");
+
+  if (parts.length < 2) {
+    return raw;
+  }
+
+  let hour = Number(parts[0]);
+  const minute = parts[1];
+
+  if (hour === 0) {
+    hour = 12;
+  }
+
+  return `${String(hour).padStart(2,"0")}:${minute}`;
+}
+
+async function loadPrayerTimes(force = false) {
+  const settings =
+    getPrayerSettings();
+
+  $("prayerLocationLabel").textContent =
+    `${settings.city}، ${settings.country}`;
+
+  $("prayerDateLabel").textContent =
+    formatArabicDate();
+
+  const cached =
+    safeJSONParse(
+      localStorage.getItem(
+        STORAGE.prayerCache
+      ),
+      null
+    );
+
+  if (
+    cached &&
+    cached.date === todayKey() &&
+    !force
+  ) {
+    prayerTimes = cached.data;
+
+    renderPrayerTimes();
 
     return;
   }
 
-  const file=
-    new File(
-      [blob],
-      "zekr-almuslim.png",
-      {
-        type:"image/png"
+  if (!navigator.onLine) {
+    if (cached?.data) {
+      prayerTimes = cached.data;
+      renderPrayerTimes();
+      showToast("تم استخدام مواقيت محفوظة");
+    }
+
+    return;
+  }
+
+  $("prayerGrid").innerHTML =
+    `<div class="prayer-loading">جارٍ تحميل المواقيت...</div>`;
+
+  try {
+    const url =
+      "https://api.aladhan.com/v1/timingsByCity" +
+      `?city=${encodeURIComponent(settings.city)}` +
+      `&country=${encodeURIComponent(settings.country)}` +
+      `&method=${encodeURIComponent(settings.method)}`;
+
+    const response =
+      await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Prayer API error");
+    }
+
+    const json =
+      await response.json();
+
+    if (
+      !json?.data?.timings
+    ) {
+      throw new Error("No timings");
+    }
+
+    prayerTimes =
+      json.data.timings;
+
+    localStorage.setItem(
+      STORAGE.prayerCache,
+      JSON.stringify({
+        date: todayKey(),
+        data: prayerTimes
+      })
+    );
+
+    renderPrayerTimes();
+
+  } catch (error) {
+
+    if (cached?.data) {
+      prayerTimes = cached.data;
+      renderPrayerTimes();
+
+      showToast(
+        "تعذر التحديث، تم استخدام المواقيت المحفوظة"
+      );
+    } else {
+      $("prayerGrid").innerHTML = `
+        <div class="prayer-loading">
+          تعذر تحميل المواقيت حالياً.
+        </div>
+      `;
+    }
+  }
+}
+
+function getPrayerDateMinutes(value) {
+  if (!value) return null;
+
+  const raw =
+    String(value).split(" ")[0];
+
+  const parts =
+    raw.split(":");
+
+  if (parts.length < 2) return null;
+
+  const h = Number(parts[0]);
+  const m = Number(parts[1]);
+
+  if (!Number.isFinite(h) || !Number.isFinite(m)) {
+    return null;
+  }
+
+  return h * 60 + m;
+}
+
+function renderPrayerTimes() {
+  if (!prayerTimes) return;
+
+  $("prayerGrid").innerHTML =
+    PRAYER_ALL.map(([key, name]) => `
+      <div class="prayer-item" data-prayer="${key}">
+        <div class="prayer-name">${name}</div>
+        <div class="prayer-time">
+          ${cleanPrayerTime(prayerTimes[key])}
+        </div>
+      </div>
+    `).join("");
+
+  updateNextPrayer();
+}
+
+function updateNextPrayer() {
+  if (!prayerTimes) return;
+
+  const now =
+    new Date();
+
+  const currentMinutes =
+    now.getHours() * 60 +
+    now.getMinutes() +
+    now.getSeconds() / 60;
+
+  let next = null;
+
+  for (const [key, name] of PRAYERS) {
+    const mins =
+      getPrayerDateMinutes(
+        prayerTimes[key]
+      );
+
+    if (
+      mins !== null &&
+      mins > currentMinutes
+    ) {
+      next = {
+        key,
+        name,
+        minutes: mins
+      };
+      break;
+    }
+  }
+
+  if (!next) {
+    const first =
+      PRAYERS[0];
+
+    const mins =
+      getPrayerDateMinutes(
+        prayerTimes[first[0]]
+      );
+
+    next = {
+      key: first[0],
+      name: first[1],
+      minutes:
+        mins === null
+          ? 0
+          : mins + 1440
+    };
+  }
+
+  document.querySelectorAll(".prayer-item")
+    .forEach(el => {
+      el.classList.toggle(
+        "current",
+        el.dataset.prayer === next.key
+      );
+    });
+
+  $("nextPrayerName").textContent =
+    next.name;
+
+  let diff =
+    next.minutes -
+    currentMinutes;
+
+  if (diff < 0) {
+    diff += 1440;
+  }
+
+  const totalSeconds =
+    Math.max(
+      0,
+      Math.floor(diff * 60)
+    );
+
+  const h =
+    Math.floor(totalSeconds / 3600);
+
+  const m =
+    Math.floor(
+      (totalSeconds % 3600) / 60
+    );
+
+  const s =
+    totalSeconds % 60;
+
+  $("nextPrayerCountdown").textContent =
+    `${String(h).padStart(2,"0")}:` +
+    `${String(m).padStart(2,"0")}:` +
+    `${String(s).padStart(2,"0")}`;
+}
+
+function savePrayerSettings() {
+  const city =
+    $("cityInput").value.trim();
+
+  const country =
+    $("countryInput").value.trim();
+
+  const method =
+    Number($("methodSelect").value);
+
+  if (!city || !country) {
+    showToast("أدخل المدينة والدولة");
+    return;
+  }
+
+  localStorage.setItem(
+    STORAGE.city,
+    city
+  );
+
+  localStorage.setItem(
+    STORAGE.country,
+    country
+  );
+
+  localStorage.setItem(
+    STORAGE.method,
+    method
+  );
+
+  localStorage.removeItem(
+    STORAGE.prayerCache
+  );
+
+  loadPrayerTimes(true);
+
+  showToast("تم حفظ إعدادات الصلاة");
+}
+
+function syncPrayerSettingsUI() {
+  const settings =
+    getPrayerSettings();
+
+  if ($("cityInput")) {
+    $("cityInput").value =
+      settings.city;
+  }
+
+  if ($("countryInput")) {
+    $("countryInput").value =
+      settings.country;
+  }
+
+  if ($("methodSelect")) {
+    $("methodSelect").value =
+      String(settings.method);
+  }
+}
+
+
+/* =========================================================
+   REMINDERS
+========================================================= */
+
+function loadReminders() {
+  const saved =
+    safeJSONParse(
+      localStorage.getItem(
+        STORAGE.reminders
+      ),
+      null
+    );
+
+  if (saved) {
+    reminders = {
+      ...reminders,
+      ...saved
+    };
+  }
+
+  syncSettingsUI();
+}
+
+function saveReminders() {
+  localStorage.setItem(
+    STORAGE.reminders,
+    JSON.stringify(reminders)
+  );
+}
+
+async function requestNotificationPermission() {
+  if (!("Notification" in window)) {
+    showToast("المتصفح لا يدعم الإشعارات");
+    return;
+  }
+
+  try {
+    const result =
+      await Notification.requestPermission();
+
+    if (result === "granted") {
+      showToast("تم تفعيل الإشعارات");
+    } else {
+      showToast("لم يتم السماح بالإشعارات");
+    }
+  } catch {
+    showToast("تعذر طلب الإذن");
+  }
+}
+
+function toggleReminder(type) {
+  reminders[type] =
+    !reminders[type];
+
+  saveReminders();
+
+  if (reminders[type]) {
+    requestNotificationPermission();
+  }
+
+  syncSettingsUI();
+}
+
+function checkReminders() {
+  const now = new Date();
+
+  const hour =
+    now.getHours();
+
+  const minute =
+    now.getMinutes();
+
+  if (minute !== 0) return;
+
+  let type = null;
+  let message = "";
+
+  if (
+    reminders.morning &&
+    hour === 7
+  ) {
+    type = "morning";
+    message = "حان وقت أذكار الصباح 🌅";
+  }
+
+  if (
+    reminders.evening &&
+    hour === 18
+  ) {
+    type = "evening";
+    message = "حان وقت أذكار المساء 🌇";
+  }
+
+  if (
+    reminders.sleep &&
+    hour === 22
+  ) {
+    type = "sleep";
+    message = "تذكير بأذكار النوم 🌙";
+  }
+
+  if (!type) return;
+
+  const marker =
+    `azkar-reminder-${todayKey()}-${type}`;
+
+  if (
+    sessionStorage.getItem(marker)
+  ) {
+    return;
+  }
+
+  sessionStorage.setItem(
+    marker,
+    "1"
+  );
+
+  showToast(message);
+
+  if (
+    "Notification" in window &&
+    Notification.permission === "granted"
+  ) {
+    try {
+      new Notification(
+        "أذكار المسلم",
+        {
+          body: message,
+          icon: "./manifest.json"
+        }
+      );
+    } catch {}
+  }
+}
+
+
+/* =========================================================
+   SETTINGS SYNC
+========================================================= */
+
+function syncSettingsUI() {
+  loadTheme();
+
+  if ($("vibrationSwitch")) {
+    $("vibrationSwitch").classList.toggle(
+      "active",
+      appSettings.vibration
+    );
+  }
+
+  if ($("autoAdvanceSwitch")) {
+    $("autoAdvanceSwitch").classList.toggle(
+      "active",
+      appSettings.autoAdvance
+    );
+  }
+
+  if ($("morningReminderSwitch")) {
+    $("morningReminderSwitch").classList.toggle(
+      "active",
+      reminders.morning
+    );
+  }
+
+  if ($("eveningReminderSwitch")) {
+    $("eveningReminderSwitch").classList.toggle(
+      "active",
+      reminders.evening
+    );
+  }
+
+  if ($("sleepReminderSwitch")) {
+    $("sleepReminderSwitch").classList.toggle(
+      "active",
+      reminders.sleep
+    );
+  }
+
+  syncPrayerSettingsUI();
+  loadReadingSettings();
+}
+
+function toggleFocusMode() {
+  document.body.classList.toggle(
+    "reader-focus"
+  );
+
+  showToast(
+    document.body.classList.contains("reader-focus")
+      ? "تم تفعيل وضع التركيز"
+      : "تم إيقاف وضع التركيز"
+  );
+}
+
+
+/* =========================================================
+   EXPORT / IMPORT
+========================================================= */
+
+function exportData() {
+  const data = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+
+    favorites:
+      getFavorites(),
+
+    daily:
+      getDailyData(),
+
+    recent:
+      getRecent(),
+
+    tasbeeh,
+
+    appSettings,
+
+    reminders,
+
+    theme:
+      localStorage.getItem(STORAGE.theme),
+
+    font:
+      localStorage.getItem(STORAGE.font),
+
+    line:
+      localStorage.getItem(STORAGE.line),
+
+    city:
+      localStorage.getItem(STORAGE.city),
+
+    country:
+      localStorage.getItem(STORAGE.country),
+
+    method:
+      localStorage.getItem(STORAGE.method)
+  };
+
+  const blob =
+    new Blob(
+      [JSON.stringify(data, null, 2)],
+      { type: "application/json" }
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+  link.download =
+    "azkar-muslim-backup.json";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+  }, 1000);
+
+  showToast("تم تصدير بياناتك");
+}
+
+function importData(event) {
+  const file =
+    event.target.files?.[0];
+
+  if (!file) return;
+
+  const reader =
+    new FileReader();
+
+  reader.onload = () => {
+    try {
+      const data =
+        JSON.parse(reader.result);
+
+      if (
+        Array.isArray(data.favorites)
+      ) {
+        saveFavorites(
+          data.favorites
+        );
+      }
+
+      if (
+        data.daily &&
+        typeof data.daily === "object"
+      ) {
+        saveDailyData(
+          data.daily
+        );
+      }
+
+      if (
+        Array.isArray(data.recent)
+      ) {
+        localStorage.setItem(
+          STORAGE.recent,
+          JSON.stringify(data.recent)
+        );
+      }
+
+      if (
+        data.tasbeeh &&
+        typeof data.tasbeeh === "object"
+      ) {
+        tasbeeh = {
+          ...tasbeeh,
+          ...data.tasbeeh
+        };
+
+        saveTasbeeh();
+      }
+
+      if (
+        data.appSettings
+      ) {
+        appSettings = {
+          ...appSettings,
+          ...data.appSettings
+        };
+
+        saveAppSettings();
+      }
+
+      if (
+        data.reminders
+      ) {
+        reminders = {
+          ...reminders,
+          ...data.reminders
+        };
+
+        saveReminders();
+      }
+
+      const simpleValues = [
+        ["theme", STORAGE.theme],
+        ["font", STORAGE.font],
+        ["line", STORAGE.line],
+        ["city", STORAGE.city],
+        ["country", STORAGE.country],
+        ["method", STORAGE.method]
+      ];
+
+      simpleValues.forEach(
+        ([field, key]) => {
+          if (
+            data[field] !== undefined &&
+            data[field] !== null
+          ) {
+            localStorage.setItem(
+              key,
+              data[field]
+            );
+          }
+        }
+      );
+
+      loadTheme();
+      loadReadingSettings();
+      loadTasbeeh();
+      syncSettingsUI();
+
+      updateStats();
+      renderRecent();
+
+      showToast(
+        "تم استيراد البيانات بنجاح"
+      );
+
+    } catch {
+      showToast(
+        "ملف النسخة الاحتياطية غير صالح"
+      );
+    }
+
+    event.target.value = "";
+  };
+
+  reader.readAsText(file);
+}
+
+
+/* =========================================================
+   OFFLINE
+========================================================= */
+
+function updateOnlineStatus() {
+  $("offlineBar").classList.toggle(
+    "show",
+    !navigator.onLine
+  );
+}
+
+window.addEventListener(
+  "online",
+  () => {
+    updateOnlineStatus();
+    showToast("عاد الاتصال بالإنترنت");
+  }
+);
+
+window.addEventListener(
+  "offline",
+  () => {
+    updateOnlineStatus();
+    showToast("أنت الآن دون اتصال");
+  }
+);
+
+
+/* =========================================================
+   PWA INSTALL
+========================================================= */
+
+window.addEventListener(
+  "beforeinstallprompt",
+  event => {
+    event.preventDefault();
+
+    deferredInstallPrompt =
+      event;
+
+    if ($("installButton")) {
+      $("installButton").style.display =
+        "block";
+    }
+  }
+);
+
+async function installApp() {
+  if (!deferredInstallPrompt) {
+    showToast(
+      "التثبيت غير متاح حالياً من هذا المتصفح"
+    );
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+
+  try {
+    await deferredInstallPrompt.userChoice;
+  } catch {}
+
+  deferredInstallPrompt = null;
+
+  $("installButton").style.display =
+    "none";
+}
+
+
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
+
+async function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  try {
+    const registration =
+      await navigator.serviceWorker.register(
+        "./service-worker.js"
+      );
+
+    registration.addEventListener(
+      "updatefound",
+      () => {
+        const worker =
+          registration.installing;
+
+        if (!worker) return;
+
+        worker.addEventListener(
+          "statechange",
+          () => {
+            if (
+              worker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              showToast(
+                "يتوفر تحديث جديد للتطبيق"
+              );
+            }
+          }
+        );
       }
     );
 
-  /*
-    المشاركة المباشرة إذا كان الجهاز
-    والمتصفح يدعمان مشاركة الملفات.
-  */
+  } catch (error) {
+    console.warn(
+      "Service Worker registration failed:",
+      error
+    );
+  }
+}
 
-  if(
-    navigator.share &&
-    navigator.canShare &&
-    navigator.canShare({
-      files:[file]
-    })
-  ){
+async function checkForUpdate() {
+  if (
+    !navigator.serviceWorker?.ready
+  ) {
+    showToast(
+      "خدمة التحديث غير متاحة"
+    );
+    return;
+  }
 
-    try{
+  try {
+    const registration =
+      await navigator.serviceWorker.ready;
 
-      await navigator.share({
-        title:"أذكار المسلم",
-        text:"ذكر من تطبيق أذكار المسلم",
-        files:[file]
-      });
+    await registration.update();
 
-      return;
+    showToast(
+      "تم التحقق من وجود تحديث"
+    );
+  } catch {
+    showToast(
+      "تعذر التحقق من التحديث حالياً"
+    );
+  }
+}
 
-    }catch(e){
 
-      if(e.name==="AbortError")
-        return;
+/* =========================================================
+   METHODOLOGY
+========================================================= */
 
+function openMethodology() {
+  openPage("methodologyPage");
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+async function init() {
+
+  $("todayDate").textContent =
+    formatArabicDate();
+
+  loadTheme();
+
+  loadAppSettings();
+
+  loadReminders();
+
+  loadTasbeeh();
+
+  loadReadingSettings();
+
+  syncPrayerSettingsUI();
+
+  updateOnlineStatus();
+
+  await loadData();
+
+  loadPrayerTimes();
+
+  if (
+    prayerCountdownTimer
+  ) {
+    clearInterval(
+      prayerCountdownTimer
+    );
+  }
+
+  prayerCountdownTimer =
+    setInterval(
+      updateNextPrayer,
+      1000
+    );
+
+  setInterval(
+    checkReminders,
+    60000
+  );
+
+  registerServiceWorker();
+
+  /* فتح الصفحة حسب الرابط */
+  const hash =
+    location.hash.replace("#", "");
+
+  if (
+    hash &&
+    $(hash)
+  ) {
+    openPage(hash, false);
+  } else {
+    openPage(
+      "homePage",
+      false
+    );
+  }
+
+  updateStats();
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICK OUTSIDE
+========================================================= */
+
+document.querySelectorAll(
+  ".modal-backdrop"
+).forEach(backdrop => {
+
+  backdrop.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target === backdrop
+      ) {
+        backdrop.classList.remove(
+          "open"
+        );
+      }
+
+    }
+  );
+
+});
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      currentPage === "readerPage"
+    ) {
+
+      if (
+        event.code === "Space"
+      ) {
+        event.preventDefault();
+        incrementReaderCounter();
+      }
+
+      if (
+        event.key === "ArrowLeft"
+      ) {
+        nextDhikr();
+      }
+
+      if (
+        event.key === "ArrowRight"
+      ) {
+        previousDhikr();
+      }
     }
 
   }
-
-  /*
-    إذا لم تتوفر مشاركة الملفات،
-    نحفظ الصورة بدلًا منها.
-  */
-
-  downloadGeneratedImage();
-
-  toast(
-    "تم حفظ الصورة، ويمكنك مشاركتها من المعرض"
-  );
-}
-
-function downloadGeneratedImage(){
-
-  const canvas=
-    $("shareCanvas");
-
-  const link=
-    document.createElement("a");
-
-  link.download=
-    "zekr-almuslim.png";
-
-  link.href=
-    canvas.toDataURL(
-      "image/png"
-    );
-
-  link.click();
-}
-
-
-/* ESCAPE */
-
-function esc(v){
-
-  return String(
-    v??""
-  ).replace(
-    /[&<>"']/g,
-    m=>({
-
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-
-    }[m])
-  );
-}
-
-
-/* START */
-
-loadFavorites();
-
-loadFont();
-
-applyTheme();
-
-loadPrayerSettingsIntoUI();
-
-loadData();
-
-loadPrayerTimes();
-
-
-/* SERVICE WORKER */
-
-if(
-  "serviceWorker" in navigator
-){
-
-  window.addEventListener(
-    "load",
-    ()=>{
-
-      navigator.serviceWorker
-        .register(
-          "./service-worker.js"
-        )
-        .catch(
-          ()=>{}
-        );
-
-    }
-  );
-
-}
-
-
-/* HISTORY */
-
-initHistory();
+);
 
 </script>
 
 </body>
-  </html>
+          </html>
