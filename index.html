@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b7a70">
+<meta name="description" content="أذكار المسلم — أذكار وأدعية وأوقات الصلاة">
 <link rel="manifest" href="./manifest.json">
 <title>أذكار المسلم | بلال بن رباح</title>
 
@@ -18,6 +19,7 @@
   --muted:#71827f;
   --border:#e2ece9;
   --danger:#c0392b;
+  --gold:#d39b00;
   --shadow:0 7px 24px rgba(20,70,64,.08);
   --radius:20px;
   --font-size:24px;
@@ -40,7 +42,7 @@ body{
   min-height:100vh;
 }
 
-button,input{
+button,input,select{
   font:inherit;
 }
 
@@ -51,7 +53,7 @@ button{
 .app{
   max-width:850px;
   margin:auto;
-  padding-bottom:90px;
+  padding-bottom:92px;
 }
 
 /* HEADER */
@@ -126,6 +128,7 @@ header:after{
   margin-top:16px;
   font-size:12px;
   opacity:.9;
+  line-height:1.7;
 }
 
 main{
@@ -189,7 +192,7 @@ main{
   border-radius:24px;
   padding:20px;
   box-shadow:var(--shadow);
-  margin-bottom:22px;
+  margin-bottom:18px;
 }
 
 .welcome h2{
@@ -230,6 +233,127 @@ main{
   font-size:10px;
 }
 
+/* PRAYER CARD */
+
+.prayer-card{
+  position:relative;
+  overflow:hidden;
+  color:#fff;
+  background:linear-gradient(145deg,#075e57,#0b7a70);
+  border-radius:25px;
+  padding:19px;
+  margin-bottom:22px;
+  box-shadow:0 10px 28px rgba(7,94,87,.18);
+}
+
+.prayer-card:before{
+  content:"";
+  position:absolute;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:#ffffff0b;
+  left:-65px;
+  bottom:-80px;
+}
+
+.prayer-card-content{
+  position:relative;
+  z-index:2;
+}
+
+.prayer-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.prayer-title{
+  font-size:18px;
+  font-weight:850;
+}
+
+.prayer-city{
+  font-size:11px;
+  opacity:.82;
+  margin-top:3px;
+}
+
+.prayer-next{
+  margin-top:15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.next-label{
+  font-size:11px;
+  opacity:.8;
+}
+
+.next-name{
+  font-size:20px;
+  font-weight:850;
+  margin-top:2px;
+}
+
+.next-time{
+  font-size:27px;
+  font-weight:900;
+  direction:ltr;
+}
+
+.prayer-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:16px;
+}
+
+.prayer-time{
+  background:#ffffff14;
+  border:1px solid #ffffff16;
+  border-radius:14px;
+  padding:9px 5px;
+  text-align:center;
+}
+
+.prayer-time-name{
+  font-size:10px;
+  opacity:.82;
+}
+
+.prayer-time-value{
+  margin-top:3px;
+  font-size:14px;
+  font-weight:800;
+  direction:ltr;
+}
+
+.prayer-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.prayer-actions button{
+  flex:1;
+  border:1px solid #ffffff24;
+  background:#ffffff14;
+  color:#fff;
+  border-radius:13px;
+  padding:9px 8px;
+  font-size:11px;
+}
+
+.prayer-loading{
+  font-size:12px;
+  opacity:.85;
+  padding:15px 0 3px;
+}
+
 /* TITLES */
 
 .section-title{
@@ -266,6 +390,7 @@ main{
   min-height:108px;
   text-align:right;
   box-shadow:var(--shadow);
+  transition:transform .16s ease;
 }
 
 .category:active,
@@ -414,10 +539,17 @@ main{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:8px;
   margin-bottom:14px;
 }
 
-.favorite-btn{
+.reader-head-actions{
+  display:flex;
+  gap:7px;
+}
+
+.favorite-btn,
+.share-btn{
   width:44px;
   height:44px;
   border:1px solid var(--border);
@@ -425,7 +557,11 @@ main{
   color:#d39b00;
   border-radius:15px;
   box-shadow:var(--shadow);
-  font-size:21px;
+  font-size:20px;
+}
+
+.share-btn{
+  color:var(--primary);
 }
 
 .reader-card{
@@ -533,6 +669,10 @@ main{
   padding:13px;
 }
 
+.reader-actions button:disabled{
+  opacity:.4;
+}
+
 /* SETTINGS */
 
 .settings-section{
@@ -615,6 +755,55 @@ main{
   border:1px solid var(--border);
   background:var(--bg);
   border-radius:10px;
+}
+
+/* PRAYER SETTINGS */
+
+.prayer-settings{
+  padding:15px 16px;
+  border-top:1px solid var(--border);
+}
+
+.prayer-settings label{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:7px;
+}
+
+.prayer-settings-row{
+  display:flex;
+  gap:8px;
+}
+
+.prayer-settings input{
+  flex:1;
+  min-width:0;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  border-radius:13px;
+  padding:11px;
+  outline:none;
+}
+
+.prayer-settings button{
+  border:0;
+  background:var(--primary);
+  color:#fff;
+  border-radius:13px;
+  padding:10px 14px;
+  font-size:12px;
+}
+
+.prayer-method{
+  margin-top:9px;
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text);
+  border-radius:13px;
+  padding:10px;
 }
 
 /* TOAST */
@@ -705,6 +894,64 @@ main{
   display:none!important;
 }
 
+/* SHARE PREVIEW */
+
+.share-preview{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:#0009;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.share-preview-box{
+  width:min(430px,100%);
+  max-height:94vh;
+  overflow:auto;
+  background:var(--card);
+  border-radius:24px;
+  padding:14px;
+}
+
+.share-preview-title{
+  font-weight:850;
+  font-size:16px;
+  margin:3px 4px 12px;
+}
+
+.share-preview canvas{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:17px;
+  background:#fff;
+}
+
+.share-preview-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+
+.share-preview-actions button{
+  border:0;
+  background:var(--primary);
+  color:#fff;
+  border-radius:14px;
+  padding:12px;
+  font-weight:750;
+}
+
+.share-preview-actions button.secondary{
+  background:var(--bg);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+
 @media(prefers-color-scheme:dark){
 
   :root{
@@ -729,6 +976,10 @@ main{
   .settings-section{
     background:var(--card);
   }
+
+  .share-preview{
+    background:#000c;
+  }
 }
 
 @media(min-width:650px){
@@ -750,6 +1001,14 @@ main{
 
   .reader-text{
     font-size:21px;
+  }
+
+  .prayer-grid{
+    gap:5px;
+  }
+
+  .prayer-time-value{
+    font-size:13px;
   }
 }
 </style>
@@ -806,6 +1065,89 @@ main{
       class="clear-search"
       onclick="clearSearch()"
     >✕</button>
+
+  </div>
+
+  <!-- PRAYER TIMES -->
+
+  <div class="prayer-card">
+
+    <div class="prayer-card-content">
+
+      <div class="prayer-head">
+
+        <div>
+          <div class="prayer-title">
+            🕌 أوقات الصلاة
+          </div>
+
+          <div
+            class="prayer-city"
+            id="prayerCityLabel"
+          >
+            أرمناز، سوريا
+          </div>
+        </div>
+
+        <div
+          id="prayerDate"
+          class="prayer-city"
+        ></div>
+
+      </div>
+
+      <div
+        id="prayerLoading"
+        class="prayer-loading"
+      >
+        جارٍ تحميل أوقات الصلاة...
+      </div>
+
+      <div
+        id="prayerContent"
+        class="hidden"
+      >
+
+        <div class="prayer-next">
+
+          <div>
+            <div class="next-label">
+              الصلاة القادمة
+            </div>
+
+            <div
+              id="nextPrayerName"
+              class="next-name"
+            >—</div>
+          </div>
+
+          <div
+            id="nextPrayerTime"
+            class="next-time"
+          >--:--</div>
+
+        </div>
+
+        <div
+          id="prayerGrid"
+          class="prayer-grid"
+        ></div>
+
+        <div class="prayer-actions">
+
+          <button onclick="loadPrayerTimes(true)">
+            🔄 تحديث
+          </button>
+
+          <button onclick="showSettings()">
+            ⚙️ المدينة
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
@@ -893,11 +1235,22 @@ main{
       onclick="back()"
     >→</button>
 
-    <button
-      id="favoriteBtn"
-      class="favorite-btn"
-      onclick="toggleFavorite()"
-    >☆</button>
+    <div class="reader-head-actions">
+
+      <button
+        id="favoriteBtn"
+        class="favorite-btn"
+        onclick="toggleFavorite()"
+        title="المفضلة"
+      >☆</button>
+
+      <button
+        class="share-btn"
+        onclick="shareCurrentDhikr()"
+        title="مشاركة"
+      >📤</button>
+
+    </div>
 
   </div>
 
@@ -1044,13 +1397,8 @@ main{
 
       <div class="font-controls">
 
-        <button
-          onclick="changeFont(-1)"
-        >A−</button>
-
-        <button
-          onclick="changeFont(1)"
-        >A+</button>
+        <button onclick="changeFont(-1)">A−</button>
+        <button onclick="changeFont(1)">A+</button>
 
       </div>
 
@@ -1085,6 +1433,81 @@ main{
       </div>
 
     </button>
+
+  </div>
+
+  <!-- PRAYER SETTINGS -->
+
+  <div class="settings-section">
+
+    <div class="settings-title">
+      🕌 أوقات الصلاة
+    </div>
+
+    <div class="prayer-settings">
+
+      <label>
+        المدينة
+      </label>
+
+      <div class="prayer-settings-row">
+
+        <input
+          id="cityInput"
+          type="text"
+          placeholder="مثال: أرمناز"
+          autocomplete="off"
+        >
+
+        <button
+          onclick="savePrayerLocation()"
+        >
+          حفظ
+        </button>
+
+      </div>
+
+      <select
+        id="countryInput"
+        class="prayer-method"
+      >
+        <option value="Syria">
+          سوريا
+        </option>
+        <option value="Türkiye">
+          تركيا
+        </option>
+        <option value="Saudi Arabia">
+          السعودية
+        </option>
+        <option value="Jordan">
+          الأردن
+        </option>
+        <option value="Egypt">
+          مصر
+        </option>
+        <option value="Palestine">
+          فلسطين
+        </option>
+        <option value="Lebanon">
+          لبنان
+        </option>
+        <option value="Iraq">
+          العراق
+        </option>
+        <option value="Other">
+          دولة أخرى
+        </option>
+      </select>
+
+      <div
+        class="setting-desc"
+        style="margin-top:9px"
+      >
+        يتم تحديد المدينة يدويًا ولا يتم استخدام موقع جهازك.
+      </div>
+
+    </div>
 
   </div>
 
@@ -1209,7 +1632,7 @@ main{
         </div>
 
         <div class="setting-desc">
-          أذكار المسلم — الإصدار 2.0
+          أذكار المسلم — الإصدار 3.0
         </div>
 
       </div>
@@ -1271,21 +1694,80 @@ main{
   class="toast"
 ></div>
 
+<!-- SHARE PREVIEW -->
+
+<div
+  id="sharePreview"
+  class="share-preview hidden"
+>
+
+  <div class="share-preview-box">
+
+    <div class="share-preview-title">
+      📸 مشاركة الذكر
+    </div>
+
+    <canvas id="shareCanvas"></canvas>
+
+    <div class="share-preview-actions">
+
+      <button onclick="shareGeneratedImage()">
+        📤 مشاركة
+      </button>
+
+      <button
+        class="secondary"
+        onclick="downloadGeneratedImage()"
+      >
+        💾 حفظ الصورة
+      </button>
+
+      <button
+        class="secondary"
+        onclick="closeSharePreview()"
+        style="grid-column:1/-1"
+      >
+        إغلاق
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
 <script>
 
 const REMOTE_URL="./azkar.json";
 
-const CACHE_KEY=
-  "azkar_muslim_content_v2";
+const CACHE_KEY="azkar_muslim_content_v2";
+const FAVORITES_KEY="azkar_muslim_favorites_v1";
+const FONT_KEY="azkar_muslim_font_v1";
+const THEME_KEY="azkar_muslim_theme_v1";
 
-const FAVORITES_KEY=
-  "azkar_muslim_favorites_v1";
+/* PRAYER */
 
-const FONT_KEY=
-  "azkar_muslim_font_v1";
+const PRAYER_CITY_KEY="azkar_muslim_prayer_city_v1";
+const PRAYER_COUNTRY_KEY="azkar_muslim_prayer_country_v1";
+const PRAYER_CACHE_KEY="azkar_muslim_prayer_cache_v1";
 
-const THEME_KEY=
-  "azkar_muslim_theme_v1";
+/*
+  طريقة الحساب:
+  5 = Egyptian General Authority of Survey
+
+  يمكن تغييرها لاحقًا إذا أردنا اعتماد طريقة
+  حساب مختلفة بحسب المنطقة.
+*/
+const PRAYER_METHOD=5;
+
+const PRAYER_NAMES={
+  Fajr:"الفجر",
+  Sunrise:"الشروق",
+  Dhuhr:"الظهر",
+  Asr:"العصر",
+  Maghrib:"المغرب",
+  Isha:"العشاء"
+};
 
 let data=[];
 let view=[];
@@ -1293,8 +1775,10 @@ let i=0;
 let n=0;
 
 let favorites=new Set();
-
 let historyReady=false;
+
+let prayerData=null;
+let prayerTimer=null;
 
 
 /* HELPERS */
@@ -1331,9 +1815,7 @@ function loadFavorites(){
 
     favorites=new Set(
       JSON.parse(
-        localStorage.getItem(
-          FAVORITES_KEY
-        )||"[]"
+        localStorage.getItem(FAVORITES_KEY)||"[]"
       )
     );
 
@@ -1359,9 +1841,9 @@ function saveFavorites(){
 function getKey(x){
 
   return String(
-    x.id??
-    x.title??
-    x.text??
+    x.id ??
+    x.title ??
+    x.text ??
     ""
   );
 }
@@ -1369,8 +1851,7 @@ function getKey(x){
 function updateFavoriteCount(){
 
   if($("favoriteCount"))
-    $("favoriteCount").textContent=
-      favorites.size;
+    $("favoriteCount").textContent=favorites.size;
 }
 
 
@@ -1422,9 +1903,7 @@ async function loadData(){
   try{
 
     const saved=
-      localStorage.getItem(
-        CACHE_KEY
-      );
+      localStorage.getItem(CACHE_KEY);
 
     if(saved){
 
@@ -1477,14 +1956,10 @@ async function loadData(){
 
 function refreshData(){
 
-  toast(
-    "جارٍ تحديث البيانات..."
-  );
+  toast("جارٍ تحديث البيانات...");
 
   loadData().then(()=>{
-    toast(
-      "تم تحديث البيانات ✓"
-    );
+    toast("تم تحديث البيانات ✓");
   });
 }
 
@@ -1501,19 +1976,14 @@ function updateStats(){
     )
   ];
 
-  $("totalAzkar").textContent=
-    data.length;
-
-  $("totalCategories").textContent=
-    cats.length;
+  $("totalAzkar").textContent=data.length;
+  $("totalCategories").textContent=cats.length;
 
   updateFavoriteCount();
 }
 
 
-/* =====================================================
-   NAVIGATION SYSTEM
-   ===================================================== */
+/* NAVIGATION */
 
 function hideAll(){
 
@@ -1534,7 +2004,6 @@ function hideAll(){
 
 }
 
-
 function setNav(active){
 
   [
@@ -1553,13 +2022,7 @@ function setNav(active){
 
   if(active && $(active))
     $(active).classList.add("active");
-
 }
-
-
-/*
-  إضافة حالة جديدة لسجل التطبيق
-*/
 
 function pushRoute(state){
 
@@ -1574,23 +2037,17 @@ function pushRoute(state){
     "",
     location.href
   );
-
 }
 
 
 /* HOME */
 
-function showPage(
-  id,
-  push=true
-){
+function showPage(id,push=true){
 
   hideAll();
 
   if($(id))
-    $(id).classList.remove(
-      "hidden"
-    );
+    $(id).classList.remove("hidden");
 
   setNav(
     id==="home"
@@ -1611,48 +2068,28 @@ function showPage(
     renderHome();
 
   if(push){
-
-    pushRoute({
-      page:id
-    });
-
+    pushRoute({page:id});
   }
 }
 
-
-function home(
-  push=true
-){
-
-  showPage(
-    "home",
-    push
-  );
-
+function home(push=true){
+  showPage("home",push);
 }
 
 
-/* الأقسام */
+/* SECTIONS */
 
-function showSections(
-  push=true
-){
+function showSections(push=true){
 
   hideAll();
 
-  $("list").classList.remove(
-    "hidden"
-  );
+  $("list").classList.remove("hidden");
 
-  setNav(
-    "navSections"
-  );
+  setNav("navSections");
 
-  $("lt").textContent=
-    "الأقسام";
+  $("lt").textContent="الأقسام";
 
-  $("listCount").textContent=
-    "اختر قسمًا للبدء";
+  $("listCount").textContent="اختر قسمًا للبدء";
 
   renderSectionList();
 
@@ -1662,31 +2099,20 @@ function showSections(
   });
 
   if(push){
-
-    pushRoute({
-      page:"sections"
-    });
-
+    pushRoute({page:"sections"});
   }
 }
 
 
-/* المفضلة */
+/* FAVORITES */
 
-function showFavorites(
-  push=true
-){
+function showFavorites(push=true){
 
   hideAll();
 
-  $("favoritesPage")
-    .classList.remove(
-      "hidden"
-    );
+  $("favoritesPage").classList.remove("hidden");
 
-  setNav(
-    "navFavorites"
-  );
+  setNav("navFavorites");
 
   renderFavorites();
 
@@ -1696,31 +2122,22 @@ function showFavorites(
   });
 
   if(push){
-
-    pushRoute({
-      page:"favorites"
-    });
-
+    pushRoute({page:"favorites"});
   }
 }
 
 
-/* الإعدادات */
+/* SETTINGS */
 
-function showSettings(
-  push=true
-){
+function showSettings(push=true){
 
   hideAll();
 
-  $("settingsPage")
-    .classList.remove(
-      "hidden"
-    );
+  $("settingsPage").classList.remove("hidden");
 
-  setNav(
-    "navSettings"
-  );
+  setNav("navSettings");
+
+  loadPrayerSettingsIntoUI();
 
   window.scrollTo({
     top:0,
@@ -1728,18 +2145,12 @@ function showSettings(
   });
 
   if(push){
-
-    pushRoute({
-      page:"settings"
-    });
-
+    pushRoute({page:"settings"});
   }
 }
 
 
-/*
-  زر الرجوع داخل التطبيق
-*/
+/* BACK */
 
 function back(){
 
@@ -1752,36 +2163,16 @@ function back(){
   }
 
   showSections(false);
-
 }
 
 
-/*
-  =====================================================
-  زر الرجوع في الهاتف
-  =====================================================
-
-  هذا هو الإصلاح الأساسي.
-
-  عند وجود صفحة داخلية:
-  رجوع الهاتف يعيد الصفحة السابقة داخل التطبيق.
-
-  عند الوصول إلى الرئيسية:
-  لا نقوم بإجبار المستخدم على الخروج
-  من الموقع بسبب حالة غير معروفة.
-*/
+/* HISTORY */
 
 window.addEventListener(
   "popstate",
   function(event){
 
-    const state=
-      event.state;
-
-
-    /*
-      حالة غير تابعة للتطبيق
-    */
+    const state=event.state;
 
     if(!state || !state.app){
 
@@ -1794,81 +2185,40 @@ window.addEventListener(
         location.href
       );
 
-      showPage(
-        "home",
-        false
-      );
+      showPage("home",false);
 
       return;
     }
 
+    if(state.page==="home"){
 
-    /*
-      الرئيسية
-    */
-
-    if(
-      state.page==="home"
-    ){
-
-      showPage(
-        "home",
-        false
-      );
-
+      showPage("home",false);
       return;
+
     }
 
-
-    /*
-      الأقسام
-    */
-
-    if(
-      state.page==="sections"
-    ){
+    if(state.page==="sections"){
 
       showSections(false);
-
       return;
+
     }
 
-
-    /*
-      المفضلة
-    */
-
-    if(
-      state.page==="favorites"
-    ){
+    if(state.page==="favorites"){
 
       showFavorites(false);
-
       return;
+
     }
 
-
-    /*
-      الإعدادات
-    */
-
-    if(
-      state.page==="settings"
-    ){
+    if(state.page==="settings"){
 
       showSettings(false);
-
       return;
+
     }
 
-
-    /*
-      قسم محدد
-    */
-
-    if(
-      state.page==="category"
-    ){
+    if(state.page==="category"){
 
       if(state.category){
 
@@ -1886,19 +2236,10 @@ window.addEventListener(
       return;
     }
 
-
-    /*
-      قارئ الذكر
-    */
-
-    if(
-      state.page==="reader"
-    ){
+    if(state.page==="reader"){
 
       const ids=
-        Array.isArray(
-          state.viewIds
-        )
+        Array.isArray(state.viewIds)
         ?state.viewIds
         :[];
 
@@ -1908,16 +2249,13 @@ window.addEventListener(
 
         const found=
           data.find(
-            x=>
-              getKey(x)===
-              String(id)
+            x=>getKey(x)===String(id)
           );
 
         if(found)
           restored.push(found);
 
       });
-
 
       if(restored.length){
 
@@ -1931,24 +2269,13 @@ window.addEventListener(
         return;
       }
 
-
       showSections(false);
-
     }
 
   }
 );
 
-
-/*
-  تهيئة سجل التطبيق
-*/
-
 function initHistory(){
-
-  /*
-    الحالة الحالية = الرئيسية
-  */
 
   history.replaceState(
     {
@@ -1958,12 +2285,6 @@ function initHistory(){
     "",
     location.href
   );
-
-  /*
-    نقطة إضافية للرئيسية.
-    وجودها يمنع أول رجوع من إخراج
-    التطبيق مباشرة.
-  */
 
   history.pushState(
     {
@@ -1975,11 +2296,10 @@ function initHistory(){
   );
 
   historyReady=true;
-
 }
 
 
-/* HOME */
+/* HOME RENDER */
 
 function renderHome(){
 
@@ -1998,77 +2318,58 @@ function renderHome(){
   ];
 
   const box=$("cats");
-
   const results=$("results");
-
   const sr=$("searchResults");
 
   box.innerHTML="";
-
   sr.innerHTML="";
 
   $("clearSearch").style.display=
-    q
-      ?"block"
-      :"none";
-
+    q?"block":"none";
 
   if(!q){
 
-    results.classList.add(
-      "hidden"
-    );
+    results.classList.add("hidden");
 
-    cats.forEach(
-      (c,index)=>{
+    cats.forEach((c,index)=>{
 
-        const items=
-          data.filter(
-            x=>
-              x.category===c
-          );
+      const items=
+        data.filter(
+          x=>x.category===c
+        );
 
-        const b=
-          document.createElement(
-            "button"
-          );
+      const b=document.createElement("button");
 
-        b.className=
-          "category";
+      b.className="category";
 
-        b.innerHTML=`
+      b.innerHTML=`
 
-          <div class="category-icon">
-            ${categoryIcon(c,index)}
-          </div>
+        <div class="category-icon">
+          ${categoryIcon(c,index)}
+        </div>
 
-          <div class="category-title">
-            ${esc(c)}
-          </div>
+        <div class="category-title">
+          ${esc(c)}
+        </div>
 
-          <div class="category-count">
-            ${items.length} أذكار
-          </div>
+        <div class="category-count">
+          ${items.length} أذكار
+        </div>
 
-        `;
+      `;
 
-        b.onclick=()=>{
-          openCat(c);
-        };
+      b.onclick=()=>{
+        openCat(c);
+      };
 
-        box.appendChild(b);
+      box.appendChild(b);
 
-      }
-    );
+    });
 
     return;
   }
 
-
-  results.classList.remove(
-    "hidden"
-  );
-
+  results.classList.remove("hidden");
 
   const found=
     data.filter(x=>{
@@ -2082,7 +2383,6 @@ function renderHome(){
       return text.includes(q);
 
     });
-
 
   if(!found.length){
 
@@ -2107,16 +2407,11 @@ function renderHome(){
     return;
   }
 
-
   found.forEach(x=>{
 
-    const b=
-      document.createElement(
-        "button"
-      );
+    const b=document.createElement("button");
 
-    b.className=
-      "result";
+    b.className="result";
 
     b.innerHTML=`
 
@@ -2142,7 +2437,6 @@ function renderHome(){
     b.onclick=()=>{
 
       view=[x];
-
       i=0;
 
       openReader(0);
@@ -2152,14 +2446,11 @@ function renderHome(){
     sr.appendChild(b);
 
   });
-
 }
-
 
 function clearSearch(){
 
   $("q").value="";
-
   renderHome();
 
 }
@@ -2181,7 +2472,6 @@ function renderSectionList(){
     )
   ];
 
-
   if(!cats.length){
 
     box.innerHTML=`
@@ -2195,69 +2485,58 @@ function renderSectionList(){
     return;
   }
 
+  cats.forEach((c,index)=>{
 
-  cats.forEach(
-    (c,index)=>{
+    const count=
+      data.filter(
+        x=>x.category===c
+      ).length;
 
-      const count=
-        data.filter(
-          x=>x.category===c
-        ).length;
+    const b=document.createElement("button");
 
-      const b=
-        document.createElement(
-          "button"
-        );
+    b.className="dhikr-item";
 
-      b.className=
-        "dhikr-item";
+    b.innerHTML=`
 
-      b.innerHTML=`
+      <div class="dhikr-number">
+        ${categoryIcon(c,index)}
+      </div>
 
-        <div class="dhikr-number">
-          ${categoryIcon(c,index)}
+      <div class="dhikr-info">
+
+        <div class="dhikr-title">
+          ${esc(c)}
         </div>
 
-        <div class="dhikr-info">
-
-          <div class="dhikr-title">
-            ${esc(c)}
-          </div>
-
-          <div class="dhikr-count">
-            ${count} أذكار
-          </div>
-
+        <div class="dhikr-count">
+          ${count} أذكار
         </div>
 
-        <div class="dhikr-arrow">
-          ‹
-        </div>
+      </div>
 
-      `;
+      <div class="dhikr-arrow">
+        ‹
+      </div>
 
-      b.onclick=()=>{
-        openCat(c);
-      };
+    `;
 
-      box.appendChild(b);
+    b.onclick=()=>{
+      openCat(c);
+    };
 
-    }
-  );
+    box.appendChild(b);
+
+  });
 }
 
 
-/* CATEGORY */
+/* CATEGORY ICON */
 
-function categoryIcon(
-  name,
-  index
-){
+function categoryIcon(name,index){
 
   const n=
     String(name||"")
     .toLowerCase();
-
 
   if(
     n.includes("صباح")||
@@ -2265,13 +2544,11 @@ function categoryIcon(
   )
     return "☀️";
 
-
   if(
     n.includes("نوم")||
     n.includes("استيق")
   )
     return "🌙";
-
 
   if(
     n.includes("صلاة")||
@@ -2279,13 +2556,11 @@ function categoryIcon(
   )
     return "🕌";
 
-
   if(
     n.includes("منزل")||
     n.includes("بيت")
   )
     return "🏠";
-
 
   if(
     n.includes("طعام")||
@@ -2293,12 +2568,8 @@ function categoryIcon(
   )
     return "🍃";
 
-
-  if(
-    n.includes("سفر")
-  )
+  if(n.includes("سفر"))
     return "🧳";
-
 
   if(
     n.includes("قرآن")||
@@ -2306,12 +2577,8 @@ function categoryIcon(
   )
     return "📖";
 
-
-  if(
-    n.includes("دعاء")
-  )
+  if(n.includes("دعاء"))
     return "🤲";
-
 
   return [
     "📿",
@@ -2321,14 +2588,12 @@ function categoryIcon(
     "🕊️",
     "📖"
   ][index%6];
-
 }
 
 
-function openCat(
-  c,
-  push=true
-){
+/* CATEGORY */
+
+function openCat(c,push=true){
 
   view=
     data.filter(
@@ -2344,13 +2609,9 @@ function openCat(
 
   hideAll();
 
-  $("list").classList.remove(
-    "hidden"
-  );
+  $("list").classList.remove("hidden");
 
-  setNav(
-    "navSections"
-  );
+  setNav("navSections");
 
   renderList();
 
@@ -2358,7 +2619,6 @@ function openCat(
     top:0,
     behavior:"smooth"
   });
-
 
   if(push){
 
@@ -2370,74 +2630,58 @@ function openCat(
   }
 }
 
-
 function renderList(){
 
   const box=$("ls");
 
   box.innerHTML="";
 
+  view.forEach((x,j)=>{
 
-  view.forEach(
-    (x,j)=>{
+    const b=document.createElement("button");
 
-      const b=
-        document.createElement(
-          "button"
-        );
+    b.className="dhikr-item";
 
-      b.className=
-        "dhikr-item";
+    b.innerHTML=`
 
-      b.innerHTML=`
+      <div class="dhikr-number">
+        ${j+1}
+      </div>
 
-        <div class="dhikr-number">
-          ${j+1}
+      <div class="dhikr-info">
+
+        <div class="dhikr-title">
+          ${esc(x.title||"ذكر")}
         </div>
 
-        <div class="dhikr-info">
-
-          <div class="dhikr-title">
-            ${esc(
-              x.title||"ذكر"
-            )}
-          </div>
-
-          <div class="dhikr-count">
-            التكرار:
-            ${esc(
-              x.count??1
-            )}
-          </div>
-
+        <div class="dhikr-count">
+          التكرار:
+          ${esc(x.count??1)}
         </div>
 
-        <div class="dhikr-arrow">
-          ‹
-        </div>
+      </div>
 
-      `;
+      <div class="dhikr-arrow">
+        ‹
+      </div>
 
-      b.onclick=()=>{
-        openReader(j);
-      };
+    `;
 
-      box.appendChild(b);
+    b.onclick=()=>{
+      openReader(j);
+    };
 
-    }
-  );
+    box.appendChild(b);
+
+  });
 }
 
 
 /* READER */
 
-function openReader(
-  j,
-  push=true
-){
+function openReader(j,push=true){
 
   i=j;
-
   n=0;
 
   const x=view[i];
@@ -2445,13 +2689,11 @@ function openReader(
   if(!x)
     return;
 
-
   $("rt").textContent=
     x.title||"ذكر";
 
   $("rx").textContent=
     x.text||"";
-
 
   $("rs").textContent=[
     x.source,
@@ -2460,25 +2702,18 @@ function openReader(
   .filter(Boolean)
   .join(" — ");
 
-
   updateReader();
-
 
   hideAll();
 
-  $("reader")
-    .classList.remove(
-      "hidden"
-    );
+  $("reader").classList.remove("hidden");
 
   setNav("");
-
 
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
-
 
   if(push){
 
@@ -2486,14 +2721,11 @@ function openReader(
       page:"reader",
       index:i,
       viewIds:
-        view.map(
-          x=>getKey(x)
-        )
+        view.map(x=>getKey(x))
     });
 
   }
 }
-
 
 function updateReader(){
 
@@ -2502,10 +2734,7 @@ function updateReader(){
   if(!x)
     return;
 
-
-  let count=
-    Number(x.count);
-
+  let count=Number(x.count);
 
   if(
     !Number.isFinite(count)||
@@ -2513,45 +2742,28 @@ function updateReader(){
   )
     count=1;
 
-
   $("rc").textContent=
     n+" / "+count;
-
 
   const percent=
     Math.min(
       100,
-      Math.round(
-        (n/count)*100
-      )
+      Math.round((n/count)*100)
     );
 
+  $("progressBar").style.width=
+    percent+"%";
 
-  $("progressBar")
-    .style.width=
-      percent+"%";
+  $("progressPercent").textContent=
+    percent+"%";
 
+  $("progressText").textContent=
+    "التكرار "+n+" من "+count;
 
-  $("progressPercent")
-    .textContent=
-      percent+"%";
-
-
-  $("progressText")
-    .textContent=
-      "التكرار "+
-      n+
-      " من "+
-      count;
-
-
-  $("prevBtn").disabled=
-    i===0;
-
+  $("prevBtn").disabled=i===0;
 
   updateFavoriteButton();
 }
-
 
 function tap(){
 
@@ -2560,10 +2772,7 @@ function tap(){
   if(!x)
     return;
 
-
-  let count=
-    Number(x.count);
-
+  let count=Number(x.count);
 
   if(
     !Number.isFinite(count)||
@@ -2571,9 +2780,7 @@ function tap(){
   )
     count=1;
 
-
   n++;
-
 
   if(n>=count){
 
@@ -2581,24 +2788,14 @@ function tap(){
 
     updateReader();
 
-
     setTimeout(()=>{
 
       if(i<view.length-1){
 
         i++;
-
         n=0;
 
-        /*
-          الانتقال التلقائي لا يضيف
-          سجلًا جديدًا.
-        */
-
-        openReader(
-          i,
-          false
-        );
+        openReader(i,false);
 
       }else{
 
@@ -2613,17 +2810,14 @@ function tap(){
     return;
   }
 
-
   updateReader();
 }
-
 
 function prev(){
 
   if(i>0){
 
     i--;
-
     n=0;
 
     openReader(i);
@@ -2631,13 +2825,11 @@ function prev(){
   }
 }
 
-
 function skip(){
 
   if(i<view.length-1){
 
     i++;
-
     n=0;
 
     openReader(i);
@@ -2651,7 +2843,6 @@ function skip(){
     showSections();
 
   }
-
 }
 
 
@@ -2664,20 +2855,16 @@ function toggleFavorite(){
   if(!x)
     return;
 
-
   const key=getKey(x);
-
 
   if(favorites.has(key))
     favorites.delete(key);
   else
     favorites.add(key);
 
-
   saveFavorites();
 
   updateFavoriteButton();
-
 
   toast(
     favorites.has(key)
@@ -2686,49 +2873,34 @@ function toggleFavorite(){
   );
 }
 
-
 function updateFavoriteButton(){
 
-  const b=
-    $("favoriteBtn");
+  const b=$("favoriteBtn");
 
   const x=view[i];
 
   if(!x)
     return;
 
-
   b.textContent=
-    favorites.has(
-      getKey(x)
-    )
+    favorites.has(getKey(x))
       ?"★"
       :"☆";
 }
 
-
 function renderFavorites(){
 
-  const box=
-    $("favoriteList");
+  const box=$("favoriteList");
 
   box.innerHTML="";
 
-
   const favs=
     data.filter(
-      x=>
-        favorites.has(
-          getKey(x)
-        )
+      x=>favorites.has(getKey(x))
     );
 
-
-  $("favPageCount")
-    .textContent=
-      favs.length+
-      " أذكار";
-
+  $("favPageCount").textContent=
+    favs.length+" أذكار";
 
   if(!favs.length){
 
@@ -2754,16 +2926,11 @@ function renderFavorites(){
     return;
   }
 
-
   favs.forEach(x=>{
 
-    const b=
-      document.createElement(
-        "button"
-      );
+    const b=document.createElement("button");
 
-    b.className=
-      "dhikr-item";
+    b.className="dhikr-item";
 
     b.innerHTML=`
 
@@ -2774,15 +2941,11 @@ function renderFavorites(){
       <div class="dhikr-info">
 
         <div class="dhikr-title">
-          ${esc(
-            x.title||"ذكر"
-          )}
+          ${esc(x.title||"ذكر")}
         </div>
 
         <div class="dhikr-count">
-          ${esc(
-            x.category||""
-          )}
+          ${esc(x.category||"")}
         </div>
 
       </div>
@@ -2793,35 +2956,28 @@ function renderFavorites(){
 
     `;
 
-
     b.onclick=()=>{
 
       view=[x];
-
       i=0;
 
       openReader(0);
 
     };
 
-
     box.appendChild(b);
 
   });
 }
 
-
 function clearFavorites(){
 
   if(!favorites.size){
 
-    toast(
-      "المفضلة فارغة"
-    );
+    toast("المفضلة فارغة");
 
     return;
   }
-
 
   if(
     !confirm(
@@ -2830,16 +2986,13 @@ function clearFavorites(){
   )
     return;
 
-
   favorites.clear();
 
   saveFavorites();
 
   renderFavorites();
 
-  toast(
-    "تم مسح المفضلة ✓"
-  );
+  toast("تم مسح المفضلة ✓");
 }
 
 
@@ -2849,24 +3002,16 @@ function changeFont(delta){
 
   let size=
     Number(
-      localStorage.getItem(
-        FONT_KEY
-      )||24
+      localStorage.getItem(FONT_KEY)||24
     );
 
-
   size+=delta*2;
-
 
   size=
     Math.max(
       18,
-      Math.min(
-        34,
-        size
-      )
+      Math.min(34,size)
     );
-
 
   document.documentElement
     .style
@@ -2874,29 +3019,21 @@ function changeFont(delta){
       "--font-size",
       size+"px"
     );
-
 
   localStorage.setItem(
     FONT_KEY,
     size
   );
 
-
-  toast(
-    "حجم النص: "+size
-  );
+  toast("حجم النص: "+size);
 }
-
 
 function loadFont(){
 
   const size=
     Number(
-      localStorage.getItem(
-        FONT_KEY
-      )||24
+      localStorage.getItem(FONT_KEY)||24
     );
-
 
   document.documentElement
     .style
@@ -2906,29 +3043,22 @@ function loadFont(){
     );
 }
 
-
 function toggleTheme(){
 
   const current=
-    localStorage.getItem(
-      THEME_KEY
-    )||"auto";
-
+    localStorage.getItem(THEME_KEY)||"auto";
 
   const next=
     current==="dark"
       ?"light"
       :"dark";
 
-
   localStorage.setItem(
     THEME_KEY,
     next
   );
 
-
   applyTheme();
-
 
   toast(
     next==="dark"
@@ -2937,36 +3067,23 @@ function toggleTheme(){
   );
 }
 
-
 function applyTheme(){
 
   const theme=
-    localStorage.getItem(
-      THEME_KEY
-    )||"auto";
-
+    localStorage.getItem(THEME_KEY)||"auto";
 
   let style=
-    document.getElementById(
-      "customTheme"
-    );
-
+    document.getElementById("customTheme");
 
   if(!style){
 
     style=
-      document.createElement(
-        "style"
-      );
+      document.createElement("style");
 
-    style.id=
-      "customTheme";
+    style.id="customTheme";
 
-    document.head.appendChild(
-      style
-    );
+    document.head.appendChild(style);
   }
-
 
   if(theme==="dark"){
 
@@ -2988,7 +3105,6 @@ function applyTheme(){
 
     `;
 
-
     $("themeText")
       .textContent=
         "الوضع الليلي مفعّل";
@@ -3002,6 +3118,988 @@ function applyTheme(){
         "الوضع الفاتح مفعّل";
 
   }
+}
+
+
+/* =====================================================
+   PRAYER TIMES
+   ===================================================== */
+
+function getPrayerCity(){
+
+  return localStorage.getItem(
+    PRAYER_CITY_KEY
+  ) || "Armanaz";
+}
+
+function getPrayerCountry(){
+
+  return localStorage.getItem(
+    PRAYER_COUNTRY_KEY
+  ) || "Syria";
+}
+
+function savePrayerLocation(){
+
+  const city=
+    $("cityInput").value.trim();
+
+  const country=
+    $("countryInput").value;
+
+  if(!city){
+
+    toast("اكتب اسم المدينة أولًا");
+
+    return;
+  }
+
+  localStorage.setItem(
+    PRAYER_CITY_KEY,
+    city
+  );
+
+  localStorage.setItem(
+    PRAYER_COUNTRY_KEY,
+    country
+  );
+
+  $("prayerCityLabel").textContent=
+    city+"، "+country;
+
+  toast("تم حفظ المدينة ✓");
+
+  loadPrayerTimes(true);
+}
+
+function loadPrayerSettingsIntoUI(){
+
+  $("cityInput").value=
+    getPrayerCity();
+
+  $("countryInput").value=
+    getPrayerCountry();
+
+  $("prayerCityLabel").textContent=
+    getPrayerCity()+
+    "، "+
+    getPrayerCountry();
+}
+
+
+/*
+  جلب أوقات الصلاة من AlAdhan.
+
+  لا يتم إرسال إحداثيات الجهاز.
+  يتم إرسال اسم المدينة والدولة فقط.
+*/
+
+async function loadPrayerTimes(force=false){
+
+  const city=getPrayerCity();
+  const country=getPrayerCountry();
+
+  $("prayerCityLabel").textContent=
+    city+"، "+country;
+
+  const cached=
+    localStorage.getItem(
+      PRAYER_CACHE_KEY
+    );
+
+  /*
+    نعرض البيانات المحفوظة أولًا
+    حتى لا تظهر البطاقة فارغة.
+  */
+
+  if(cached && !prayerData){
+
+    try{
+
+      const saved=JSON.parse(cached);
+
+      if(saved && saved.city===city){
+
+        prayerData=saved.data;
+
+        renderPrayerTimes();
+
+      }
+
+    }catch(e){}
+
+  }
+
+  /*
+    إذا كانت البيانات موجودة اليوم
+    ولا يوجد طلب تحديث صريح، لا داعي
+    لطلب الشبكة مرة أخرى.
+  */
+
+  if(
+    prayerData &&
+    !force
+  ){
+
+    if(
+      prayerData.date===todayKey()
+    ){
+
+      renderPrayerTimes();
+
+      return;
+    }
+  }
+
+  $("prayerLoading").textContent=
+    "جارٍ تحميل أوقات الصلاة...";
+
+  $("prayerLoading").classList.remove("hidden");
+
+  $("prayerContent").classList.add("hidden");
+
+  const url=
+    "https://api.aladhan.com/v1/timingsByCity"
+    +"?city="+encodeURIComponent(city)
+    +"&country="+encodeURIComponent(country)
+    +"&method="+PRAYER_METHOD;
+
+  try{
+
+    const r=await fetch(url);
+
+    if(!r.ok)
+      throw new Error();
+
+    const json=await r.json();
+
+    if(
+      !json||
+      json.code!==200||
+      !json.data||
+      !json.data.timings
+    )
+      throw new Error();
+
+    prayerData={
+      timings:json.data.timings,
+      date:todayKey(),
+      hijri:json.data.date?.hijri?.date||"",
+      gregorian:json.data.date?.gregorian?.date||"",
+      city,
+      country
+    };
+
+    localStorage.setItem(
+      PRAYER_CACHE_KEY,
+      JSON.stringify({
+        city,
+        country,
+        data:prayerData
+      })
+    );
+
+    renderPrayerTimes();
+
+    toast("تم تحديث أوقات الصلاة ✓");
+
+  }catch(e){
+
+    if(prayerData){
+
+      renderPrayerTimes();
+
+      toast(
+        "تعذر التحديث، تم استخدام آخر بيانات محفوظة"
+      );
+
+    }else{
+
+      $("prayerLoading").textContent=
+        "تعذر تحميل أوقات الصلاة. تحقق من الاتصال بالإنترنت.";
+
+    }
+
+  }
+}
+
+function todayKey(){
+
+  const d=new Date();
+
+  return [
+    d.getFullYear(),
+    String(d.getMonth()+1).padStart(2,"0"),
+    String(d.getDate()).padStart(2,"0")
+  ].join("-");
+}
+
+
+/*
+  تحويل 24 ساعة إلى صيغة واضحة.
+*/
+
+function cleanTime(value){
+
+  if(!value)
+    return "--:--";
+
+  const match=
+    String(value).match(/^(\d{1,2}):(\d{2})/);
+
+  if(!match)
+    return value;
+
+  let h=Number(match[1]);
+  const m=match[2];
+
+  if(h===0)
+    h=12;
+
+  return String(h).padStart(2,"0")+":"+m;
+}
+
+function timeToMinutes(value){
+
+  const match=
+    String(value||"").match(/^(\d{1,2}):(\d{2})/);
+
+  if(!match)
+    return null;
+
+  return Number(match[1])*60+
+         Number(match[2]);
+}
+
+function renderPrayerTimes(){
+
+  if(
+    !prayerData||
+    !prayerData.timings
+  )
+    return;
+
+  const t=prayerData.timings;
+
+  $("prayerLoading").classList.add("hidden");
+  $("prayerContent").classList.remove("hidden");
+
+  const order=[
+    "Fajr",
+    "Sunrise",
+    "Dhuhr",
+    "Asr",
+    "Maghrib",
+    "Isha"
+  ];
+
+  const grid=$("prayerGrid");
+
+  grid.innerHTML="";
+
+  order.forEach(key=>{
+
+    const div=
+      document.createElement("div");
+
+    div.className="prayer-time";
+
+    div.innerHTML=`
+
+      <div class="prayer-time-name">
+        ${PRAYER_NAMES[key]}
+      </div>
+
+      <div class="prayer-time-value">
+        ${cleanTime(t[key])}
+      </div>
+
+    `;
+
+    grid.appendChild(div);
+
+  });
+
+  $("prayerDate").textContent=
+    prayerData.hijri||"";
+
+  updateNextPrayer();
+
+  clearInterval(prayerTimer);
+
+  prayerTimer=
+    setInterval(
+      updateNextPrayer,
+      30000
+    );
+}
+
+function updateNextPrayer(){
+
+  if(
+    !prayerData||
+    !prayerData.timings
+  )
+    return;
+
+  const now=new Date();
+
+  const currentMinutes=
+    now.getHours()*60+
+    now.getMinutes()+
+    now.getSeconds()/60;
+
+  const order=[
+    "Fajr",
+    "Dhuhr",
+    "Asr",
+    "Maghrib",
+    "Isha"
+  ];
+
+  let next=null;
+
+  for(const key of order){
+
+    const mins=
+      timeToMinutes(
+        prayerData.timings[key]
+      );
+
+    if(
+      mins!==null &&
+      mins>currentMinutes
+    ){
+
+      next={
+        key,
+        minutes:mins
+      };
+
+      break;
+    }
+  }
+
+  /*
+    إذا انتهت صلاة العشاء،
+    تكون الصلاة القادمة فجر اليوم التالي.
+  */
+
+  let difference;
+
+  if(!next){
+
+    const fajr=
+      timeToMinutes(
+        prayerData.timings.Fajr
+      );
+
+    next={
+      key:"Fajr",
+      minutes:fajr
+    };
+
+    difference=
+      (24*60-currentMinutes)+fajr;
+
+  }else{
+
+    difference=
+      next.minutes-currentMinutes;
+
+  }
+
+  $("nextPrayerName").textContent=
+    PRAYER_NAMES[next.key];
+
+  $("nextPrayerTime").textContent=
+    cleanTime(
+      prayerData.timings[next.key]
+    );
+
+  /*
+    نعرض الوقت المتبقي داخل عنوان صغير
+    دون تغيير تصميم البطاقة.
+  */
+
+  const label=
+    document.querySelector(".next-label");
+
+  if(label){
+
+    const totalSeconds=
+      Math.max(
+        0,
+        Math.round(difference*60)
+      );
+
+    const h=
+      Math.floor(totalSeconds/3600);
+
+    const m=
+      Math.floor(
+        (totalSeconds%3600)/60
+      );
+
+    const s=
+      totalSeconds%60;
+
+    label.textContent=
+      "الصلاة القادمة · متبقي "+
+      String(h).padStart(2,"0")+
+      ":"+
+      String(m).padStart(2,"0")+
+      ":"+
+      String(s).padStart(2,"0");
+
+  }
+}
+
+
+/* =====================================================
+   SHARE AS IMAGE
+   ===================================================== */
+
+async function shareCurrentDhikr(){
+
+  const x=view[i];
+
+  if(!x)
+    return;
+
+  toast("جارٍ تجهيز الصورة...");
+
+  try{
+
+    await createShareImage(x);
+
+    $("sharePreview")
+      .classList.remove("hidden");
+
+  }catch(e){
+
+    console.error(e);
+
+    toast(
+      "تعذر إنشاء صورة المشاركة"
+    );
+
+  }
+}
+
+function closeSharePreview(){
+
+  $("sharePreview")
+    .classList.add("hidden");
+}
+
+
+/*
+  رسم صورة مشاركة عربية واضحة
+  باستخدام Canvas.
+
+  لا تحتاج إلى ملف صورة خارجي،
+  لذلك تعمل حتى دون إضافة صور جديدة
+  إلى المستودع.
+*/
+
+async function createShareImage(x){
+
+  const canvas=$("shareCanvas");
+
+  const ctx=canvas.getContext("2d");
+
+  const width=1080;
+
+  const text=
+    String(x.text||"").trim();
+
+  const title=
+    String(x.title||"ذكر");
+
+  const source=[
+    x.source,
+    x.grade||x.status
+  ]
+  .filter(Boolean)
+  .join(" — ");
+
+  /*
+    نحسب الارتفاع بحسب طول النص.
+  */
+
+  const tempCanvas=
+    document.createElement("canvas");
+
+  const tempCtx=
+    tempCanvas.getContext("2d");
+
+  tempCtx.font=
+    "38px Arial, Tahoma, sans-serif";
+
+  const maxWidth=900;
+
+  const lines=
+    wrapArabicText(
+      tempCtx,
+      text,
+      maxWidth
+    );
+
+  const height=
+    Math.max(
+      1250,
+      350+
+      lines.length*70+
+      (source?100:0)
+    );
+
+  canvas.width=width;
+  canvas.height=height;
+
+  /*
+    الخلفية
+  */
+
+  const gradient=
+    ctx.createLinearGradient(
+      0,
+      0,
+      width,
+      height
+    );
+
+  gradient.addColorStop(
+    0,
+    "#f4f8f7"
+  );
+
+  gradient.addColorStop(
+    1,
+    "#ffffff"
+  );
+
+  ctx.fillStyle=gradient;
+
+  ctx.fillRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+  /*
+    شريط الهوية العلوي
+  */
+
+  const headerGradient=
+    ctx.createLinearGradient(
+      0,
+      0,
+      width,
+      0
+    );
+
+  headerGradient.addColorStop(
+    0,
+    "#075e57"
+  );
+
+  headerGradient.addColorStop(
+    1,
+    "#0b7a70"
+  );
+
+  ctx.fillStyle=headerGradient;
+
+  roundRect(
+    ctx,
+    0,
+    0,
+    width,
+    260,
+    0
+  );
+
+  ctx.fill();
+
+  /*
+    شعار رمزي بسيط
+  */
+
+  ctx.fillStyle="#ffffff22";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    930,
+    80,
+    95,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+  ctx.fillStyle="#fff";
+
+  ctx.font=
+    "bold 50px Arial";
+
+  ctx.textAlign="right";
+  ctx.direction="rtl";
+
+  ctx.fillText(
+    "📿 أذكار المسلم",
+    930,
+    92
+  );
+
+  ctx.font=
+    "28px Arial";
+
+  ctx.fillText(
+    "رفيقك اليومي للذكر والدعاء",
+    930,
+    145
+  );
+
+  /*
+    العنوان
+  */
+
+  ctx.fillStyle="#17312e";
+
+  ctx.font=
+    "bold 42px Arial";
+
+  ctx.textAlign="right";
+  ctx.direction="rtl";
+
+  ctx.fillText(
+    title,
+    930,
+    345
+  );
+
+  /*
+    خط زخرفي بسيط
+  */
+
+  ctx.fillStyle="#0b7a70";
+
+  roundRect(
+    ctx,
+    850,
+    380,
+    80,
+    7,
+    4
+  );
+
+  ctx.fill();
+
+  /*
+    نص الذكر
+  */
+
+  ctx.fillStyle="#17312e";
+
+  ctx.font=
+    "38px Arial";
+
+  ctx.textAlign="right";
+  ctx.direction="rtl";
+
+  let y=455;
+
+  lines.forEach(line=>{
+
+    ctx.fillText(
+      line,
+      930,
+      y
+    );
+
+    y+=70;
+
+  });
+
+  /*
+    المصدر
+  */
+
+  if(source){
+
+    y+=20;
+
+    ctx.fillStyle="#71827f";
+
+    ctx.font=
+      "25px Arial";
+
+    ctx.fillText(
+      source,
+      930,
+      y
+    );
+
+  }
+
+  /*
+    هوية المدرسة أسفل الصورة
+  */
+
+  const footerY=
+    height-150;
+
+  ctx.fillStyle="#dff4f0";
+
+  roundRect(
+    ctx,
+    70,
+    footerY,
+    width-140,
+    90,
+    22
+  );
+
+  ctx.fill();
+
+  ctx.fillStyle="#075e57";
+
+  ctx.font=
+    "bold 25px Arial";
+
+  ctx.textAlign="center";
+
+  ctx.fillText(
+    "المدرسة الشرعية الخامسة عشرة بلال بن رباح رضي الله عنه",
+    width/2,
+    footerY+38
+  );
+
+  ctx.font=
+    "21px Arial";
+
+  ctx.fillStyle="#71827f";
+
+  ctx.fillText(
+    "أذكار المسلم",
+    width/2,
+    footerY+68
+  );
+
+  return canvas;
+}
+
+
+/*
+  تقسيم النص العربي إلى أسطر.
+*/
+
+function wrapArabicText(
+  ctx,
+  text,
+  maxWidth
+){
+
+  const words=
+    text.split(/\s+/);
+
+  const lines=[];
+
+  let line="";
+
+  words.forEach(word=>{
+
+    const test=
+      line
+        ?line+" "+word
+        :word;
+
+    if(
+      ctx.measureText(test).width>
+      maxWidth &&
+      line
+    ){
+
+      lines.push(line);
+
+      line=word;
+
+    }else{
+
+      line=test;
+
+    }
+
+  });
+
+  if(line)
+    lines.push(line);
+
+  return lines;
+}
+
+function roundRect(
+  ctx,
+  x,
+  y,
+  w,
+  h,
+  r
+){
+
+  const radius=
+    Math.min(
+      r,
+      w/2,
+      h/2
+    );
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    x+radius,
+    y
+  );
+
+  ctx.arcTo(
+    x+w,
+    y,
+    x+w,
+    y+h,
+    radius
+  );
+
+  ctx.arcTo(
+    x+w,
+    y+h,
+    x,
+    y+h,
+    radius
+  );
+
+  ctx.arcTo(
+    x,
+    y+h,
+    x,
+    y,
+    radius
+  );
+
+  ctx.arcTo(
+    x,
+    y,
+    x+w,
+    y,
+    radius
+  );
+
+  ctx.closePath();
+}
+
+
+/* SHARE / DOWNLOAD */
+
+function canvasToBlob(){
+
+  return new Promise(resolve=>{
+
+    $("shareCanvas")
+      .toBlob(
+        blob=>resolve(blob),
+        "image/png"
+      );
+
+  });
+}
+
+async function shareGeneratedImage(){
+
+  const blob=
+    await canvasToBlob();
+
+  if(!blob){
+
+    toast(
+      "تعذر تجهيز الصورة"
+    );
+
+    return;
+  }
+
+  const file=
+    new File(
+      [blob],
+      "zekr-almuslim.png",
+      {
+        type:"image/png"
+      }
+    );
+
+  /*
+    المشاركة المباشرة إذا كان الجهاز
+    والمتصفح يدعمان مشاركة الملفات.
+  */
+
+  if(
+    navigator.share &&
+    navigator.canShare &&
+    navigator.canShare({
+      files:[file]
+    })
+  ){
+
+    try{
+
+      await navigator.share({
+        title:"أذكار المسلم",
+        text:"ذكر من تطبيق أذكار المسلم",
+        files:[file]
+      });
+
+      return;
+
+    }catch(e){
+
+      if(e.name==="AbortError")
+        return;
+
+    }
+
+  }
+
+  /*
+    إذا لم تتوفر مشاركة الملفات،
+    نحفظ الصورة بدلًا منها.
+  */
+
+  downloadGeneratedImage();
+
+  toast(
+    "تم حفظ الصورة، ويمكنك مشاركتها من المعرض"
+  );
+}
+
+function downloadGeneratedImage(){
+
+  const canvas=
+    $("shareCanvas");
+
+  const link=
+    document.createElement("a");
+
+  link.download=
+    "zekr-almuslim.png";
+
+  link.href=
+    canvas.toDataURL(
+      "image/png"
+    );
+
+  link.click();
 }
 
 
@@ -3034,12 +4132,14 @@ loadFont();
 
 applyTheme();
 
+loadPrayerSettingsIntoUI();
+
 loadData();
 
+loadPrayerTimes();
 
-/*
-  تسجيل Service Worker
-*/
+
+/* SERVICE WORKER */
 
 if(
   "serviceWorker" in navigator
@@ -3063,9 +4163,7 @@ if(
 }
 
 
-/*
-  تشغيل سجل التنقل
-*/
+/* HISTORY */
 
 initHistory();
 
